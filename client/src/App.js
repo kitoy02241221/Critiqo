@@ -1,4 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useRef } from 'react';
 import Modal from './Mainpage/AnalyzeModal/Modal';
 import WhatisCritiqo from './Mainpage/whatisCritiqo/WhatisCritiqo';
 import MyProfile from './MyProfilePage/MyProfile';
@@ -13,11 +14,19 @@ function App() {
   const isProfilePage = location.pathname === "/myprofile";
   const isAdmin = location.pathname === "/adminpanel";
   const isHomePage = location.pathname === "/";
-  
+
+  // refs для секций
+  const whatisRef = useRef(null);
+  const weAreRef = useRef(null);
+  const tryFreeRef = useRef(null);
 
   return (
     <div className='header'>
-      <Navbar />
+      {/* передаём refs в Navbar */}
+      <Navbar 
+        onScrollTo={(ref) => ref.current?.scrollIntoView({ behavior: "smooth" })}
+        refs={{ whatisRef, weAreRef, tryFreeRef }}
+      />
 
       <Routes>
         <Route path="/myprofile" element={<MyProfile />} />
@@ -26,10 +35,9 @@ function App() {
 
       {isHomePage && (
         <>
-          
-          <WhatisCritiqo />
-          <WeAreTheFirst/>
-          <TryFreeModal/>
+          <div ref={whatisRef}><WhatisCritiqo /></div>
+          <div ref={weAreRef}><WeAreTheFirst /></div>
+          <div ref={tryFreeRef}><TryFreeModal /></div>
           <Modal />
         </>
       )}

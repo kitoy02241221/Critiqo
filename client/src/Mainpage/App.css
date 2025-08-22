@@ -165,3 +165,13 @@ button:hover {
   margin-top: -95px;
   margin-left: 620px;
 }
+
+.banner h1 {
+  cursor: pointer;
+  color: #00BFFF;
+  transition: color 0.3s ease;
+}
+
+.banner h1:hover {
+  color: #00FF94;
+}
