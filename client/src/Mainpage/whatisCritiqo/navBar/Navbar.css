@@ -1,0 +1,73 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 1400px;
+  padding: 14px 32px;
+
+  display: flex;
+  justify-content: space-between; /* все в одну строку */
+  align-items: center;
+
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(6px);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+  z-index: 1000;
+}
+
+/* Логотип */
+.banner h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #00bfff;
+  margin: 0;
+}
+
+/* Центральные кнопки */
+.navbar-center {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-center button {
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  color: #f1f1f1;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar-center button:hover {
+  background: #00bfff;
+  color: #000;
+}
+
+/* Авторизация справа */
+.steamAuth {
+  display: flex;
+  gap: 12px;
+}
+
+.steamAuth button {
+  background: #00bfff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.steamAuth button:hover {
+  background: #1a94bd;
+  color: #fff;
+}

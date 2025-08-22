@@ -1,0 +1,260 @@
+import { useEffect, useState } from 'react';
+import { supabase } from '../createSupabase/supabase';
+import TakeMatchModal from '../AdminPage/DataMatchModal';
+
+function AdminPanel() {
+  const [update, setUpdate] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [tasks, setTasks] = useState([]);
+  const [count, setCount] = useState(0);
+  const [compliteAp, setCompliteAp] = useState(0);
+  const [matchData, setMatchData] = useState('')
+  const [isOpenModal, setIsOpenModal] = useState(false)
+
+  // Хранение значений инпутов для каждой заявки
+  const [inputValues, setInputValues] = useState({});
+
+  useEffect(() => {
+    async function fetchTasks() {
+      setLoading(true);
+
+      const { data, error } = await supabase
+        .from('AnalyzeAplication')
+        .select('match, task, problem, id')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Ошибка при загрузке:', error.message);
+      } else {
+        setTasks(data);
+      }
+
+      setLoading(false);
+    }
+
+    async function aplicationCount() {
+      const { count, error } = await supabase
+        .from('AnalyzeAplication')
+        .select('*', { count: 'exact' });
+
+      if (error) {
+        console.error('Ошибка:' + error.message);
+        return 0;
+      }
+
+      setCount(count);
+      return count || 0;
+    }
+
+    async function getComplite() {
+      try {
+        const res = await fetch('http://localhost:5000/complite-aplication', {
+          credentials: 'include'
+        });
+
+        if (!res.ok) {
+          throw new Error('Ошибка при получении количества выполненых задач');
+        }
+
+        const data = await res.json();
+        setCompliteAp(data.complite_aplication);
+      } catch (err) {
+        console.error('Ошибка:' + err);
+      }
+    }
+
+    fetchTasks();
+    aplicationCount();
+    getComplite();
+  }, [update]);
+
+  // Отправка анализа
+  async function resultAnalyze(match, taskInputs) {
+    setLoading(true);
+
+    if (!taskInputs.result.trim() || !taskInputs.advice.trim() || !taskInputs.grade.trim()) {
+      alert('Пожалуйста, заполните все поля!');
+      setLoading(false);
+      return;
+    }
+
+    const { data: userData, error: fetchError } = await supabase
+      .from('AnalyzeAplication')
+      .select('user_auth_uid')
+      .eq('match', match)
+      .single();
+
+    if (fetchError) {
+      console.error('Ошибка при получении user_auth_uid:', fetchError.message);
+      setLoading(false);
+      return;
+    }
+
+    const { error } = await supabase
+      .from('ResultAnalyze')
+      .insert([
+        {
+          result: taskInputs.result,
+          grade: taskInputs.grade,
+          advice: taskInputs.advice,
+          match_id: match,
+          user_auth_uid: userData.user_auth_uid
+        },
+      ]);
+
+    if (error) {
+      console.error('❌ Ошибка при добавлении:', error);
+      alert('Ошибка:' + error.message);
+      setLoading(false);
+      return;
+    }
+
+    // Удаляем заявку после анализа
+    const { error: deleteError } = await supabase
+      .from('AnalyzeAplication')
+      .delete()
+      .eq('match', match);
+
+    if (deleteError) {
+      console.error('❌ Ошибка при удалении заявки:', deleteError);
+      alert('Ошибка:' + deleteError.message);
+    } else {
+      alert('✅ Заявка удалена!');
+      setUpdate(prev => !prev);
+    }
+
+    //счётчик выполненных анализов
+    try {
+      const res = await fetch('http://localhost:5000/increment-application', {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (!res.ok) throw new Error('Ошибка на сервере');
+
+      const data = await res.json();
+      console.log('Новое значение complite_aplication:', data.newValue);
+    } catch (err) {
+      console.error('Не удалось обновить complite_aplication:', err);
+    }
+
+    setLoading(false);
+  }
+
+  const getDataMatch = async (matchId) => {
+  if (!matchId) {
+    console.error('Не указан ID матча');
+    return;
+  }
+
+  try {
+    const res = await fetch(`http://localhost:5000/match/${matchId}/opendota`, {
+      credentials: 'include'
+    });
+
+    if (!res.ok) {
+      throw new Error(`Ошибка запроса: ${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    console.log(`Данные матча ${matchId} получены:`, data);
+
+    setMatchData(data);
+    setIsOpenModal(true);
+
+  } catch (err) {
+    console.error('Ошибка при получении данных матча:', err.message);
+  }
+};
+
+  return (
+    <div className="profileBlock">
+      <h1>Админ панель</h1>
+
+      <div className='updateBlock'>
+        <button onClick={() => setUpdate(prevState => !prevState)}>Обновить</button>
+        <h2>Заявки на анализ:</h2>
+      </div>
+
+      <div className='adminStatistics'>
+        <h2>Статистика</h2>
+        {loading ? (
+          <p>Загрузка...</p>
+        ) : (
+          <div>
+            <h3>Выполнено анализов:</h3>
+            <p>{compliteAp}</p>
+            <h3>Заявок в базе:</h3>
+            <p>{count}</p>
+          </div>
+        )}
+      </div>
+
+      <div className='tasks'>
+        {loading ? (
+          <p>Загрузка...</p>
+        ) : (
+          tasks.map((task) => {
+            const taskInputs = inputValues[task.id] || { result: '', advice: '', grade: '' };
+
+            return (
+              <div key={task.id} className="aplicationCard">
+                <h3>ID Матча: {task.match}</h3>
+                <h3>Задачи анализа: {task.task}</h3>
+                <h3>Проблемы в матче: {task.problem}</h3>
+
+                <input
+                  type="text"
+                  placeholder="Введите результат анализа"
+                  className="resultInput"
+                  value={taskInputs.result}
+                  onChange={(e) => setInputValues(prev => ({
+                    ...prev,
+                    [task.id]: { ...taskInputs, result: e.target.value }
+                  }))}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Советы по игре"
+                  className="resultInput"
+                  value={taskInputs.advice}
+                  onChange={(e) => setInputValues(prev => ({
+                    ...prev,
+                    [task.id]: { ...taskInputs, advice: e.target.value }
+                  }))}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Оценка матча"
+                  className="resultInput"
+                  value={taskInputs.grade}
+                  onChange={(e) => setInputValues(prev => ({
+                    ...prev,
+                    [task.id]: { ...taskInputs, grade: e.target.value }
+                  }))}
+                  required
+                />
+
+                <div className='matchButton'>
+                  <button onClick={() => getDataMatch(task.match)}>Получить данные</button>
+
+                  <TakeMatchModal
+                    matchData={matchData}
+                    isOpenModal={isOpenModal}
+                    setIsOpenModal={setIsOpenModal}
+                  />
+
+                  <button onClick={() => resultAnalyze(task.match, taskInputs)}>Отправить анализ</button>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default AdminPanel;

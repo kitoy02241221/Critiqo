@@ -1,0 +1,156 @@
+.profileBlock {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+    height: 640px;
+    background-color: #1E1E1E;
+    padding-top: 1px;
+    border-radius: 16px;
+
+    color: #F1F1F1;
+
+    overflow: hidden;
+}
+
+.profile {
+  max-width: 460px;
+}
+
+.profileBlock h1 {
+    margin-left: 40px;
+    letter-spacing: 5px;
+}
+
+.profileBlock img {
+    width: 120px;
+    height: 120px;
+    border-radius: 100px;
+    margin-left: 40px;
+}
+
+.userName {
+    position: absolute;
+    top: 60px;
+    left: 40px;
+
+    font-size: 42px;
+}
+
+.statisticsBlock {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 340px;
+    margin-top: 78px;
+    margin-left: 20px;
+}
+
+.statistics {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background-color: #00BFFF;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.statistics p {
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    left: auto;
+}
+
+.statistics strong {
+    margin-top: 15px;
+    font-size: 28px;
+}
+
+.analyzeHistory {
+    position: absolute;
+    width: 600px;
+    height: 400px;
+    background-color: #0b0b0b;
+    top: 189px;
+    left: 50%;
+}
+
+.profileButton {
+    position: absolute;
+    top: 635px;
+    left: 1310px;
+}
+
+.profileButton button {
+    width: 290px;
+    margin-left: 20px;
+    height: 80px;
+    border: none;
+    border-radius: 12px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #1E1E1E;
+  padding: 20px 30px;
+  border-radius: 12px;
+  width: 600px;
+  max-width: 600px;
+  height: 160px;
+  max-height: 800px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease;
+  
+}
+
+.modal h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+
+.modal p {
+  margin: 10px 0;
+}
+
+.editName {
+  margin-left: 40px;
+  margin-top: 60px;
+}
+
+.profileAvatar {
+  width: 20px;
+  height: 20px;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

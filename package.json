@@ -1,0 +1,24 @@
+{
+  "name": "critiqo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"node server/index.js\" \"npm run client\"",
+    "server": "cd server && npm start",
+    "client": "cd client && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.55.0",
+    "cheerio": "^1.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "node-fetch": "^2.7.0",
+    "openid": "^2.0.13",
+    "xml2js": "^0.6.2"
+  }
+}

@@ -1,0 +1,19 @@
+.weAreTheFirstBlock {
+    margin-top: 200px;
+    letter-spacing: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    width: 800px;
+    color: #F1F1F1;
+}
+
+.weAreTheFirstBlock p {
+    margin-left: 12px;
+    line-height: 30px;
+    letter-spacing: 2px;
+}
+
+.weAreTheFirstBlock h1 {
+    margin-left: 10px;
+}
