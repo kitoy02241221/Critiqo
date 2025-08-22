@@ -4,10 +4,11 @@ const session = require('express-session');
 const openid = require('openid');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
-
+const path = require('path');
+const fetch = require('node-fetch'); // убедись, что установлен
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const ADMIN_STEAM_ID = "76561199838029880";
 
 const supabase = createClient(
@@ -16,7 +17,7 @@ const supabase = createClient(
 );
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "http://localhost:3000", // можно заменить на продакшн URL
   credentials: true
 }));
 
@@ -33,11 +34,15 @@ app.use((req, res, next) => {
   next();
 });
 
+// === Отдача фронтенда ===
+const clientBuildPath = path.join(__dirname, '../client/build');
+app.use(express.static(clientBuildPath));
+
 app.get('/', (req, res) => {
-  res.send('Server is running');
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
-// Steam OpenID
+// === Steam OpenID ===
 const relyingParty = new openid.RelyingParty(
   'http://localhost:5000/auth/steam/return',
   null,
@@ -46,7 +51,6 @@ const relyingParty = new openid.RelyingParty(
   []
 );
 
-// Начало авторизации
 app.get('/auth/steam', (req, res) => {
   relyingParty.authenticate('https://steamcommunity.com/openid', false, (err, authUrl) => {
     if (err || !authUrl) {
@@ -57,7 +61,6 @@ app.get('/auth/steam', (req, res) => {
   });
 });
 
-// Callback Steam
 app.get('/auth/steam/return', async (req, res) => {
   relyingParty.verifyAssertion(req, async (err, result) => {
     if (err || !result.authenticated) {
@@ -114,27 +117,20 @@ app.get('/auth/steam/return', async (req, res) => {
   });
 });
 
-// Проверка авторизации
+// === Авторизация и сессия ===
 app.get('/check-auth', (req, res) => {
-  if (!req.session.authUid) {
-    return res.status(401).json({ authenticated: false });
-  }
+  if (!req.session.authUid) return res.status(401).json({ authenticated: false });
   res.json({ authenticated: true });
 });
 
-// Получение сессии пользователя
 app.get('/take-session-auth_id', (req, res) => {
-  if (!req.session.authUid) {
-    return res.status(401).json({ error: 'Пользователь не авторизован' });
-  }
+  if (!req.session.authUid) return res.status(401).json({ error: 'Пользователь не авторизован' });
   res.json({ authUid: req.session.authUid });
 });
 
-// Получение имени пользователя
 app.get('/take-name', async (req, res) => {
-  if (!req.session.authUid) {
-    return res.status(401).json({ error: 'Пользователь не авторизован' });
-  }
+  if (!req.session.authUid) return res.status(401).json({ error: 'Пользователь не авторизован' });
+
   try {
     const { data, error } = await supabase
       .from('Users')
@@ -150,16 +146,11 @@ app.get('/take-name', async (req, res) => {
   }
 });
 
-// Обновление имени пользователя
 app.put('/update-name', async (req, res) => {
-  if (!req.session.authUid) {
-    return res.status(401).json({ error: 'Пользователь не авторизован' });
-  }
+  if (!req.session.authUid) return res.status(401).json({ error: 'Пользователь не авторизован' });
 
   const { name } = req.body;
-  if (!name || typeof name !== 'string') {
-    return res.status(400).json({ error: 'Неверное имя' });
-  }
+  if (!name || typeof name !== 'string') return res.status(400).json({ error: 'Неверное имя' });
 
   try {
     const { data, error } = await supabase
@@ -177,30 +168,24 @@ app.put('/update-name', async (req, res) => {
   }
 });
 
+// === Инкременты и получение данных пользователя ===
 app.post('/increment-num-application', async (req, res) => {
-  if (!req.session.authUid) {
-    return res.status(401).json({ error: 'Пользователь не авторизован' });
-  }
+  if (!req.session.authUid) return res.status(401).json({ error: 'Пользователь не авторизован' });
 
   try {
-    // Получаем текущее значение numAplication
     const { data: userData, error: fetchError } = await supabase
       .from('Users')
       .select('numAplication')
       .eq('auth_uid', req.session.authUid)
       .single();
-    
     if (fetchError) throw fetchError;
 
-    const currentValue = userData.numAplication ?? 0; // если null, ставим 0
-    const newValue = currentValue + 1;
+    const newValue = (userData.numAplication ?? 0) + 1;
 
-    // Обновляем значение
     const { error: updateError } = await supabase
       .from('Users')
       .update({ numAplication: newValue })
       .eq('auth_uid', req.session.authUid);
-
     if (updateError) throw updateError;
 
     res.json({ success: true, newValue });
@@ -210,11 +195,8 @@ app.post('/increment-num-application', async (req, res) => {
   }
 });
 
-// Получение numAplication
 app.get('/num-application', async (req, res) => {
-  if (!req.session.authUid) {
-    return res.status(401).json({ error: 'Пользователь не авторизован' });
-  }
+  if (!req.session.authUid) return res.status(401).json({ error: 'Пользователь не авторизован' });
 
   try {
     const { data, error } = await supabase
@@ -222,7 +204,6 @@ app.get('/num-application', async (req, res) => {
       .select('numAplication')
       .eq('auth_uid', req.session.authUid)
       .single();
-
     if (error) throw error;
 
     res.json({ numAplication: data.numAplication ?? 0 });
@@ -232,7 +213,6 @@ app.get('/num-application', async (req, res) => {
   }
 });
 
-// Получение данных текущего пользователя
 app.get('/me', async (req, res) => {
   if (!req.session.authUid) return res.json({ isLoggedIn: false });
 
@@ -242,7 +222,6 @@ app.get('/me', async (req, res) => {
       .select('auth_uid, steam_id, created_at, last_login')
       .eq('auth_uid', req.session.authUid)
       .single();
-
     if (error || !user) return res.json({ isLoggedIn: false });
 
     res.json({
@@ -257,11 +236,8 @@ app.get('/me', async (req, res) => {
   }
 });
 
-// Выход
 app.get('/logout', (req, res) => {
-  req.session.destroy(() => {
-    res.redirect("http://localhost:3000");
-  });
+  req.session.destroy(() => res.redirect("http://localhost:3000"));
 });
 
 // Инкремент complite_aplication
