@@ -6,10 +6,10 @@ import Navbar from './Mainpage/whatisCritiqo/navBar/Navbar';
 import AdminPanel from './AdminPage/AdminPanel';
 import WeAreTheFirst from './Mainpage/weAreTheFirstBlock/WeAreTheFirst';
 import TryFreeModal from './Mainpage/AnalyzeModal/TryFreeModal/TryFreeModal';
-import "../src/Mainpage/App.css"
+import './Mainpage/App.css';
 
 function App() {
-  const location = useLocation();
+  const location = useLocation(); 
   const isProfilePage = location.pathname === "/myprofile";
   const isAdmin = location.pathname === "/adminpanel";
   const isHomePage = location.pathname === "/";
