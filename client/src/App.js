@@ -7,6 +7,7 @@ import Navbar from './Mainpage/whatisCritiqo/navBar/Navbar';
 import AdminPanel from './AdminPage/AdminPanel';
 import WeAreTheFirst from './Mainpage/weAreTheFirstBlock/WeAreTheFirst';
 import TryFreeModal from './Mainpage/AnalyzeModal/TryFreeModal/TryFreeModal';
+import Advantagesblock from './Mainpage/AdvantagesBlock/AdvantagesBlock';
 import './Mainpage/App.css';
 
 function App() {
@@ -15,14 +16,13 @@ function App() {
   const isAdmin = location.pathname === "/adminpanel";
   const isHomePage = location.pathname === "/";
 
-  // refs для секций
+
   const whatisRef = useRef(null);
   const weAreRef = useRef(null);
   const tryFreeRef = useRef(null);
 
   return (
     <div className='header'>
-      {/* передаём refs в Navbar */}
       <Navbar 
         onScrollTo={(ref) => ref.current?.scrollIntoView({ behavior: "smooth" })}
         refs={{ whatisRef, weAreRef, tryFreeRef }}
@@ -39,6 +39,7 @@ function App() {
           <div ref={weAreRef}><WeAreTheFirst /></div>
           <div ref={tryFreeRef}><TryFreeModal /></div>
           <Modal />
+          <Advantagesblock/>
         </>
       )}
 

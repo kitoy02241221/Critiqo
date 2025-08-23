@@ -1,0 +1,58 @@
+.advantages > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-left: 60px;
+  cursor: pointer;
+}
+
+.advantagesblock {
+    color: #F1F1F1;
+    width: 900px;
+    margin: 200px auto 0 auto;
+    padding: 40px;
+}
+
+.advantagesblock h1 {
+    margin-left: 60px;
+}
+
+.advantages img {
+  width: 40px;
+  height: 40px;
+  margin-right: 60px;
+  filter: brightness(0) invert(1);
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.textBlock p {
+  letter-spacing: 1px;
+  margin: 10px 0 0 0;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.textBlock .description {
+  max-height: 0;
+  letter-spacing: 2px;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.7s ease;
+  font-size: 14px;
+  color: #F1F1F1;
+  line-height: 1.8;
+  width: 600px;
+}
+
+.textBlock:hover .description {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 4px;
+}
