@@ -18,8 +18,9 @@
 }
 
 .modalAnalyze h1 {
-    position: absolute;
-    margin-left: 33.5%;
+    text-align: center;
+    margin: 0 auto 0 auto;
+    position: relative;
 }
 
 .modalAnalyze p {
