@@ -1,100 +1,108 @@
 .tryFreeModal {
-  width: 40%;
-  margin: 200px auto 0px auto;
-  padding: 20px 40px;
+  width: 780px;
+  margin: 100px auto;
+  padding: 45px 35px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #121212, #1E1E1E);
   color: #F1F1F1;
-  border-radius: 16px;
-  background: transparent;
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+
+.tryFreeModal::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(0,255,148,0.2), transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
 }
 
 .tryFreeModal h1 {
   text-align: center;
-  margin-bottom: 40px;
-  font-size: 2rem;
-  color: #00ff99;
-}
-
-.tryFreeModal > div {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
+  font-size: 32px;
+  font-weight: 800;
+  color: #00FF94;
+  text-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
+  margin-bottom: 35px;
   position: relative;
+  z-index: 2;
 }
-
 
 .tryFreeInfoBlock {
-  flex: 1;
-  line-height: 1.8;
-  padding-right: 20px;
+  background: #1E1E1E;
+  padding: 25px 30px;
+  border-radius: 14px;
+  margin-bottom: 40px;
+  box-shadow: inset 0 0 15px rgba(0, 255, 148, 0.15);
 }
 
 .tryFreeInfoBlock h2 {
-  margin-bottom: 10px;
+  color: #00BFFF;
+  margin-bottom: 15px;
 }
 
-.tryFreeModal > div::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background-color: rgb(179, 179, 179);
-  transform: translateX(-50%);
+.tryFreeInfoBlock p, .tryFreeInfoBlock li {
+  color: #B0BEC5;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.tryFreeInfoBlock li::before {
+  content: "✦";
+  color: #00BFFF;
+  margin-right: 8px;
+  font-weight: bold;
 }
 
 .selectMatchBlock {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
+  background: #121212;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: inset 0 0 12px rgba(0, 191, 255, 0.1);
 }
 
 .selectMatchBlock h2 {
+  color: #00BFFF;
   margin-bottom: 20px;
-  color: #fff;
 }
 
 .selectMatchBlock input {
-  width: 100%;
-  max-width: 240px;
-  height: 45px;
-  border-radius: 16px;
-  padding: 0 12px;
+  width: 70%;
+  max-width: 380px;
+  padding: 12px 15px;
+  border-radius: 10px;
   border: none;
+  background: #1E1E1E;
+  color: #F1F1F1;
   margin-bottom: 20px;
   font-size: 1rem;
 }
 
+.selectMatchBlock input:focus {
+  box-shadow: 0 0 8px rgba(0, 255, 148, 0.6);
+  outline: none;
+}
+
 .selectMatchBlock button {
-  padding: 12px 24px;
-  border: none;
+  padding: 12px 28px;
   border-radius: 12px;
-  background-color: #00bfff;
-  color: #000;
-  font-weight: 500;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #00FF94, #00BFFF);
+  color: #121212;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .selectMatchBlock button:hover {
-  background-color: #009acd;
-}
-
-@media (max-width: 900px) {
-  .tryFreeModal {
-    width: 90%;
-  }
-
-  .tryFreeModal > div {
-    flex-direction: column;
-  }
-
-  .tryFreeModal > div::after {
-    display: none;
-  }
-
-  .selectMatchBlock {
-    margin-top: 30px;
-  }
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(0, 255, 148, 0.5), 0 0 15px rgba(0, 191, 255, 0.5);
 }

@@ -1,19 +1,59 @@
 .weAreTheFirstBlock {
-    margin-top: 200px;
-    letter-spacing: 4px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 10px;
-    width: 800px;
-    color: #F1F1F1;
+  width: 820px;
+  margin: 120px auto;
+  padding: 50px 40px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #121212, #1E1E1E);
+  color: #F1F1F1;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0, 255, 148, 0.1);
 }
 
-.weAreTheFirstBlock p {
-    margin-left: 12px;
-    line-height: 30px;
-    letter-spacing: 2px;
+.weAreTheFirstBlock::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(0,191,255,0.15), transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
 }
 
 .weAreTheFirstBlock h1 {
-    margin-left: 10px;
+  text-align: left;
+  font-size: 36px;
+  font-weight: 800;
+  color: #00FF94;
+  text-shadow: 0 0 12px rgba(0, 255, 148, 0.6);
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 2;
+}
+
+.weAreTheFirstBlock p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #B0BEC5;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.weAreTheFirstBlock li {
+  list-style: none;
+  background: #1E1E1E;
+  border-left: 4px solid #00FF94;
+  padding: 12px 20px;
+  margin: 12px 0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  color: #F1F1F1;
+}
+
+.weAreTheFirstBlock li:hover {
+  transform: translateX(6px);
+  box-shadow: 0 0 12px rgba(0, 255, 148, 0.3);
 }

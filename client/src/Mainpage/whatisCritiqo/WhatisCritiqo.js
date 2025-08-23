@@ -1,4 +1,5 @@
 import WeAreTheFirst from "../weAreTheFirstBlock/WeAreTheFirst"
+import './whatisCritiqo.css'
 
 function WhatisCritiqo() {
     return (
@@ -20,16 +21,24 @@ function WhatisCritiqo() {
              <p>Что делает Critiqo:</p> <br/>
              <ul>
                 <li>
-                <p>находит ошибки в позиционке, фарме и принятии решений</p>
+                  <strong className="blockName">Находит</strong>
+                <p>Находит <strong>слабые места</strong> в твоей игре и показывает, как именно они влияют на общий <strong>результат</strong> в игре. 
+                  Это помогает осознать <strong>привычки</strong>, которые мешают <strong>прогрессу</strong>.</p>
                 </li>
                 <li>
-                <p>указывает точное игровое время, где вы допустили промах</p>
+                  <strong className="blockName">Показывает</strong>
+                <p>Показывает конкретные <strong>эпизоды</strong> матча, где <strong>ошибка</strong> стоила драки или преимущества. 
+                  Так ты видишь, <strong>что именно</strong> пошло не так и как этого <strong>избежать</strong>.</p>
                 </li>
                 <li>
-                <p>предлагает конкретные советы по билду, скиллам и действиям</p>
+                  <strong className="blockName">Предлагает</strong>
+                <p>Предлагает <strong>чёткие рекомендации</strong> по предметам, прокачке и игровым решениям. 
+                  Их <strong>легко применить</strong> в следующей игре без лишних догадок.</p>
                 </li>
                 <li>
-                <p>рекомендует обучающие видео и ресурсы по вашим слабым сторонам</p>
+                  <strong className="blockName">Подсказывает</strong>
+                <p>Подсказывает <strong>направления для развития</strong> и выделяет самое важное. 
+                  Это позволяет сосредоточиться на <strong>главном</strong> и <strong>быстрее улучшать игру</strong>.</p>
                 </li>
              </ul>
                 <p>Сервис работает на базе искусственного интеллекта и настоящих игровых данных — без гаданий и шаблонов.

@@ -1,0 +1,107 @@
+.WhatisCritiqo {
+  width: 800px;
+  height: 720px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #121212, #1E1E1E);
+  color: #F1F1F1;
+  box-shadow: 0px 0px 20px rgba(0, 255, 148, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.WhatisCritiqo::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0,255,148,0.15), transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.WhatisCritiqo h1 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 30px;
+  color: #00FF94;
+  text-shadow: 0 0 8px rgba(0, 255, 148, 0.6);
+  position: relative;
+  z-index: 2;
+}
+
+.WhatisCritiqo > p {
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #B0BEC5;
+  margin-bottom: 40px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.WhatisCritiqo ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  padding: 0;
+  margin: 0 auto 30px auto;
+  list-style: none;
+  position: relative;
+  z-index: 2;
+}
+
+.WhatisCritiqo ul li {
+  background: #1E1E1E;
+  border: 1px solid rgba(0, 191, 255, 0.2);
+  border-radius: 14px;
+  padding: 22px 18px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+  box-shadow: 0px 0px 10px rgba(0, 191, 255, 0.1);
+  position: relative;
+}
+
+
+.WhatisCritiqo ul li:hover {
+  transform: translateY(-6px);
+  border-color: #00BFFF;
+  box-shadow: 0px 0px 18px rgba(0, 191, 255, 0.5);
+  background: linear-gradient(145deg, #1E1E1E, #222);
+}
+
+.blockName {
+  font-size: 18px;
+  font-weight: 700;
+  color: #00BFFF;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.WhatisCritiqo ul li p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.WhatisCritiqo > div > p:last-child {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+  color: #B0BEC5;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+}

@@ -6,17 +6,28 @@
   margin-bottom: 20px;
   margin-left: 60px;
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.advantages > div:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 255, 148, 0.25);
 }
 
 .advantagesblock {
-    color: #F1F1F1;
-    width: 900px;
-    margin: 200px auto 0 auto;
-    padding: 40px;
+  color: #F1F1F1;
+  width: 900px;
+  margin: 200px auto 0 auto;
+  padding: 40px;
+  background: #121212;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(0, 255, 148, 0.1);
 }
 
 .advantagesblock h1 {
-    margin-left: 60px;
+  margin-left: 60px;
+  color: #00FF94;
+  text-shadow: 0 0 10px rgba(0, 255, 148, 0.4);
 }
 
 .advantages img {
@@ -24,6 +35,12 @@
   height: 40px;
   margin-right: 60px;
   filter: brightness(0) invert(1);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.advantages img:hover {
+  transform: scale(1.1);
+  filter: brightness(0) invert(0.6) sepia(1) saturate(5) hue-rotate(150deg);
 }
 
 .textBlock {
@@ -37,6 +54,8 @@
   margin: 10px 0 0 0;
   font-weight: bold;
   font-size: 18px;
+  color: #00BFFF;
+  text-shadow: 0 0 5px rgba(0, 255, 148, 0.3);
 }
 
 .textBlock .description {
@@ -49,10 +68,28 @@
   color: #F1F1F1;
   line-height: 1.8;
   width: 600px;
+  margin-left: 8px;
+  background: rgba(0, 191, 255, 0.05);
+  padding: 6px 10px;
+  border-radius: 8px;
 }
 
 .textBlock:hover .description {
   max-height: 200px;
   opacity: 1;
-  margin-top: 4px;
+  margin-top: 6px;
+}
+
+
+@media (max-width: 1024px) {
+  .advantagesblock {
+    width: 95%;
+    padding: 20px;
+  }
+  .textBlock .description {
+    width: 100%;
+  }
+  .advantages img {
+    margin-right: 30px;
+  }
 }

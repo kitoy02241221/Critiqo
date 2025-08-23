@@ -114,8 +114,8 @@ function MyProfile() {
       )}
 
       {userAuth && savedName && !isEditing && (
-        <div>
-          <button onClick={startEditing} className="editName">Редактировать</button>
+        <div className="editName">
+          <button onClick={startEditing} >Редактировать</button>
         </div>
       )}
 

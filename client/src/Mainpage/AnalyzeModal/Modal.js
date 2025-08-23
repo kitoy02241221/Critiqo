@@ -121,7 +121,7 @@ function handleSubmit(event) {
         <textarea
           ref={refArea2}
           onInput={() => autoResize(refArea2)}
-          placeholder='Например: Не мог найти фарм, не получалось убить'
+          placeholder='Например: Не мог найти фарм'
           onChange={(e) => setProblem(e.target.value)}
           rows={1}
         />

@@ -7,7 +7,6 @@
 🟥 Ошибка/предупрежд.	Ярко-красный/оранжевый	                     #FF4C4C
 🟨 Уведомления	Янтарный для всплывающих подсказок	               #FFC107 */
 
-
 body {
   background-color: #121212;
   padding-top: 70px;
@@ -31,48 +30,6 @@ button:hover {
   background-color: #5bd6ff;
 }
 
-
-.WhatisCritiqo {
-  letter-spacing: 4px;
-  margin-top: 80px;
-  padding: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  color: #F1F1F1;
-  width: 800px;
-  height: 660px;
-  word-break: normal;
-  border-radius: 10px;
-}
-
-.WhatisCritiqo h1 {
-  margin-left: 10px;
-}
-
-.WhatisCritiqo p {
-  margin-left: 12px;
-  line-height: 30px;
-  letter-spacing: 2px;
-}
-
-.WhatisCritiqo ul li {
-  margin-left: -12px;
-}
-
-.aplicationCard {
-  margin-top: 30px;
-  margin-left: 40px;
-}
-
-.aplicationCard h3 {
-  margin: 0px;
-}
-
-.postResult {
-  position: relative;
-  top: -8px;
-}
-
 .resultInput {
   width: 600px;
   margin-top: 8px;
@@ -82,83 +39,6 @@ button:hover {
   border: none;
   border-radius: 10px;
   padding-left: 6px;
-}
-
-.tasks h3 {
-  margin-top: 10px;
-}
-
-.tasks {
-  background-color: #292929;
-  width: 900px;
-  height: 430px;
-  border-radius: 6px;
-  padding-top: 1px;
-  margin-left: 300px;
-  margin-top: -198px;
-
-  overflow: scroll;
-  overflow-x: hidden;
-  -ms-overflow-style: none;
-}
-.tasks::-webkit-scrollbar {
-    width: 6px;
-}
-
-.tasks::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.3);
-  border-radius: 3px;
-}
-
-.updateBlock {
-  margin-left: 40px;
-}
-
-.updateBlock {
-  margin-left: 300px;
-}
-
-.updateBlock::after {
-  position: absolute;
-  display: block;
-  left: 290px;
-  content: "";
-  width: 1px;
-  height: 410px;
-  background-color: rgb(179, 179, 179);
-  margin-top: 10px;
-}
-
-.updateBlock::before {
-  position: absolute;
-  display: block;
-  left: 290px;
-  top: 92.5px;
-  content: "";
-  width: 1px;
-  height: 80px;
-  background-color: rgb(179, 179, 179);
-  margin-top: 10px;
-}
-
-.adminStatistics {
-  margin-left: 40px;
-}
-
-.matchButton button {
-  width: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-
-}
-
-.matchButton {
-  max-width: 200px;
-  position: relative;
-  margin-top: -95px;
-  margin-left: 620px;
 }
 
 .banner h1 {

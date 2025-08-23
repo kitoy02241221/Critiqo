@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../createSupabase/supabase';
 import TakeMatchModal from '../AdminPage/DataMatchModal';
+import './AdminPage.css'
 
 function AdminPanel() {
   const [update, setUpdate] = useState(false);
