@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Critiqo/static/css/main.5a09b5b5.css",
-    "main.js": "/Critiqo/static/js/main.522a682b.js",
+    "main.css": "/Critiqo/static/css/main.ff44d8b4.css",
+    "main.js": "/Critiqo/static/js/main.6b6f9ff5.js",
     "index.html": "/Critiqo/index.html",
-    "main.5a09b5b5.css.map": "/Critiqo/static/css/main.5a09b5b5.css.map",
-    "main.522a682b.js.map": "/Critiqo/static/js/main.522a682b.js.map"
+    "main.ff44d8b4.css.map": "/Critiqo/static/css/main.ff44d8b4.css.map",
+    "main.6b6f9ff5.js.map": "/Critiqo/static/js/main.6b6f9ff5.js.map"
   },
   "entrypoints": [
-    "static/css/main.5a09b5b5.css",
-    "static/js/main.522a682b.js"
+    "static/css/main.ff44d8b4.css",
+    "static/js/main.6b6f9ff5.js"
   ]
 }
