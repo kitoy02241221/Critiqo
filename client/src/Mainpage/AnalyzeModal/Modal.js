@@ -12,7 +12,7 @@ function Modal() {
 
 const onAddTask = async (task) => {
   try {
-    // Получаем authUid из сессии
+
     const res = await fetch('http://localhost:5000/take-session-auth_id', { credentials: 'include' });
     if (!res.ok) throw new Error("Не удалось получить сессию");
 
@@ -20,8 +20,6 @@ const onAddTask = async (task) => {
     const authUid = data.authUid;
 
     const newTask = { ...task, user_auth_uid: authUid };
-
-    // Проверяем, есть ли уже заявка на этот матч
     const { data: existingMatches, error: checkError } = await supabase
       .from('AnalyzeAplication')
       .select('match')
@@ -34,14 +32,14 @@ const onAddTask = async (task) => {
       return;
     }
 
-    // Добавляем новую задачу
+
     const { error: insertError } = await supabase
       .from('AnalyzeAplication')
       .insert([newTask]);
 
     if (insertError) throw insertError;
 
-    // Вызываем бэкенд, чтобы увеличить numAplication
+
     const incrementRes = await fetch('http://localhost:5000/increment-num-application', {
       method: 'POST',
       credentials: 'include'

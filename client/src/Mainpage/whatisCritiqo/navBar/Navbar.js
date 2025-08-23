@@ -33,12 +33,12 @@ function Navbar({ refs }) {
     window.location.href = 'http://localhost:5000/logout';
   };
 
-  // универсальная функция скролла с учётом высоты navbar
+
   const scrollWithOffset = (ref) => {
     if (ref.current && navbarRef.current) {
       const navbarHeight = navbarRef.current.offsetHeight;
       const elementPosition = ref.current.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - navbarHeight - 20; // 20px зазор
+      const offsetPosition = elementPosition - navbarHeight - 160; // 20px зазор
 
       window.scrollTo({
         top: offsetPosition,

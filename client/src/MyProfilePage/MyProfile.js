@@ -18,7 +18,6 @@ function MyProfile() {
 
     async function fetchData() {
       try {
-        // Получаем authUid из сессии
         const res = await fetch('http://localhost:5000/take-session-auth_id', { credentials: 'include' });
         if (!res.ok) throw new Error('Сессия не установлена');
         const authdata = await res.json();
@@ -26,18 +25,15 @@ function MyProfile() {
         const authUid = authdata.authUid;
         if (isMounted) setSessionid(authUid);
 
-        // Проверка авторизации
         const authRes = await fetch('http://localhost:5000/check-auth', { credentials: 'include' });
         if (!authRes.ok) throw new Error('Ошибка при проверке авторизации');
         if (isMounted) setUserAuth(true);
 
-        // Получение имени пользователя
         const nameRes = await fetch('http://localhost:5000/take-name', { credentials: 'include' });
         if (!nameRes.ok) throw new Error('Ошибка при получении имени');
         const nameData = await nameRes.json();
         if (isMounted && nameData.name) setSavedName(nameData.name);
 
-        // Получение данных пользователя из Supabase
         const { data: userData, error: userError } = await supabase
           .from('Users')
           .select('numAplication, created_at')
@@ -47,24 +43,16 @@ function MyProfile() {
         if (userError) throw userError;
 
         if (isMounted) {
-          // Количество заказанных разборов
+
           setTestsOrder(userData.numAplication ?? 0);
 
-          // Дни с регистрации
           const createdDate = new Date(userData.created_at);
           const now = new Date();
           const diffDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
           setDaysSinceRegistration(diffDays);
 
 
-          // const {lastlogin} = await supabase
-          // .from('Users')
-          // .select('last_login')
-          // .eq('auth_uid', authUid)
 
-          // const lastLoginData = await lastlogin.json
-
-          
         }
 
       } catch (err) {
