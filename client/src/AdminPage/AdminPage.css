@@ -89,6 +89,8 @@
 
 .resultInput {
     width: 100%;
+    min-height: 60px;       /* стартовая высота */
+    max-height: 800px;      /* ограничение */
     padding: 10px;
     margin: 6px 0;
     border-radius: 10px;
@@ -96,6 +98,9 @@
     background-color: #1E1E1E;
     color: #F1F1F1;
     font-size: 1rem;
+    line-height: 1.4;
+    resize: vertical;       /* можно менять высоту вручную */
+    overflow-y: auto;       /* скролл появится только если текст превысил 800px */
     transition: all 0.25s ease;
 }
 

@@ -1,5 +1,6 @@
-.advantages > div {
+.advantageItem {
   display: flex;
+  flex-direction: column; /* теперь иконка сверху, текст снизу */
   align-items: flex-start;
   gap: 12px;
   margin-top: 40px;
@@ -9,14 +10,26 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.advantages > div:hover {
+.advantageItem:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 255, 148, 0.25);
 }
 
+/* иконка + текст реагируют как единое целое */
+.advantageItem:hover img {
+  transform: scale(1.1);
+  filter: brightness(0) invert(0.6) sepia(1) saturate(5) hue-rotate(150deg);
+}
+
+.advantageItem:hover .description {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 6px;
+}
+
 .advantagesblock {
   color: #F1F1F1;
-  width: 900px;
+  width: 800px;
   margin: 200px auto 0 auto;
   padding: 40px;
   background: #121212;
@@ -31,16 +44,12 @@
 }
 
 .advantages img {
+  position: absolute;
   width: 40px;
   height: 40px;
-  margin-right: 60px;
+  margin-bottom: 12px;
   filter: brightness(0) invert(1);
   transition: filter 0.3s ease, transform 0.3s ease;
-}
-
-.advantages img:hover {
-  transform: scale(1.1);
-  filter: brightness(0) invert(0.6) sepia(1) saturate(5) hue-rotate(150deg);
 }
 
 .textBlock {
@@ -50,6 +59,7 @@
 }
 
 .textBlock p {
+  padding-left: 80px;
   letter-spacing: 1px;
   margin: 10px 0 0 0;
   font-weight: bold;
@@ -68,7 +78,7 @@
   color: #F1F1F1;
   line-height: 1.8;
   width: 600px;
-  margin-left: 8px;
+  margin-left: 70px;
   background: rgba(0, 191, 255, 0.05);
   padding: 6px 10px;
   border-radius: 8px;
@@ -80,7 +90,6 @@
   margin-top: 6px;
 }
 
-
 @media (max-width: 1024px) {
   .advantagesblock {
     width: 95%;
@@ -88,8 +97,5 @@
   }
   .textBlock .description {
     width: 100%;
-  }
-  .advantages img {
-    margin-right: 30px;
   }
 }

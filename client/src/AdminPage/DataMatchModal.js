@@ -8,18 +8,24 @@ function TakeMatchModal({ matchData, isOpenModal, setIsOpenModal }) {
   if (!matchData) return null;
 
   const downloadJSON = () => {
-    const dataStr = JSON.stringify(matchData, null, 2);
-    const blob = new Blob([dataStr], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
+  if (!matchData) return;
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `match_${matchData?.local?.match || "data"}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
+  const dataStr = JSON.stringify(matchData, null, 2);
+  const blob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+
+  // Файл берём по match_id или local.match
+  const matchId = matchData.local?.match || matchData.match_id || "data";
+  link.download = `match_${matchId}.json`;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
 
   return (
     <>

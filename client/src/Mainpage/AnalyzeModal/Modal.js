@@ -84,7 +84,7 @@ function handleSubmit(event) {
     <div className='modalAnalyze'>
     <h1>Заказать анализ</h1>
       <div className='infoTakeAnalyze'>
-  <h2>Закажите анализ прямо сейчас!</h2>
+  <h2>Закажи анализ прямо сейчас!</h2>
   <p>
     Заказать анализ можно в несколько кликов:
     <li>Введи <b>ID матча</b>, анализ которого хочешь получить</li>

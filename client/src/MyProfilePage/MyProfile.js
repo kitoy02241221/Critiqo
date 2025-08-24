@@ -1,6 +1,6 @@
 import "./MyProfile.css"
 import AnalyzeResult from "./AnalyzeResult/AnalyzeResult";
-import { Link } from "react-router-dom"
+import { data, Link } from "react-router-dom"
 import { useEffect, useState } from "react" 
 import { supabase } from '../createSupabase/supabase';
 
@@ -12,9 +12,13 @@ function MyProfile() {
   const [isEditing, setIsEditing] = useState(false)
   const [testsOrdered, setTestsOrder] = useState(0)
   const [daysSinceRegistration, setDaysSinceRegistration] = useState(0)
+  const [activityLevel, setActivityLevel] = useState('')
+  const [loading, setLoading] = useState(Boolean)
+  const [siteRank, setSiteRank] = useState('')
 
   useEffect(() => {
     let isMounted = true;
+    setLoading(true)
 
     async function fetchData() {
       try {
@@ -50,10 +54,42 @@ function MyProfile() {
           const now = new Date();
           const diffDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
           setDaysSinceRegistration(diffDays);
+        }
 
 
+        async function activityLevel() {
+          const {data, error} = await supabase
+          .from('Users')
+          .select('numAplication')
+          .eq('auth_uid', authdata.authUid)
+          .single()
+
+
+          if (error) {
+            console.error('Ошибка при получении количества заказанных анализов: ' + error.message);
+          } else if (data.numAplication < 1) {
+            setActivityLevel('Неактивный');
+            setSiteRank('Курьер')
+          } else if (data.numAplication >= 1 && data.numAplication <= 3) {
+            setActivityLevel('Иногда заходит');
+            setSiteRank('Сапорт')
+          } else if (data.numAplication >= 4 && data.numAplication <= 8) {
+            setActivityLevel('Постоянный пользователь');
+            setSiteRank('Керри')
+          } else if (data.numAplication >= 9 && data.numAplication <= 14) {
+            setActivityLevel('Продвинутый');
+            setSiteRank('Иммортал')
+          } else if (data.numAplication >= 15 && data.numAplication <= 19) {
+            setActivityLevel('Суперактивный');
+            setSiteRank('Герой патча')
+          } else if (data.numAplication >= 20) {
+            setActivityLevel('Хардкорный');
+            setSiteRank('Легенда')
+          }
 
         }
+
+        activityLevel()
 
       } catch (err) {
         console.error(err.message);
@@ -61,6 +97,7 @@ function MyProfile() {
     }
 
     fetchData();
+    setLoading(false)
     return () => { isMounted = false; }
   }, [])
 
@@ -121,7 +158,10 @@ function MyProfile() {
 
       {savedName && !isEditing && <h2 className="userName">{savedName}</h2>}
 
-      <div className="statisticsBlock">
+      {loading ? (
+        <h1>Загрузка...</h1>
+      ) : (
+        <div className="statisticsBlock">
         <div className="statistics">
           <p>Ты с нами уже</p>
           <strong>{daysSinceRegistration} Дней!</strong>
@@ -132,18 +172,19 @@ function MyProfile() {
         </div>
         <div className="statistics">
           <p>Уровень активности</p>
-          <strong>Слабый</strong>
+          <strong>{activityLevel}</strong>
         </div>
         <div className="statistics">
-          <p>Статус подписки</p>
-          <strong>Активно</strong>
+          <p>Ранг на сайте</p>
+          <strong>{siteRank}</strong>
         </div>
       </div>
-
+      )}
+      
       <AnalyzeResult/>
 
       <div className="profileButton">
-        <button>Оформить подписку</button>
+        <Link to={"/"}><button>Заказать разбор</button></Link>
         <Link to={"/"}><button>На главную</button></Link>
       </div>
     </div>

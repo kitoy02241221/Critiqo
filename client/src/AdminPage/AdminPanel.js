@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../createSupabase/supabase';
 import TakeMatchModal from '../AdminPage/DataMatchModal';
-import './AdminPage.css'
+import './AdminPage.css';
 
 function AdminPanel() {
   const [update, setUpdate] = useState(false);
@@ -9,10 +9,10 @@ function AdminPanel() {
   const [tasks, setTasks] = useState([]);
   const [count, setCount] = useState(0);
   const [compliteAp, setCompliteAp] = useState(0);
-  const [matchData, setMatchData] = useState('')
-  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [matchData, setMatchData] = useState('');
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
-  // Хранение значений инпутов для каждой заявки
+  // Инпуты для каждой заявки
   const [inputValues, setInputValues] = useState({});
 
   useEffect(() => {
@@ -70,103 +70,100 @@ function AdminPanel() {
   }, [update]);
 
   // Отправка анализа
-  async function resultAnalyze(match, taskInputs) {
-    setLoading(true);
+ async function resultAnalyze(match, taskInputs) {
+  setLoading(true);
 
-    if (!taskInputs.result.trim() || !taskInputs.advice.trim() || !taskInputs.grade.trim()) {
-      alert('Пожалуйста, заполните все поля!');
-      setLoading(false);
-      return;
-    }
-
-    const { data: userData, error: fetchError } = await supabase
-      .from('AnalyzeAplication')
-      .select('user_auth_uid')
-      .eq('match', match)
-      .single();
-
-    if (fetchError) {
-      console.error('Ошибка при получении user_auth_uid:', fetchError.message);
-      setLoading(false);
-      return;
-    }
-
-    const { error } = await supabase
-      .from('ResultAnalyze')
-      .insert([
-        {
-          result: taskInputs.result,
-          grade: taskInputs.grade,
-          advice: taskInputs.advice,
-          match_id: match,
-          user_auth_uid: userData.user_auth_uid
-        },
-      ]);
-
-    if (error) {
-      console.error('❌ Ошибка при добавлении:', error);
-      alert('Ошибка:' + error.message);
-      setLoading(false);
-      return;
-    }
-
-    // Удаляем заявку после анализа
-    const { error: deleteError } = await supabase
-      .from('AnalyzeAplication')
-      .delete()
-      .eq('match', match);
-
-    if (deleteError) {
-      console.error('❌ Ошибка при удалении заявки:', deleteError);
-      alert('Ошибка:' + deleteError.message);
-    } else {
-      alert('✅ Заявка удалена!');
-      setUpdate(prev => !prev);
-    }
-
-    //счётчик выполненных анализов
-    try {
-      const res = await fetch('http://localhost:5000/increment-application', {
-        method: 'POST',
-        credentials: 'include',
-      });
-
-      if (!res.ok) throw new Error('Ошибка на сервере');
-
-      const data = await res.json();
-      console.log('Новое значение complite_aplication:', data.newValue);
-    } catch (err) {
-      console.error('Не удалось обновить complite_aplication:', err);
-    }
-
+  // Проверка на пустые поля
+  if (!taskInputs.result.trim() || !taskInputs.advice.trim() || !taskInputs.grade.trim()) {
+    alert('Пожалуйста, заполните все поля!');
     setLoading(false);
-  }
-
-  const getDataMatch = async (matchId) => {
-  if (!matchId) {
-    console.error('Не указан ID матча');
     return;
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/match/${matchId}/opendota`, {
-      credentials: 'include'
+    // 1. Берём текущего пользователя из backend-сессии (Steam)
+    const resUser = await fetch("http://localhost:5000/get-user", {
+      credentials: "include"
     });
+    const dataUser = await resUser.json();
 
-    if (!res.ok) {
-      throw new Error(`Ошибка запроса: ${res.status} ${res.statusText}`);
+    if (!resUser.ok || !dataUser.user_auth_uid) {
+      console.error("Ошибка при получении пользователя:", dataUser);
+      alert("Не удалось определить пользователя");
+      setLoading(false);
+      return;
     }
 
-    const data = await res.json();
-    console.log(`Данные матча ${matchId} получены:`, data);
+    const uid = dataUser.user_auth_uid;
 
-    setMatchData(data);
-    setIsOpenModal(true);
+    // 2. Сохраняем анализ в Supabase
+    const { error } = await supabase
+      .from("ResultAnalyze")
+      .insert([{
+        result: taskInputs.result,
+        grade: taskInputs.grade,
+        advice: taskInputs.advice,
+        match_id: match,
+        user_auth_uid: uid
+      }]);
+
+    if (error) {
+      console.error("❌ Ошибка при добавлении:", error);
+      alert("Ошибка: " + error.message);
+      setLoading(false);
+      return;
+    }
+
+    // 3. Удаляем заявку после анализа
+    const { error: deleteError } = await supabase
+      .from("AnalyzeAplication")
+      .delete()
+      .eq("match", match);
+
+    if (deleteError) {
+      console.error("❌ Ошибка при удалении заявки:", deleteError);
+      alert("Ошибка: " + deleteError.message);
+    } else {
+      alert("✅ Заявка успешно обработана!");
+      setUpdate(prev => !prev);
+    }
+
+    // 4. Увеличиваем счётчик выполненных анализов
+    try {
+      const res = await fetch("http://localhost:5000/increment-application", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("Ошибка на сервере при обновлении счётчика");
+
+      const data = await res.json();
+      console.log("Новое значение complite_aplication:", data.newValue);
+    } catch (err) {
+      console.error("Не удалось обновить complite_aplication:", err);
+    }
 
   } catch (err) {
-    console.error('Ошибка при получении данных матча:', err.message);
+    console.error("Ошибка в resultAnalyze:", err);
+    alert("Что-то пошло не так: " + err.message);
+  } finally {
+    setLoading(false);
   }
-};
+}
+
+  const getDataMatch = async (matchId) => {
+    try {
+      const res = await fetch(`http://localhost:5000/match/${matchId}/opendota`);
+      if (!res.ok) throw new Error(`Ошибка запроса: ${res.status} ${res.statusText}`);
+
+      const data = await res.json();
+      console.log('Данные матча:', data);
+      setMatchData(data);
+      setIsOpenModal(true);
+    } catch (err) {
+      console.error('Ошибка при получении данных матча:', err.message);
+    }
+  };
 
   return (
     <div className="profileBlock">
@@ -204,7 +201,7 @@ function AdminPanel() {
                 <h3>Задачи анализа: {task.task}</h3>
                 <h3>Проблемы в матче: {task.problem}</h3>
 
-                <input
+                <textarea
                   type="text"
                   placeholder="Введите результат анализа"
                   className="resultInput"
@@ -215,7 +212,7 @@ function AdminPanel() {
                   }))}
                   required
                 />
-                <input
+                <textarea
                   type="text"
                   placeholder="Советы по игре"
                   className="resultInput"
@@ -226,7 +223,7 @@ function AdminPanel() {
                   }))}
                   required
                 />
-                <input
+                <textarea
                   type="text"
                   placeholder="Оценка матча"
                   className="resultInput"

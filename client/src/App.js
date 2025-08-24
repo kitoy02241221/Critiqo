@@ -36,10 +36,11 @@ function App() {
       {isHomePage && (
         <>
           <div ref={whatisRef}><WhatisCritiqo /></div>
+          <Advantagesblock/>
           <div ref={weAreRef}><WeAreTheFirst /></div>
           <div ref={tryFreeRef}><TryFreeModal /></div>
           <Modal />
-          <Advantagesblock/>
+          
         </>
       )}
 

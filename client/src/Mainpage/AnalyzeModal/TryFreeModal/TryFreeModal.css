@@ -53,6 +53,10 @@
   font-size: 15px;
 }
 
+.tryFreeInfoBlock li {
+  list-style: none;
+}
+
 .tryFreeInfoBlock li::before {
   content: "✦";
   color: #00BFFF;

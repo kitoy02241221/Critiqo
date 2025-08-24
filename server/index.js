@@ -6,6 +6,8 @@ const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
 const fetch = require('node-fetch'); // убедись, что установлен
+const heroes = require('./heroes.json');
+const items = require('./items.json');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -284,74 +286,21 @@ app.get('/complite-aplication', async (req, res) => {
   }
 });
 
+
 app.get('/match/:id/opendota', async (req, res) => {
   const id = Number(req.params.id);
-
   if (!id) {
     return res.status(400).json({ error: 'Не передан match_id или неверный формат' });
   }
 
   try {
-    const { data: localData, error: localError } = await supabase
-      .from('AnalyzeAplication')
-      .select('match')
-      .eq('match', id)
-      .single();
-
-    if (localError && localError.code !== "PGRST116") {
-      console.error("Ошибка Supabase:", localError);
-      return res.status(500).json({ error: localError.message });
-    }
-
     const response = await fetch(`https://api.opendota.com/api/matches/${id}`);
     if (!response.ok) {
       return res.status(500).json({ error: 'Ошибка при запросе к OpenDota' });
     }
 
     const rawData = await response.json();
-
-    // Подготовка детализированных данных
-    const matchData = {
-      local: localData || null,
-      match_id: rawData.match_id,
-      duration: rawData.duration,
-      start_time: rawData.start_time,
-      radiant_win: rawData.radiant_win,
-      radiant_score: rawData.radiant_score,
-      dire_score: rawData.dire_score,
-      players: rawData.players.map(player => ({
-        account_id: player.account_id,
-        player_slot: player.player_slot,
-        hero_id: player.hero_id,
-        is_radiant: player.isRadiant,
-        // KDA и показатели на каждом моменте
-        kills_log: player.kills_log || [],
-        deaths_log: player.deaths_log || [],
-        assists_log: player.assists_log || [],
-        xp_t: player.xp_t || [],           // опыт на протяжении времени
-        gold_t: player.gold_t || [],       // голда на протяжении времени
-        lh_t: player.lh_t || [],           // ластхиты на протяжении времени
-        dn_t: player.dn_t || [],           // денайты на протяжении времени
-        items_log: player.purchase_log?.map(item => ({
-          time: item.time,
-          key: item.key,
-          charges: item.charges
-        })) || [],
-        positions: player.obs_log?.map(o => ({ time: o.time, x: o.x, y: o.y })) || [],   // позиции игрока
-        sen_log: player.sen_log?.map(s => ({ time: s.time, x: s.x, y: s.y })) || [],
-        obs_left_log: player.obs_left_log?.map(o => ({ time: o.time, x: o.x, y: o.y })) || [],
-        sen_left_log: player.sen_left_log?.map(s => ({ time: s.time, x: s.x, y: s.y })) || []
-      })),
-      objectives: rawData.objectives?.map(obj => ({
-        type: obj.type,
-        team: obj.team,
-        time: obj.time,
-        player_slot: obj.player_slot
-      })) || []
-    };
-
-    res.json(matchData);
-
+    res.json(rawData); // 👈 отдаём как есть
   } catch (err) {
     console.error("Серверная ошибка:", err);
     res.status(500).json({ error: "Ошибка сервера" });
@@ -384,6 +333,13 @@ app.put('/update-profile-image', async (req, res) => {
     console.error('Ошибка при обновлении аватарки:', err);
     res.status(500).json({ error: 'Не удалось обновить аватарку' });
   }
+});
+
+app.get("/get-user", (req, res) => {
+  if (!req.session.authUid) {
+    return res.status(401).json({ message: "Не авторизован" });
+  }
+  res.json({ user_auth_uid: req.session.authUid });
 });
 
 app.listen(PORT, () => {

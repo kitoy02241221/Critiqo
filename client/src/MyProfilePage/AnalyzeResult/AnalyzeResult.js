@@ -19,6 +19,7 @@ function AnalyzeResult() {
           .select("match_id")
           .eq("user_auth_uid", authUid)
 
+          console.log("Auth UID:", authUid)
         if (error) throw error
 
         setMatchIds(data.map((item) => item.match_id))
@@ -29,6 +30,12 @@ function AnalyzeResult() {
 
     takeAnalyzeResult()
   }, [])
+
+    const handleOverlayClick = (e) => {
+    if (e.target.classList.contains("modal-overlay")) {
+      setIsOpenModal(false);
+    }
+  };
 
   async function openModal(matchId) {
     setSelectMatch(matchId)
@@ -68,16 +75,31 @@ function AnalyzeResult() {
         
       </ul>
       {isOpenModal && analyzeData && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>Результат анализа матча №{selectMatch}</h3>
-            <p><b>Оценка:</b> {analyzeData.grade}</p>
-            <p><b>Советы:</b> {analyzeData.advice}</p>
-            <p><b>Результат:</b> {analyzeData.result}</p>
-            <button onClick={closeModal}>Закрыть</button>
-          </div>
+  <div className="modal-overlay" onClick={handleOverlayClick}>
+    <div className="modal">
+      <h3 className="modal-title">Результат анализа матча №{selectMatch}</h3>
+      
+      <div className="analysis-card">
+        <div className="analysis-section">
+          <h4>📊 Результат</h4>
+          <p>{analyzeData.result}</p>
         </div>
-      )}
+
+        <div className="analysis-section">
+          <h4>💡 Советы</h4>
+          <p>{analyzeData.advice}</p>
+        </div>
+
+        <div className="analysis-section grade">
+          <h4>⭐ Оценка</h4>
+          <p>{analyzeData.grade}</p>
+        </div>
+      </div>
+
+      <button className="close-btn" onClick={closeModal}>Закрыть</button>
+    </div>
+  </div>
+)}
     </div>
   )
 }
