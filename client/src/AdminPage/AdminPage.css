@@ -3,6 +3,7 @@
     margin: 40px auto;
     width: 1200px;
     min-height: 800px;
+    max-height: 1200px;
     background-color: #1E1E1E; /* графит */
     border-radius: 16px;
     padding: 30px 40px;
@@ -63,6 +64,9 @@
 }
 
 .tasks {
+    border-radius: 20px;
+    max-height: 600px;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -89,8 +93,8 @@
 
 .resultInput {
     width: 100%;
-    min-height: 60px;       /* стартовая высота */
-    max-height: 800px;      /* ограничение */
+    min-height: 60px;
+    max-height: 800px;
     padding: 10px;
     margin: 6px 0;
     border-radius: 10px;
@@ -99,8 +103,8 @@
     color: #F1F1F1;
     font-size: 1rem;
     line-height: 1.4;
-    resize: vertical;       /* можно менять высоту вручную */
-    overflow-y: auto;       /* скролл появится только если текст превысил 800px */
+    resize: vertical;
+    overflow-y: auto;
     transition: all 0.25s ease;
 }
 
@@ -139,7 +143,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(18, 18, 18, 0.85); /* тёмный фон с прозрачностью */
+    background: rgba(18, 18, 18, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
