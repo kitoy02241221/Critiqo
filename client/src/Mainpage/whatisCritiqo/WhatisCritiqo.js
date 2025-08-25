@@ -1,4 +1,3 @@
-import WeAreTheFirst from "../weAreTheFirstBlock/WeAreTheFirst"
 import './whatisCritiqo.css'
 
 function WhatisCritiqo() {

@@ -1,13 +1,11 @@
-require('dotenv').config({ path: __dirname + '/.env' });
+// require('dotenv').config({ path: __dirname + '/.env' });
 const express = require('express');
 const session = require('express-session');
 const openid = require('openid');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
-const fetch = require('node-fetch'); // убедись, что установлен
-const heroes = require('./heroes.json');
-const items = require('./items.json');
+const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +20,7 @@ app.use(cors({
   origin: "http://localhost:3000", // можно заменить на продакшн URL
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use(session({

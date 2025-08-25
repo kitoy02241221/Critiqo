@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function TakeMatchModal({ matchData, isOpenModal, setIsOpenModal }) {
   function closeModal() {
     setIsOpenModal(false);

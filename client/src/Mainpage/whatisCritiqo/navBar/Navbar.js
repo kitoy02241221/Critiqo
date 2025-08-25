@@ -5,11 +5,9 @@ import './Navbar.css';
 function Navbar({ refs }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [displayName, setDisplayName] = useState("");
 
   const navbarRef = useRef(null);
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     fetch('http://localhost:5000/me', {
@@ -20,7 +18,6 @@ function Navbar({ refs }) {
         if (data.isLoggedIn) {
           setIsLoggedIn(true);
           setIsAdmin(data.isAdmin);
-          setDisplayName(data.displayName);
         }
       });
   }, []);

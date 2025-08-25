@@ -1,8 +1,8 @@
-import { useState } from "react";
+// import { useState } from "react";
 import './TryFreeModal.css'
 
 function TryFreeModal() {
-    const[freematchid, setFreeMatchId] = useState(0)
+    // const[freematchid, setFreeMatchId] = useState(0)
     
     return(
         <div className="tryFreeModal">
@@ -27,7 +27,7 @@ function TryFreeModal() {
                     <input
                     type='number'
                     placeholder="Введите id матча"
-                    onChange={(e) => setFreeMatchId(e.target.value)}
+                    // onChange={(e) => setFreeMatchId(e.target.value)}
                     />
 
                     <button>Отправить</button>
