@@ -62,7 +62,7 @@ function Navbar({ refs }) {
         <button onClick={() => scrollWithOffset(refs.tryFreeRef)}>Разбор матчей</button>
 
         <Link to={"/myprofile"}><button>Мой профиль</button></Link>
-        <button>F.A.Q</button>
+        <Link to={"/faq"}><button>F.A.Q</button></Link>
       </div>
 
       <div className="steamAuth">

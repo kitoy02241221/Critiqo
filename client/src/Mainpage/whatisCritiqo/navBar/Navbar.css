@@ -20,14 +20,26 @@
   z-index: 1000;
 }
 
-/* Логотип */
+
 .banner h1 {
   font-size: 2rem;
   font-weight: 800;
-  color: #00FF94; /* ядовито-зеленый акцент */
+  color: #00FF94;
   margin: 0;
   cursor: pointer;
   transition: color 0.3s ease;
+}
+.banner::before {
+  content: "";
+}
+
+.banner:hover::before {
+  content: "✦";
+  position: absolute;
+  color: #00BFFF;
+  top: 23px;
+  left: 13px;
+  font-weight: bold;
 }
 
 .banner h1:hover {

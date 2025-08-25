@@ -8,12 +8,14 @@ import AdminPanel from './AdminPage/AdminPanel';
 import WeAreTheFirst from './Mainpage/weAreTheFirstBlock/WeAreTheFirst';
 import TryFreeModal from './Mainpage/AnalyzeModal/TryFreeModal/TryFreeModal';
 import Advantagesblock from './Mainpage/AdvantagesBlock/AdvantagesBlock';
+import FAQpage from './FAQpage/FAQpage';
 import './Mainpage/App.css';
 
 function App() {
   const location = useLocation();  
   const isProfilePage = location.pathname === "/myprofile";
   const isAdmin = location.pathname === "/adminpanel";
+  const isFAQPage  = location.pathname ==="/faq"
   const isHomePage = location.pathname === "/";
 
 
@@ -31,6 +33,7 @@ function App() {
       <Routes>
         <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/adminpanel" element={<AdminPanel />} />
+        <Route path="/faq" element={<FAQpage />} />
       </Routes>
 
       {isHomePage && (
@@ -44,7 +47,7 @@ function App() {
         </>
       )}
 
-      {!isProfilePage && !isAdmin && !isHomePage && (
+      {!isProfilePage && !isAdmin && !isHomePage && !isFAQPage &&(
         <>
           <Modal />
           <WhatisCritiqo />
