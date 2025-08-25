@@ -18,6 +18,11 @@ const supabase = createClient(
 );
 console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
 
+console.log("ENV CHECK:");
+console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
+console.log("SUPABASE_SERVICE_KEY exists:", !!process.env.SUPABASE_SERVICE_KEY);
+console.log("SESSION_SECRET exists:", !!process.env.SESSION_SECRET);
+
 app.use(cors({
   origin: "http://localhost:3000", // можно заменить на продакшн URL
   credentials: true
