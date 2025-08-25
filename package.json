@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"node server/index.js\" \"npm run client\"",
-    "client": "cd client && npm start",
-    "build": "cd client && npm run build",
-    "server": "cd server && node index.js",
-    "deploy": "cd client && npm run build && gh-pages -d build"
-  },
+  "start": "node server/index.js",
+  "server": "cd server && node index.js",
+  "client": "cd client && npm start",
+  "build": "cd client && npm run build"
+},
   "devDependencies": {
     "concurrently": "^7.6.0",
     "gh-pages": "^6.3.0"

@@ -15,6 +15,7 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 );
+console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
 
 app.use(cors({
   origin: "http://localhost:3000", // можно заменить на продакшн URL
