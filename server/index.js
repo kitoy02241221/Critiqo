@@ -16,12 +16,14 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 );
-console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
+
 
 console.log("ENV CHECK:");
 console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
 console.log("SUPABASE_SERVICE_KEY exists:", !!process.env.SUPABASE_SERVICE_KEY);
 console.log("SESSION_SECRET exists:", !!process.env.SESSION_SECRET);
+console.log('>>> SUPABASE_URL length:', process.env.SUPABASE_URL?.length);
+console.log('>>> SUPABASE_SERVICE_KEY length:', process.env.SUPABASE_SERVICE_KEY?.length);
 
 app.use(cors({
   origin: "http://localhost:3000", // можно заменить на продакшн URL
