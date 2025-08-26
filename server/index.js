@@ -44,13 +44,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// === Отдача фронтенда ===
-const clientBuildPath = path.join(__dirname, '../client/build');
-app.use(express.static(clientBuildPath));
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(clientBuildPath, 'index.html'));
-});
 
 // === Steam OpenID ===
 const relyingParty = new openid.RelyingParty(
@@ -352,4 +345,11 @@ app.get("/get-user", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`✅ Server running on https://critiqo-backend.up.railway.app/:${PORT}`);
+});
+
+const clientBuildPath = path.join(__dirname, '../client/build');
+app.use(express.static(clientBuildPath));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
 });

@@ -130,7 +130,7 @@ function AdminPanel() {
 
     // 4. Увеличиваем счётчик выполненных анализов
     try {
-      const res = await fetch("http://localhost:5000/increment-application", {
+      const res = await fetch("https://critiqo-backend.up.railway.app/increment-application", {
         method: "POST",
         credentials: "include",
       });
@@ -153,7 +153,7 @@ function AdminPanel() {
 
   const getDataMatch = async (matchId) => {
     try {
-      const res = await fetch(`http://localhost:5000/match/${matchId}/opendota`);
+      const res = await fetch(`https://critiqo-backend.up.railway.app/match/${matchId}/opendota`);
       if (!res.ok) throw new Error(`Ошибка запроса: ${res.status} ${res.statusText}`);
 
       const data = await res.json();
