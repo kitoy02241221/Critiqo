@@ -10,7 +10,7 @@ function Navbar({ refs }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/me', {
+    fetch('https://critiqo-backend.up.railway.app/me', {
       credentials: 'include'
     })
       .then(res => res.json())
@@ -23,11 +23,11 @@ function Navbar({ refs }) {
   }, []);
 
   const handleLogin = () => {
-    window.location.href = 'http://localhost:5000/auth/steam';
+    window.location.href = 'https://critiqo-backend.up.railway.app/auth/steam';
   };
 
   const handleLogout = () => {
-    window.location.href = 'http://localhost:5000/logout';
+    window.location.href = 'https://critiqo-backend.up.railway.app/logout';
   };
 
 
