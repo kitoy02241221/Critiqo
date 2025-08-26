@@ -12,24 +12,22 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const ADMIN_STEAM_ID = "76561199838029880";
 
-const supabase = createClient(  
+const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 );
-
 
 console.log("ENV CHECK:");
 console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
 console.log("SUPABASE_SERVICE_KEY exists:", !!process.env.SUPABASE_SERVICE_KEY);
 console.log("SESSION_SECRET exists:", !!process.env.SESSION_SECRET);
-console.log('>>> SUPABASE_URL length:', process.env.SUPABASE_URL?.length);
-console.log('>>> SUPABASE_SERVICE_KEY length:', process.env.SUPABASE_SERVICE_KEY?.length);
+console.log(">>> SUPABASE_URL length:", process.env.SUPABASE_URL?.length);
+console.log(">>> SUPABASE_SERVICE_KEY length:", process.env.SUPABASE_SERVICE_KEY?.length);
 
 app.use(cors({
   origin: "https://kitoy02241221.github.io",
   credentials: true
 }));
-
 
 app.use(express.json());
 app.use(session({
@@ -43,7 +41,6 @@ app.use((req, res, next) => {
   console.log(`Request: ${req.method} ${req.url} | Session authUid: ${req.session.authUid}`);
   next();
 });
-
 
 // === Steam OpenID ===
 const relyingParty = new openid.RelyingParty(
@@ -287,7 +284,6 @@ app.get('/complite-aplication', async (req, res) => {
   }
 });
 
-
 app.get('/match/:id/opendota', async (req, res) => {
   const id = Number(req.params.id);
   if (!id) {
@@ -301,13 +297,12 @@ app.get('/match/:id/opendota', async (req, res) => {
     }
 
     const rawData = await response.json();
-    res.json(rawData); // 👈 отдаём как есть
+    res.json(rawData);
   } catch (err) {
     console.error("Серверная ошибка:", err);
     res.status(500).json({ error: "Ошибка сервера" });
   }
 });
-
 
 app.put('/update-profile-image', async (req, res) => {
   if (!req.session.authUid) {
@@ -343,13 +338,15 @@ app.get("/get-user", (req, res) => {
   res.json({ user_auth_uid: req.session.authUid });
 });
 
-app.listen(PORT, () => {
-  console.log(`✅ Server running on https://critiqo-backend.up.railway.app/:${PORT}`);
-});
-
+// === React build ===
 const clientBuildPath = path.join(__dirname, '../client/build');
 app.use(express.static(clientBuildPath));
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(clientBuildPath, 'index.html'));
+});
+
+// === Start server ===
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
 });
