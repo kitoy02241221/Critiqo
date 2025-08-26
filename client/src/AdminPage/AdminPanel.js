@@ -49,7 +49,7 @@ function AdminPanel() {
 
     async function getComplite() {
       try {
-        const res = await fetch('http://localhost:5000/complite-aplication', {
+        const res = await fetch('https://critiqo-backend.up.railway.app/complite-aplication', {
           credentials: 'include'
         });
 
@@ -82,7 +82,7 @@ function AdminPanel() {
 
   try {
     // 1. Берём текущего пользователя из backend-сессии (Steam)
-    const resUser = await fetch("http://localhost:5000/get-user", {
+    const resUser = await fetch("https://critiqo-backend.up.railway.app/get-user", {
       credentials: "include"
     });
     const dataUser = await resUser.json();

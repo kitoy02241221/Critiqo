@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const ADMIN_STEAM_ID = "76561199838029880";
 
-const supabase = createClient(
+const supabase = createClient(  
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 );
@@ -26,7 +26,7 @@ console.log('>>> SUPABASE_URL length:', process.env.SUPABASE_URL?.length);
 console.log('>>> SUPABASE_SERVICE_KEY length:', process.env.SUPABASE_SERVICE_KEY?.length);
 
 app.use(cors({
-  origin: "http://localhost:3000", // можно заменить на продакшн URL
+  origin: "https://kitoy02241221.github.io",
   credentials: true
 }));
 
@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
 
 // === Steam OpenID ===
 const relyingParty = new openid.RelyingParty(
-  'http://localhost:5000/auth/steam/return',
+  'https://critiqo-backend.up.railway.app/auth/steam/return',
   null,
   true,
   false,
@@ -75,7 +75,7 @@ app.get('/auth/steam/return', async (req, res) => {
   relyingParty.verifyAssertion(req, async (err, result) => {
     if (err || !result.authenticated) {
       console.error('Ошибка подтверждения Steam:', err);
-      return res.redirect('http://localhost:3000/?error=auth_failed');
+      return res.redirect('https://critiqo-backend.up.railway.app/?error=auth_failed');
     }
 
     const steamId = result.claimedIdentifier.split('/').pop();
@@ -116,13 +116,13 @@ app.get('/auth/steam/return', async (req, res) => {
       req.session.save(err => {
         if (err) {
           console.error("Ошибка сохранения сессии:", err);
-          return res.redirect('http://localhost:3000/?error=session_save_failed');
+          return res.redirect('https://critiqo-backend.up.railway.app/?error=session_save_failed');
         }
-        res.redirect(`http://localhost:3000/?id=${steamId}`);
+        res.redirect(`https://critiqo-backend.up.railway.app/?id=${steamId}`);
       });
     } catch (dbErr) {
       console.error("Ошибка работы с базой:", dbErr);
-      res.redirect('http://localhost:3000/?error=db_error');
+      res.redirect('https://critiqo-backend.up.railway.app/?error=db_error');
     }
   });
 });
@@ -247,7 +247,7 @@ app.get('/me', async (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  req.session.destroy(() => res.redirect("http://localhost:3000"));
+  req.session.destroy(() => res.redirect("https://critiqo-backend.up.railway.app/"));
 });
 
 // Инкремент complite_aplication
@@ -351,5 +351,5 @@ app.get("/get-user", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`✅ Server running on https://critiqo-backend.up.railway.app/:${PORT}`);
 });
