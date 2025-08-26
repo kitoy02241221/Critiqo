@@ -17,7 +17,7 @@ function Advantagesblock() {
                                 что нужно для роста твоего уровня игры.
                             </div>
                         </div>
-                    </div>
+                    </div>   
                 </div>
 
                 <div className="advantageItem">

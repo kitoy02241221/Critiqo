@@ -339,12 +339,12 @@ app.get("/get-user", (req, res) => {
 });
 
 // === React build ===
-const clientBuildPath = path.join(__dirname, '../client/build');
-app.use(express.static(clientBuildPath));
+// const clientBuildPath = path.join(__dirname, '../client/build');
+// app.use(express.static(clientBuildPath));
 
-app.use((req, res) => {
-  res.sendFile(path.join(clientBuildPath, 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(clientBuildPath, 'index.html'));
+// });
 
 // === Start server ===
 app.listen(PORT, () => {
