@@ -1,3 +1,5 @@
+// server.js
+// Если запускаешь локально — раскомментируй .env
 // require('dotenv').config();
 
 const express = require('express');
@@ -6,49 +8,79 @@ const openid = require('openid');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
-const fetch = require('node-fetch');
+const fetch = require('node-fetch'); // В Node 18+ есть глобальный fetch, но оставим для совместимости.
 
 const app = express();
+
+// === Конфиг из ENV ===
 const PORT = process.env.PORT || 5000;
 const ADMIN_STEAM_ID = "76561199838029880";
+const BASE_URL = process.env.BASE_URL || 'https://critiqo-backend.up.railway.app';
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'https://kitoy02241221.github.io';
+
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY || !process.env.SESSION_SECRET) {
+  console.error('❌ Missing required env: SUPABASE_URL / SUPABASE_SERVICE_KEY / SESSION_SECRET');
+  process.exit(1);
+}
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 );
 
+// Railway/прокси: нужно, чтобы secure-cookies работали корректно
+app.set('trust proxy', 1);
+
+// === Логи ENV (без утечек значений) ===
 console.log("ENV CHECK:");
-console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
+console.log("SUPABASE_URL length:", process.env.SUPABASE_URL.length);
 console.log("SUPABASE_SERVICE_KEY exists:", !!process.env.SUPABASE_SERVICE_KEY);
 console.log("SESSION_SECRET exists:", !!process.env.SESSION_SECRET);
-console.log(">>> SUPABASE_URL length:", process.env.SUPABASE_URL?.length);
-console.log(">>> SUPABASE_SERVICE_KEY length:", process.env.SUPABASE_SERVICE_KEY?.length);
+console.log("BASE_URL:", BASE_URL);
+console.log("FRONTEND_ORIGIN:", FRONTEND_ORIGIN);
 
-app.use(cors({
-  origin: "https://kitoy02241221.github.io",
-  credentials: true
-}));
+// === CORS (разрешаем кросс-доменные куки) ===
+const corsOptions = {
+  origin: FRONTEND_ORIGIN,
+  credentials: true,
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
+// Явно отвечаем на preflight
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
+
+// === СЕССИЯ ===
+// Важно: sameSite:'none' + secure:true + trust proxy выше
 app.use(session({
+  name: 'sid', // своё имя куки, чтобы отличать от дефолтного connect.sid
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false, sameSite: 'lax' }
+  cookie: {
+    secure: true,        // требуется HTTPS
+    httpOnly: true,      // кука не доступна JS
+    sameSite: 'none',    // чтобы кука ехала между доменами (github.io → railway.app)
+    // domain: НЕ указываем — пусть будет хост Railway; так надёжнее.
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 7 дней
+  }
 }));
 
+// Простой лог запросов и наличия сессии
 app.use((req, res, next) => {
-  console.log(`Request: ${req.method} ${req.url} | Session authUid: ${req.session.authUid}`);
+  console.log(`Request: ${req.method} ${req.url} | authUid: ${req.session?.authUid || 'none'}`);
   next();
 });
 
 // === Steam OpenID ===
 const relyingParty = new openid.RelyingParty(
-  'https://critiqo-backend.up.railway.app/auth/steam/return',
-  null,
-  true,
-  false,
-  []
+  `${BASE_URL}/auth/steam/return`, // returnUrl
+  null,   // realm (можно null)
+  true,   // stateless
+  false,  // strict mode
+  []      // extensions
 );
 
 app.get('/auth/steam', (req, res) => {
@@ -63,17 +95,23 @@ app.get('/auth/steam', (req, res) => {
 
 app.get('/auth/steam/return', async (req, res) => {
   relyingParty.verifyAssertion(req, async (err, result) => {
-    if (err || !result.authenticated) {
+    if (err || !result?.authenticated) {
       console.error('Ошибка подтверждения Steam:', err);
-      return res.redirect('https://critiqo-backend.up.railway.app/?error=auth_failed');
+      return res.redirect(`${BASE_URL}/?error=auth_failed`);
     }
 
-    const steamId = result.claimedIdentifier.split('/').pop();
+    // Защита от странных ответов
+    const claimed = result.claimedIdentifier || '';
+    const steamId = claimed.split('/').pop();
+    if (!steamId) {
+      console.error('Не удалось извлечь steamId из claimedIdentifier:', claimed);
+      return res.redirect(`${BASE_URL}/?error=invalid_steamid`);
+    }
 
     try {
       const { data: existingUsers, error: fetchError } = await supabase
         .from('Users')
-        .select('*')
+        .select('auth_uid, steam_id')
         .eq('steam_id', steamId)
         .limit(1);
 
@@ -81,18 +119,18 @@ app.get('/auth/steam/return', async (req, res) => {
 
       let authUid;
 
-      if (existingUsers.length > 0) {
+      if (existingUsers && existingUsers.length > 0) {
         authUid = existingUsers[0].auth_uid;
         const { error: updateError } = await supabase
           .from('Users')
-          .update({ last_login: new Date() })
+          .update({ last_login: new Date().toISOString() })
           .eq('auth_uid', authUid);
         if (updateError) throw updateError;
         console.log(`🔄 Пользователь ${steamId} найден, обновлён last_login`);
       } else {
         const { data: newUser, error: insertError } = await supabase
           .from('Users')
-          .insert([{ steam_id: steamId, created_at: new Date(), last_login: new Date() }])
+          .insert([{ steam_id: steamId, created_at: new Date().toISOString(), last_login: new Date().toISOString() }])
           .select()
           .single();
         if (insertError) throw insertError;
@@ -106,13 +144,14 @@ app.get('/auth/steam/return', async (req, res) => {
       req.session.save(err => {
         if (err) {
           console.error("Ошибка сохранения сессии:", err);
-          return res.redirect('https://critiqo-backend.up.railway.app/?error=session_save_failed');
+          return res.redirect(`${BASE_URL}/?error=session_save_failed`);
         }
-        res.redirect(`https://critiqo-backend.up.railway.app/?id=${steamId}`);
+        // Можно редиректить на фронт, если хочешь, но ты используешь корень бэкенда
+        res.redirect(`${BASE_URL}/?id=${steamId}`);
       });
     } catch (dbErr) {
       console.error("Ошибка работы с базой:", dbErr);
-      res.redirect('https://critiqo-backend.up.railway.app/?error=db_error');
+      res.redirect(`${BASE_URL}/?error=db_error`);
     }
   });
 });
@@ -139,7 +178,7 @@ app.get('/take-name', async (req, res) => {
       .single();
     if (error) throw error;
 
-    res.json({ name: data.name || null });
+    res.json({ name: data?.name ?? null });
   } catch (err) {
     console.error('Ошибка при получении имени:', err);
     res.status(500).json({ error: 'Ошибка сервера' });
@@ -149,7 +188,7 @@ app.get('/take-name', async (req, res) => {
 app.put('/update-name', async (req, res) => {
   if (!req.session.authUid) return res.status(401).json({ error: 'Пользователь не авторизован' });
 
-  const { name } = req.body;
+  const { name } = req.body || {};
   if (!name || typeof name !== 'string') return res.status(400).json({ error: 'Неверное имя' });
 
   try {
@@ -180,7 +219,8 @@ app.post('/increment-num-application', async (req, res) => {
       .single();
     if (fetchError) throw fetchError;
 
-    const newValue = (userData.numAplication ?? 0) + 1;
+    const current = userData?.numAplication ?? 0;
+    const newValue = current + 1;
 
     const { error: updateError } = await supabase
       .from('Users')
@@ -206,7 +246,7 @@ app.get('/num-application', async (req, res) => {
       .single();
     if (error) throw error;
 
-    res.json({ numAplication: data.numAplication ?? 0 });
+    res.json({ numAplication: data?.numAplication ?? 0 });
   } catch (err) {
     console.error('Ошибка при получении numAplication:', err);
     res.status(500).json({ error: 'Ошибка сервера' });
@@ -232,12 +272,21 @@ app.get('/me', async (req, res) => {
       lastLogin: user.last_login
     });
   } catch (err) {
+    console.error('Ошибка /me:', err);
     res.json({ isLoggedIn: false });
   }
 });
 
 app.get('/logout', (req, res) => {
-  req.session.destroy(() => res.redirect("https://critiqo-backend.up.railway.app/"));
+  // Чистим сессию + куку с теми же флагами
+  req.session.destroy(() => {
+    res.clearCookie('sid', {
+      secure: true,
+      httpOnly: true,
+      sameSite: 'none'
+    });
+    res.redirect(`${BASE_URL}/`);
+  });
 });
 
 // Инкремент complite_aplication
@@ -252,13 +301,16 @@ app.post('/increment-application', async (req, res) => {
       .single();
     if (fetchError) throw fetchError;
 
+    const current = userData?.complite_aplication ?? 0;
+    const newValue = current + 1;
+
     const { error: updateError } = await supabase
       .from('Users')
-      .update({ complite_aplication: userData.complite_aplication + 1 })
+      .update({ complite_aplication: newValue })
       .eq('auth_uid', req.session.authUid);
     if (updateError) throw updateError;
 
-    res.json({ success: true, newValue: userData.complite_aplication + 1 });
+    res.json({ success: true, newValue });
   } catch (err) {
     console.error('Ошибка при обновлении complite_aplication:', err);
     res.status(500).json({ error: 'Не удалось обновить значение' });
@@ -277,13 +329,14 @@ app.get('/complite-aplication', async (req, res) => {
       .single();
     if (error) throw error;
 
-    res.json({ complite_aplication: data.complite_aplication });
+    res.json({ complite_aplication: data?.complite_aplication ?? 0 });
   } catch (err) {
     console.error('Ошибка:', err);
     res.status(500).json({ error: 'Ошибка сервера' });
   }
 });
 
+// Проксируем OpenDota (простой forward)
 app.get('/match/:id/opendota', async (req, res) => {
   const id = Number(req.params.id);
   if (!id) {
@@ -293,9 +346,8 @@ app.get('/match/:id/opendota', async (req, res) => {
   try {
     const response = await fetch(`https://api.opendota.com/api/matches/${id}`);
     if (!response.ok) {
-      return res.status(500).json({ error: 'Ошибка при запросе к OpenDota' });
+      return res.status(502).json({ error: 'Ошибка при запросе к OpenDota' });
     }
-
     const rawData = await response.json();
     res.json(rawData);
   } catch (err) {
@@ -304,12 +356,13 @@ app.get('/match/:id/opendota', async (req, res) => {
   }
 });
 
+// Обновление аватарки
 app.put('/update-profile-image', async (req, res) => {
   if (!req.session.authUid) {
     return res.status(401).json({ error: 'Пользователь не авторизован' });
   }
 
-  const { imageUrl } = req.body;
+  const { imageUrl } = req.body || {};
   if (!imageUrl || typeof imageUrl !== 'string') {
     return res.status(400).json({ error: 'Неверный URL изображения' });
   }
@@ -338,10 +391,12 @@ app.get("/get-user", (req, res) => {
   res.json({ user_auth_uid: req.session.authUid });
 });
 
-// === React build ===
+// Healthcheck для Railway
+app.get('/healthz', (_req, res) => res.status(200).send('ok'));
+
+// === React build (если когда-то переедешь на один домен) ===
 // const clientBuildPath = path.join(__dirname, '../client/build');
 // app.use(express.static(clientBuildPath));
-
 // app.get('*', (req, res) => {
 //   res.sendFile(path.join(clientBuildPath, 'index.html'));
 // });
