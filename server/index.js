@@ -59,7 +59,7 @@ app.use(session({
 
 app.use(express.json());
 
-// ====== Лог запросов ======
+// ====== Лог запросasdов ======   
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - authUid: ${req.session?.authUid || 'none'}`);
   next();
