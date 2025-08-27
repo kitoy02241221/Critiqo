@@ -1,6 +1,6 @@
 // server.js
 // Если запускаешь локально — раскомментируй .env
-// require('dotenv').config();
+require('dotenv').config();
 
 const express = require('express');
 const session = require('express-session');
