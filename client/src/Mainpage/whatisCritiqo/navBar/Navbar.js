@@ -23,7 +23,7 @@ function Navbar({ refs }) {
   }, []);
 
   const handleLogin = () => {
-    window.location.href = 'https://critiqo-backend.up.railway.app/auth/steam';
+    window.location.href = 'https:localhost5000/auth/steam';
   };
 
   const handleLogout = () => {

@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-  "start": "node server/index.js",
-  "server": "cd server && node index.js",
-  "client": "cd client && npm start",
-  "build": "cd client && npm run build"
-},
+    "start": "node server/index.js",
+    "server": "cd server && node index.js",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build"
+  },
   "devDependencies": {
     "concurrently": "^7.6.0",
     "gh-pages": "^6.3.0"
   },
   "dependencies": {
+    "@dataconnect/generated": "file:dataconnect-generated/js/example-connector",
     "@supabase/supabase-js": "^2.56.0",
     "cheerio": "^1.1.2",
     "cors": "^2.8.5",
@@ -26,6 +27,6 @@
     "xml2js": "^0.6.2"
   },
   "engines": {
-  "node": "20.x"
+    "node": "20.x"
   }
 }
