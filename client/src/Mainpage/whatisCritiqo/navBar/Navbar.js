@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar({ refs }) {
@@ -10,7 +10,7 @@ function Navbar({ refs }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('https://critiqo-backend.up.railway.app/me', {
+    fetch('https://critiqo-1.onrender.com/me', {
       credentials: 'include'
     })
       .then(res => res.json())
@@ -19,17 +19,17 @@ function Navbar({ refs }) {
           setIsLoggedIn(true);
           setIsAdmin(data.isAdmin);
         }
-      });
+      })
+      .catch(err => console.error("Ошибка получения /me:", err));
   }, []);
 
   const handleLogin = () => {
-    window.location.href = 'https:localhost5000/auth/steam';
+    window.location.href = 'https://critiqo-1.onrender.com/auth/steam';
   };
 
   const handleLogout = () => {
-    window.location.href = 'https://critiqo-backend.up.railway.app/logout';
+    window.location.href = 'https://critiqo-1.onrender.com/logout';
   };
-
 
   const scrollWithOffset = (ref) => {
     if (ref.current && navbarRef.current) {
