@@ -1,5 +1,5 @@
-
 // server.js
+// === Зависимости ===
 const express = require('express');
 const session = require('express-session');
 const openid = require('openid');
@@ -8,7 +8,10 @@ const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
 const fetch = require('node-fetch'); // Для Node < 18
 
-const app = express();
+// === Локальная загрузка .env ===
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 // === Конфиг из ENV ===
 const PORT = process.env.PORT || 5000;
@@ -20,53 +23,57 @@ const sessionSecret = process.env.SESSION_SECRET;
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN;
 const BASE_URL = process.env.BASE_URL;
 
-if (!supabaseUrl || !supabaseKey || !sessionSecret) {
-  console.error('❌ Missing required config for supabase or session secret');
+if (!supabaseUrl || !supabaseKey || !sessionSecret || !BASE_URL || !FRONTEND_ORIGIN) {
+  console.error('❌ Missing required config: SUPABASE_URL, SUPABASE_KEY, SESSION_SECRET, BASE_URL, FRONTEND_ORIGIN');
   process.exit(1);
 }
 
+// === Supabase client ===
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Render/прокси: чтобы secure-cookies работали корректно
+// === Express app ===
+const app = express();
+
+// Render/прокси: чтобы secure cookies работали корректно
 app.set('trust proxy', 1);
 
-// === Логи ENV (без утечек значений) ===
-console.log("ENV CHECK:");
-console.log("SUPABASE_URL length:", supabaseUrl.length);
-console.log("SUPABASE_KEY exists:", !!supabaseKey);
-console.log("SESSION_SECRET exists:", !!sessionSecret);
-console.log("BASE_URL:", BASE_URL);
-console.log("FRONTEND_ORIGIN:", FRONTEND_ORIGIN);
+// === Логирование env без утечек секретов ===
+console.log('ENV CHECK:');
+console.log('SUPABASE_URL length:', supabaseUrl.length);
+console.log('SUPABASE_KEY exists:', !!supabaseKey);
+console.log('SESSION_SECRET exists:', !!sessionSecret);
+console.log('BASE_URL:', BASE_URL);
+console.log('FRONTEND_ORIGIN:', FRONTEND_ORIGIN);
 
-// === CORS (разрешаем кросс-доменные куки) ===
-const corsOptions = {
+// === CORS ===
+app.use(cors({
   origin: FRONTEND_ORIGIN,
   credentials: true,
   methods: ['GET','POST','PUT','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-};
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+}));
+app.options('*', cors());
 
+// === JSON парсер ===
 app.use(express.json());
 
-// === СЕССИЯ ===
+// === Сессии ===
 app.use(session({
   name: 'sid',
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production', 
+    secure: process.env.NODE_ENV === 'production', // https только в продакшене
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: 'none', // для кросс-доменных куки
     maxAge: 1000 * 60 * 60 * 24 * 7 // 7 дней
   }
 }));
 
-// Простой лог запросов и наличия сессии
+// === Лог запросов и сессий ===
 app.use((req, res, next) => {
-  console.log(`Request: ${req.method} ${req.url} | authUid: ${req.session?.authUid || 'none'}`);
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} | authUid: ${req.session?.authUid || 'none'}`);
   next();
 });
 
@@ -82,7 +89,7 @@ const relyingParty = new openid.RelyingParty(
 app.get('/auth/steam', (req, res) => {
   relyingParty.authenticate('https://steamcommunity.com/openid', false, (err, authUrl) => {
     if (err || !authUrl) {
-      console.error('Ошибка Steam OpenID:', err);
+      console.error('Steam OpenID error:', err);
       return res.status(500).send('Steam авторизация недоступна.');
     }
     res.redirect(authUrl);
@@ -92,15 +99,14 @@ app.get('/auth/steam', (req, res) => {
 app.get('/auth/steam/return', async (req, res) => {
   relyingParty.verifyAssertion(req, async (err, result) => {
     if (err || !result?.authenticated) {
-      console.error('Ошибка подтверждения Steam:', err);
+      console.error('Steam verification failed:', err);
       return res.redirect(`${BASE_URL}/?error=auth_failed`);
     }
 
     const claimed = result.claimedIdentifier || '';
     const steamId = claimed.split('/').pop();
-
     if (!steamId) {
-      console.error('Не удалось извлечь steamId:', claimed);
+      console.error('Invalid Steam ID:', claimed);
       return res.redirect(`${BASE_URL}/?error=invalid_steamid`);
     }
 
@@ -114,7 +120,7 @@ app.get('/auth/steam/return', async (req, res) => {
       if (fetchError) throw fetchError;
 
       let authUid;
-      if (existingUsers && existingUsers.length > 0) {
+      if (existingUsers?.length > 0) {
         authUid = existingUsers[0].auth_uid;
         await supabase.from('Users')
           .update({ last_login: new Date().toISOString() })
@@ -122,14 +128,9 @@ app.get('/auth/steam/return', async (req, res) => {
       } else {
         const { data: newUser, error: insertError } = await supabase
           .from('Users')
-          .insert([{
-            steam_id: steamId,
-            created_at: new Date().toISOString(),
-            last_login: new Date().toISOString()
-          }])
+          .insert([{ steam_id: steamId, created_at: new Date().toISOString(), last_login: new Date().toISOString() }])
           .select()
           .single();
-
         if (insertError) throw insertError;
         authUid = newUser.auth_uid;
       }
@@ -138,22 +139,21 @@ app.get('/auth/steam/return', async (req, res) => {
       req.session.steamId = steamId;
       req.session.save(err => {
         if (err) {
-          console.error("Ошибка сохранения сессии:", err);
+          console.error('Session save error:', err);
           return res.redirect(`${BASE_URL}/?error=session_save_failed`);
         }
         res.redirect(`${BASE_URL}/?id=${steamId}`);
       });
     } catch (dbErr) {
-      console.error("Ошибка работы с базой:", dbErr);
+      console.error('Database error:', dbErr);
       res.redirect(`${BASE_URL}/?error=db_error`);
     }
   });
 });
 
-// === Авторизация и сессия ===
+// === Auth routes ===
 app.get('/check-auth', (req, res) => {
-  if (!req.session.authUid) return res.status(401).json({ authenticated: false });
-  res.json({ authenticated: true });
+  res.json({ authenticated: !!req.session.authUid });
 });
 
 app.get('/take-session-auth_id', (req, res) => {
@@ -161,25 +161,22 @@ app.get('/take-session-auth_id', (req, res) => {
   res.json({ authUid: req.session.authUid });
 });
 
+// === User profile routes ===
 app.get('/take-name', async (req, res) => {
   if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
   try {
-    const { data, error } = await supabase
-      .from('Users')
-      .select('name')
-      .eq('auth_uid', req.session.authUid)
-      .single();
+    const { data, error } = await supabase.from('Users').select('name').eq('auth_uid', req.session.authUid).single();
     if (error) throw error;
     res.json({ name: data?.name ?? null });
   } catch (err) {
-    console.error('Ошибка при получении имени:', err);
+    console.error('Get name error:', err);
     res.status(500).json({ error: 'Ошибка сервера' });
   }
 });
 
 app.put('/update-name', async (req, res) => {
   if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
-  const { name } = req.body || {};
+  const { name } = req.body;
   if (!name || typeof name !== 'string') return res.status(400).json({ error: 'Неверное имя' });
 
   try {
@@ -192,105 +189,46 @@ app.put('/update-name', async (req, res) => {
     if (error) throw error;
     res.json({ success: true, name: data.name });
   } catch (err) {
-    console.error('Ошибка при обновлении имени:', err);
+    console.error('Update name error:', err);
     res.status(500).json({ error: 'Не удалось обновить имя' });
   }
 });
 
-// === Инкременты и получение данных пользователя ===
-// numAplication
-app.post('/increment-num-application', async (req, res) => {
+// === Increment counters ===
+const incrementField = (field) => async (req, res) => {
   if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
 
   try {
-    const { data: userData } = await supabase
-      .from('Users')
-      .select('numAplication')
-      .eq('auth_uid', req.session.authUid)
-      .single();
-
-    const current = userData?.numAplication ?? 0;
+    const { data: userData } = await supabase.from('Users').select(field).eq('auth_uid', req.session.authUid).single();
+    const current = userData?.[field] ?? 0;
     const newValue = current + 1;
-
-    await supabase
-      .from('Users')
-      .update({ numAplication: newValue })
-      .eq('auth_uid', req.session.authUid);
-
+    await supabase.from('Users').update({ [field]: newValue }).eq('auth_uid', req.session.authUid);
     res.json({ success: true, newValue });
   } catch (err) {
-    console.error('Ошибка при обновлении numAplication:', err);
-    res.status(500).json({ error: 'Не удалось обновить значение' });
+    console.error(`Ошибка при обновлении ${field}:`, err);
+    res.status(500).json({ error: `Не удалось обновить ${field}` });
   }
-});
+};
 
-app.get('/num-application', async (req, res) => {
-  if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
+app.post('/increment-num-application', incrementField('numAplication'));
+app.get('/num-application', incrementField('numAplication'));
 
-  try {
-    const { data } = await supabase
-      .from('Users')
-      .select('numAplication')
-      .eq('auth_uid', req.session.authUid)
-      .single();
-    res.json({ numAplication: data?.numAplication ?? 0 });
-  } catch (err) {
-    console.error('Ошибка при получении numAplication:', err);
-    res.status(500).json({ error: 'Ошибка сервера' });
-  }
-});
+app.post('/increment-application', incrementField('complite_aplication'));
+app.get('/complite-aplication', incrementField('complite_aplication'));
 
-// complite_aplication
-app.post('/increment-application', async (req, res) => {
-  if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
-
-  try {
-    const { data: userData } = await supabase
-      .from('Users')
-      .select('complite_aplication')
-      .eq('auth_uid', req.session.authUid)
-      .single();
-
-    const current = userData?.complite_aplication ?? 0;
-    const newValue = current + 1;
-
-    await supabase
-      .from('Users')
-      .update({ complite_aplication: newValue })
-      .eq('auth_uid', req.session.authUid);
-
-    res.json({ success: true, newValue });
-  } catch (err) {
-    console.error('Ошибка при обновлении complite_aplication:', err);
-    res.status(500).json({ error: 'Не удалось обновить значение' });
-  }
-});
-
-app.get('/complite-aplication', async (req, res) => {
-  if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
-  try {
-    const { data } = await supabase
-      .from('Users')
-      .select('complite_aplication')
-      .eq('auth_uid', req.session.authUid)
-      .single();
-    res.json({ complite_aplication: data?.complite_aplication ?? 0 });
-  } catch (err) {
-    console.error('Ошибка:', err);
-    res.status(500).json({ error: 'Ошибка сервера' });
-  }
-});
-
-// === Инфа о пользователе ===
+// === User info ===
 app.get('/me', async (req, res) => {
   if (!req.session.authUid) return res.json({ isLoggedIn: false });
+
   try {
     const { data: user } = await supabase
       .from('Users')
       .select('auth_uid, steam_id, created_at, last_login')
       .eq('auth_uid', req.session.authUid)
       .single();
+
     if (!user) return res.json({ isLoggedIn: false });
+
     res.json({
       isLoggedIn: true,
       steamId: user.steam_id,
@@ -299,12 +237,12 @@ app.get('/me', async (req, res) => {
       lastLogin: user.last_login
     });
   } catch (err) {
-    console.error('Ошибка /me:', err);
+    console.error('Error /me:', err);
     res.json({ isLoggedIn: false });
   }
 });
 
-// === logout ===
+// === Logout ===
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.clearCookie('sid', { secure: true, httpOnly: true, sameSite: 'none' });
@@ -323,15 +261,15 @@ app.get('/match/:id/opendota', async (req, res) => {
     const rawData = await response.json();
     res.json(rawData);
   } catch (err) {
-    console.error("Ошибка OpenDota:", err);
-    res.status(500).json({ error: "Ошибка сервера" });
+    console.error('OpenDota error:', err);
+    res.status(500).json({ error: 'Ошибка сервера' });
   }
 });
 
 // === Update profile image ===
 app.put('/update-profile-image', async (req, res) => {
   if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
-  const { imageUrl } = req.body || {};
+  const { imageUrl } = req.body;
   if (!imageUrl || typeof imageUrl !== 'string') return res.status(400).json({ error: 'Неверный URL' });
 
   try {
@@ -341,16 +279,17 @@ app.put('/update-profile-image', async (req, res) => {
       .eq('auth_uid', req.session.authUid)
       .select()
       .single();
+
     res.json({ success: true, profile_image: data.profile_image });
   } catch (err) {
-    console.error('Ошибка при обновлении аватарки:', err);
+    console.error('Update profile image error:', err);
     res.status(500).json({ error: 'Не удалось обновить аватарку' });
   }
 });
 
-// === Misc ===
-app.get("/get-user", (req, res) => {
-  if (!req.session.authUid) return res.status(401).json({ message: "Не авторизован" });
+// === Misc routes ===
+app.get('/get-user', (req, res) => {
+  if (!req.session.authUid) return res.status(401).json({ message: 'Не авторизован' });
   res.json({ user_auth_uid: req.session.authUid });
 });
 
@@ -358,5 +297,5 @@ app.get('/healthz', (_req, res) => res.status(200).send('ok'));
 
 // === Start server ===
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});   
+  console.log(`🚀 Server running on port ${PORT}`);
+});
