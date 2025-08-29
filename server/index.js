@@ -111,6 +111,7 @@ app.get('/auth/steam/return', async (req, res) => {
     }
 
     try {
+      // Проверяем пользователя в БД
       const { data: existingUsers, error: fetchError } = await supabase
         .from('Users')
         .select('auth_uid, steam_id')
@@ -121,29 +122,39 @@ app.get('/auth/steam/return', async (req, res) => {
 
       let authUid;
       if (existingUsers?.length > 0) {
+        // Уже существует → обновляем last_login
         authUid = existingUsers[0].auth_uid;
         await supabase.from('Users')
           .update({ last_login: new Date().toISOString() })
           .eq('auth_uid', authUid);
       } else {
+        // Новый пользователь → создаём
         const { data: newUser, error: insertError } = await supabase
           .from('Users')
-          .insert([{ steam_id: steamId, created_at: new Date().toISOString(), last_login: new Date().toISOString() }])
+          .insert([{
+            steam_id: steamId,
+            created_at: new Date().toISOString(),
+            last_login: new Date().toISOString()
+          }])
           .select()
           .single();
         if (insertError) throw insertError;
         authUid = newUser.auth_uid;
       }
 
+      // Сохраняем в сессию
       req.session.authUid = authUid;
       req.session.steamId = steamId;
+
       req.session.save(err => {
         if (err) {
           console.error('Session save error:', err);
           return res.redirect(`${BASE_URL}/?error=session_save_failed`);
         }
-        res.redirect(`${BASE_URL}/?id=${steamId}`);
+        // ✅ Всегда редиректим на главную страницу фронта
+        res.redirect(`${FRONTEND_ORIGIN}`);
       });
+
     } catch (dbErr) {
       console.error('Database error:', dbErr);
       res.redirect(`${BASE_URL}/?error=db_error`);
