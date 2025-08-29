@@ -8,9 +8,10 @@ function Navbar({ refs }) {
 
   const navbarRef = useRef(null);
   const navigate = useNavigate();
+  const API_BASE_URL = "https://critiqo-1.onrender.com";
 
   useEffect(() => {
-    fetch('https://critiqo-1.onrender.com/me', {
+    fetch(`${API_BASE_URL}/me`, {
       credentials: 'include'
     })
       .then(res => res.json())
@@ -24,18 +25,18 @@ function Navbar({ refs }) {
   }, []);
 
   const handleLogin = () => {
-    window.location.href = 'https://critiqo-1.onrender.com/auth/steam';
+    window.location.href = `${API_BASE_URL}/auth/steam`;
   };
 
   const handleLogout = () => {
-    window.location.href = 'https://critiqo-1.onrender.com/logout';
+    window.location.href = `${API_BASE_URL}/logout`;;
   };
 
   const scrollWithOffset = (ref) => {
     if (ref.current && navbarRef.current) {
       const navbarHeight = navbarRef.current.offsetHeight;
       const elementPosition = ref.current.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - navbarHeight - 160; // 20px зазор
+      const offsetPosition = elementPosition - navbarHeight - 160;
 
       window.scrollTo({
         top: offsetPosition,
