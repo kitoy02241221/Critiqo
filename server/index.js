@@ -37,7 +37,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 // === CORS ===
 app.use(cors({
-  origin: FRONTEND_ORIGIN,
+  origin: FRONTEND_ORIGIN, // точный фронт-домен
   credentials: true,
 }));
 
@@ -51,10 +51,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    httpOnly: true,
+    httpOnly: true,           // защита от JS
+    secure: true,             // только HTTPS
+    sameSite: 'none',         // кросс-домен между фронтом и бэком
     maxAge: 1000 * 60 * 60 * 24 * 7, // 7 дней
-    secure: isProd,             // true на проде, false на локалке
-    sameSite: isProd ? 'none' : 'lax', // none на проде для кросс-домена, lax на локалке
   }
 }));
 
