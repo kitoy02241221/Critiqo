@@ -39,10 +39,7 @@ const isProd = process.env.NODE_ENV === 'production';
 app.use(cors({
   origin: FRONTEND_ORIGIN,
   credentials: true,
-  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.options('*', cors());
 
 // === JSON парсер ===
 app.use(express.json());
@@ -54,10 +51,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: isProd,
     httpOnly: true,
-    sameSite: isProd ? 'none' : 'lax',
-    maxAge: 1000 * 60 * 60 * 24 * 7
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 дней
+    secure: isProd,             // true на проде, false на локалке
+    sameSite: isProd ? 'none' : 'lax', // none на проде для кросс-домена, lax на локалке
   }
 }));
 
