@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node server/index.js",
-    "server": "cd server && node index.js",
-    "client": "cd client && npm start",
-    "build": "cd client && npm run build"
+    "frontend": "npm start --prefix client",
+    "backend": "npm start --prefix server",
+    "backend:prod": "npm run start:prod --prefix server",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "devDependencies": {
     "concurrently": "^7.6.0",

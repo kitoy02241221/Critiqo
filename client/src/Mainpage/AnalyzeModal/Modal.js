@@ -55,7 +55,7 @@ const onAddTask = async (task) => {
 
   } catch (err) {
     console.error("Ошибка в onAddTask:", err);
-    alert("Ошибка: " + err.message);
+    alert("Сначала авторизируйся!");
   }
 };
 

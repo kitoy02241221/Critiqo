@@ -1,4 +1,15 @@
 // server.js
+
+// === Локальная загрузка .env ===
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local';
+
+try {
+  require('dotenv').config({ path: path.resolve(__dirname, envFile) });
+  console.log(`📦 env загружен из ${envFile}`);
+} catch {
+  console.log(`⚠️ dotenv не найден (${envFile})`);
+}
+
 // === Зависимости ===
 const express = require('express');
 const session = require('express-session');
