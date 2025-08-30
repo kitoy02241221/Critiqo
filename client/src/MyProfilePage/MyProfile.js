@@ -16,24 +16,26 @@ function MyProfile() {
   const [loading, setLoading] = useState(Boolean)
   const [siteRank, setSiteRank] = useState('')
 
+  const API_BASE_URL = "https://critiqo-1.onrender.com";
+
   useEffect(() => {
     let isMounted = true;
     setLoading(true)
 
     async function fetchData() {
       try {
-        const res = await fetch('http://localhost:5000/take-session-auth_id', { credentials: 'include' });
+        const res = await fetch(`${API_BASE_URL}/take-session-auth_id`, { credentials: 'include' });
         if (!res.ok) throw new Error('Сессия не установлена');
         const authdata = await res.json();
         if (!authdata.authUid) throw new Error('Нет authUid в сессии');
         const authUid = authdata.authUid;
         if (isMounted) setSessionid(authUid);
 
-        const authRes = await fetch('http://localhost:5000/check-auth', { credentials: 'include' });
+        const authRes = await fetch(`${API_BASE_URL}/check-auth`, { credentials: 'include' });
         if (!authRes.ok) throw new Error('Ошибка при проверке авторизации');
         if (isMounted) setUserAuth(true);
 
-        const nameRes = await fetch('http://localhost:5000/take-name', { credentials: 'include' });
+        const nameRes = await fetch(`${API_BASE_URL}/take-name`, { credentials: 'include' });
         if (!nameRes.ok) throw new Error('Ошибка при получении имени');
         const nameData = await nameRes.json();
         if (isMounted && nameData.name) setSavedName(nameData.name);
@@ -105,7 +107,7 @@ function MyProfile() {
     if (!sessionid) return console.error('Session ID еще не загружен');
 
     try {
-      const res = await fetch('http://localhost:5000/update-name', {
+      const res = await fetch(`${API_BASE_URL}/update-name`, {
         method: 'PUT',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

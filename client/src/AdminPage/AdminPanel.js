@@ -12,6 +12,9 @@ function AdminPanel() {
   const [matchData, setMatchData] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
 
+
+  const API_BASE_URL = "https://critiqo-1.onrender.com";
+
   // Инпуты для каждой заявки
   const [inputValues, setInputValues] = useState({});
 
@@ -49,7 +52,7 @@ function AdminPanel() {
 
     async function getComplite() {
       try {
-        const res = await fetch('https://critiqo-backend.up.railway.app/complite-aplication', {
+        const res = await fetch(`${API_BASE_URL}/complite-aplication`, {
           credentials: 'include'
         });
 
@@ -82,7 +85,7 @@ function AdminPanel() {
 
   try {
     // 1. Берём текущего пользователя из backend-сессии (Steam)
-    const resUser = await fetch("https://critiqo-backend.up.railway.app/get-user", {
+    const resUser = await fetch(`${API_BASE_URL}/get-user`, {
       credentials: "include"
     });
     const dataUser = await resUser.json();
@@ -130,7 +133,7 @@ function AdminPanel() {
 
     // 4. Увеличиваем счётчик выполненных анализов
     try {
-      const res = await fetch("https://critiqo-backend.up.railway.app/increment-application", {
+      const res = await fetch(`${API_BASE_URL}/increment-application`, {
         method: "POST",
         credentials: "include",
       });
@@ -153,7 +156,7 @@ function AdminPanel() {
 
   const getDataMatch = async (matchId) => {
     try {
-      const res = await fetch(`https://critiqo-backend.up.railway.app/match/${matchId}/opendota`);
+      const res = await fetch(`${API_BASE_URL}/match/${matchId}/opendota`);
       if (!res.ok) throw new Error(`Ошибка запроса: ${res.status} ${res.statusText}`);
 
       const data = await res.json();
