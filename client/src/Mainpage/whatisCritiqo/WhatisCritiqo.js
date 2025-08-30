@@ -6,7 +6,7 @@ function WhatisCritiqo() {
       <>
         <div className='WhatisCritiqo'>
         <h1>
-          Что такое Critiqo?
+          О нас
         </h1>
 
         <div >

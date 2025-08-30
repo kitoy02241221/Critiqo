@@ -9,6 +9,8 @@ import WeAreTheFirst from './Mainpage/weAreTheFirstBlock/WeAreTheFirst';
 import TryFreeModal from './Mainpage/AnalyzeModal/TryFreeModal/TryFreeModal';
 import Advantagesblock from './Mainpage/AdvantagesBlock/AdvantagesBlock';
 import FAQpage from './FAQpage/FAQpage';
+import Footerblock from './Mainpage/footer/Footerblock'
+import Support from './supportPage/support';
 import './Mainpage/App.css';
 
 function App() {
@@ -16,18 +18,21 @@ function App() {
   const isProfilePage = location.pathname === "/myprofile";
   const isAdmin = location.pathname === "/adminpanel";
   const isFAQPage  = location.pathname ==="/faq"
+  const isSupportPage = location.pathname === "/support"
   const isHomePage = location.pathname === "/";
 
 
-  const whatisRef = useRef(null);
+  const aboutRef = useRef(null);
   const weAreRef = useRef(null);
   const tryFreeRef = useRef(null);
+  const matchAnalysisRef = useRef(null)
+  const advantagesRef = useRef(null)
 
   return (
     <div className='header'>
       <Navbar 
         onScrollTo={(ref) => ref.current?.scrollIntoView({ behavior: "smooth" })}
-        refs={{ whatisRef, weAreRef, tryFreeRef }}
+        refs={{ aboutRef, weAreRef, tryFreeRef }}
       />
 
       <Routes>
@@ -38,19 +43,22 @@ function App() {
 
       {isHomePage && (
         <>
-          <div ref={whatisRef}><WhatisCritiqo /></div>
-          <Advantagesblock/>
+          <div ref={aboutRef}><WhatisCritiqo /></div>
+          <div ref={advantagesRef}><Advantagesblock/></div>
           <div ref={weAreRef}><WeAreTheFirst /></div>
           <div ref={tryFreeRef}><TryFreeModal /></div>
-          <Modal />
+          <div ref={matchAnalysisRef}><Modal/></div>
           
+          <Footerblock
+          onScrollTo={(ref) => ref.current?.scrollIntoView({ behavior: "smooth" })}
+          refs={{ aboutRef, advantagesRef, tryFreeRef, matchAnalysisRef }}
+         />
         </>
       )}
 
-      {!isProfilePage && !isAdmin && !isHomePage && !isFAQPage &&(
+      {isSupportPage && (
         <>
-          <Modal />
-          <WhatisCritiqo />
+          <Support/>
         </>
       )}
     </div>

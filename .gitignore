@@ -34,4 +34,6 @@ build/
 
 # Env
 .env
+.env.local
+server/.env.local
 server/.env
