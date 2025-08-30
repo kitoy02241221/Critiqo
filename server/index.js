@@ -258,7 +258,7 @@ app.get('/me', async (req, res) => {
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.clearCookie('sid', { secure: true, httpOnly: true, sameSite: 'none' });
-    res.redirect(`${BASE_URL}/`);
+    res.redirect(`${FRONTEND_ORIGIN}${FRONTEND_PATH}`);
   });
 });
 
