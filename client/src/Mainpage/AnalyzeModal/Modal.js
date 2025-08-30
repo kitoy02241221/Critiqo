@@ -9,11 +9,13 @@ function Modal() {
   const [task, setTask] = useState('')
   const [problem, setProblem] = useState('')
 
+  const API_BASE_URL = "https://critiqo-1.onrender.com";
+
 
 const onAddTask = async (task) => {
   try {
 
-    const res = await fetch('http://localhost:5000/take-session-auth_id', { credentials: 'include' });
+    const res = await fetch('API_BASE_URL/take-session-auth_id', { credentials: 'include' });
     if (!res.ok) throw new Error("Не удалось получить сессию");
 
     const data = await res.json();
@@ -40,7 +42,7 @@ const onAddTask = async (task) => {
     if (insertError) throw insertError;
 
 
-    const incrementRes = await fetch('http://localhost:5000/increment-num-application', {
+    const incrementRes = await fetch('API_BASE_URL/increment-num-application', {
       method: 'POST',
       credentials: 'include'
     });
