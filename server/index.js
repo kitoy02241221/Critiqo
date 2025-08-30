@@ -22,6 +22,7 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const sessionSecret = process.env.SESSION_SECRET;
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN;
 const BASE_URL = process.env.BASE_URL;
+const FRONTEND_PATH = process.env.FRONTEND_PATH;
 
 if (!supabaseUrl || !supabaseKey || !sessionSecret || !BASE_URL || !FRONTEND_ORIGIN) {
   console.error('❌ Missing required config: SUPABASE_URL, SUPABASE_KEY, SESSION_SECRET, BASE_URL, FRONTEND_ORIGIN');
@@ -152,7 +153,7 @@ app.get('/auth/steam/return', async (req, res) => {
           return res.redirect(`${BASE_URL}/?error=session_save_failed`);
         }
         // ✅ Всегда редиректим на главную страницу фронта
-        res.redirect(`${FRONTEND_ORIGIN}`);
+        res.redirect(`${FRONTEND_ORIGIN}${FRONTEND_PATH}`);
       });
 
     } catch (dbErr) {
