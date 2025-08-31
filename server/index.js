@@ -166,10 +166,22 @@ app.put('/update-name', async (req, res) => {
 const incrementField = (field) => async (req, res) => {
   if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
   try {
-    const { data: userData } = await supabase.from('Users').select(field).eq('auth_uid', req.session.authUid).single();
+    const { data: userData, error } = await supabase
+      .from('Users')
+      .select(field)
+      .eq('auth_uid', req.session.authUid)
+      .single();
+
+    if (error) throw error;
+
     const current = userData?.[field] ?? 0;
     const newValue = current + 1;
-    await supabase.from('Users').update({ [field]: newValue }).eq('auth_uid', req.session.authUid);
+
+    await supabase
+      .from('Users')
+      .update({ [field]: newValue })
+      .eq('auth_uid', req.session.authUid);
+
     res.json({ success: true, newValue });
   } catch (err) {
     console.error(err);
@@ -177,10 +189,31 @@ const incrementField = (field) => async (req, res) => {
   }
 };
 
+// просто получить
+const getField = (field) => async (req, res) => {
+  if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
+  try {
+    const { data: userData, error } = await supabase
+      .from('Users')
+      .select(field)
+      .eq('auth_uid', req.session.authUid)
+      .single();
+
+    if (error) throw error;
+
+    res.json({ success: true, value: userData?.[field] ?? 0 });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: `Не удалось получить ${field}` });
+  }
+};
+
 app.post('/increment-num-application', incrementField('numAplication'));
-app.get('/num-application', incrementField('numAplication'));
+app.get('/num-application', getField('numAplication'));
+
+// выполненные заявки
 app.post('/increment-application', incrementField('complite_aplication'));
-app.get('/complite-aplication', incrementField('complite_aplication'));
+app.get('/complite-aplication', getField('complite_aplication'));
 
 // === User info ===
 app.get('/me', async (req, res) => {

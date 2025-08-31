@@ -184,7 +184,7 @@ function AdminPanel() {
         ) : (
           <div>
             <h3>Выполнено анализов:</h3>
-            <p>{compliteAp}</p>
+            <p>{compliteAp}</p>        
             <h3>Заявок в базе:</h3>
             <p>{count}</p>
           </div>
