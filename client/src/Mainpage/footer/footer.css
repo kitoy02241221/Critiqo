@@ -3,12 +3,23 @@ footer {
   color: #F1F1F1;
   padding: 2rem 1rem;
   max-width: 1400px;
-  margin: 200px auto 0px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
+  margin: 200px auto 0;
   border-top: 2px solid #00FF94;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column; /* теперь колонка */
+  align-items: center;    /* выравнивание всего содержимого по центру */
+  gap: 2rem;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: center; /* все блоки по центру */
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;         /* перенос на новую строку при узком экране */
+  width: 100%;
 }
 
 h2.footerLogo {
@@ -16,22 +27,19 @@ h2.footerLogo {
   font-weight: bold;
   color: #00BFFF;
   text-shadow: 0 0 5px #00BFFF;
-  margin-bottom: 1rem;
   text-align: center;
 }
 
-h2:last-of-type {
-  text-align: center;
-  margin-top: 1.5rem;
+h2.footerCopy {
   font-size: 0.9rem;
   color: #B0BEC5;
+  text-align: center;
 }
 
 h3 {
   font-size: 1.1rem;
   margin-bottom: 0.6rem;
   color: #00BFFF;
-  text-shadow: none;
   text-align: center;
 }
 
@@ -57,29 +65,27 @@ ul li:hover {
 .navigate,
 .contacts,
 .policy {
-  background-color: #1E1E1E;
   padding: 1rem;
-  border-radius: 10px;
-  width: 100%;
+  flex: 1 1 200px;
   max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
-.contacts a {
-    text-decoration: none;
-    color: #F1F1F1;
-}
-
-.navigate {
-  box-shadow: 0 0 12px rgba(0, 255, 148, 0.2);
-}
-
 .contacts {
-  box-shadow: 0 0 12px rgba(0, 191, 255, 0.2);
+  margin-top: -48px;
 }
 
-.policy {
-  box-shadow: 0 0 12px rgba(255, 76, 76, 0.25);
+.contacts a {
+  text-decoration: none;
+  color: #F1F1F1;
+}
+.contacts a:hover {
+  color: #00FF94;
+  text-shadow: 0 0 6px #00FF94;
+  transform: translateX(5px);
 }
 
 .policy a {
