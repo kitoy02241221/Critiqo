@@ -7,10 +7,12 @@ function AnalyzeResult() {
   const [analyzeData, setAnalyzeData] = useState(null)
   const [isOpenModal, setIsOpenModal] = useState(false)
 
+  const API_BASE_URL = "https://critiqo-1.onrender.com";
+
   useEffect(() => {
     async function takeAnalyzeResult() {
       try {
-        const res = await fetch("http://localhost:5000/take-session-auth_id", { credentials: "include" })
+        const res = await fetch(`${API_BASE_URL}/take-session-auth_id`, { credentials: "include" })
         const userData = await res.json()
         const authUid = userData.authUid
 
