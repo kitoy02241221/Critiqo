@@ -248,63 +248,96 @@ app.put('/update-profile-image', async (req, res) => {
 });
 
 // === OpenDota proxy ===
-function safeJson(res) {
-  return res.ok ? res.json() : null;
-}
-
+// === Полный матч с автопарсингом ===
 app.get('/match/:id/full', async (req, res) => {
   const id = Number(req.params.id);
   if (!id) return res.status(400).json({ error: 'Не передан match_id' });
 
   try {
-    const [
-      matchRes,
-      playersRes,
-      picksBansRes,
-      timelinesRes,
-      graphsRes
-    ] = await Promise.all([
-      fetch(`https://api.opendota.com/api/matches/${id}`),
-      fetch(`https://api.opendota.com/api/matches/${id}/players`),
-      fetch(`https://api.opendota.com/api/matches/${id}/picks_bans`),
-      fetch(`https://api.opendota.com/api/matches/${id}/timelines`),
-      fetch(`https://api.opendota.com/api/matches/${id}/graphs`)
-    ]);
-
-    const [match, players, picksBans, timelines, graphs] = await Promise.all([
-      safeJson(matchRes),
-      safeJson(playersRes),
-      safeJson(picksBansRes),
-      safeJson(timelinesRes),
-      safeJson(graphsRes)
-    ]);
-
-    if (!match) {
-      return res.status(502).json({ error: 'Нет данных о матче в OpenDota' });
-    }
-
-    const fullMatch = {
-      meta: {
-        match_id: match.match_id,
-        radiant_win: match.radiant_win,
-        duration: match.duration,
-        start_time: match.start_time,
-        server: match.cluster,
-        radiant_score: match.radiant_score,
-        dire_score: match.dire_score
-      },
-      players_basic: match.players || [],
-      players_detailed: players,
-      picks_bans: picksBans,
-      timelines,
-      graphs
+    // === 1. Функция получения матча ===
+    const getMatch = async () => {
+      const resp = await fetch(`https://api.opendota.com/api/matches/${id}`);
+      if (!resp.ok) throw new Error('Ошибка при получении данных с OpenDota');
+      return resp.json();
     };
 
-    res.json(fullMatch);
+    // === 2. Первая попытка взять матч ===
+    let match = await getMatch();
+
+    // Проверяем, распаршен ли матч
+    const isParsed =
+      !!(match.objectives || (match.players && match.players.some(p => p.purchase_log)));
+
+    // === 3. Если матч не распаршен — запускаем парсинг ===
+    if (!isParsed) {
+      console.log(`Матч ${id} не распаршен. Запускаем парсинг...`);
+      const resp = await fetch(`https://api.opendota.com/api/request/${id}`, {
+        method: 'POST',
+      });
+      if (!resp.ok) return res.status(502).json({ error: 'Не удалось запустить парсинг на OpenDota' });
+      const job = await resp.json();
+      console.log(`Парсинг запущен: jobId=${job.jobId}`);
+
+      // === 4. Ждём пока матч распарсится (polling) ===
+      let attempts = 0;
+      const maxAttempts = 12; // 12 попыток по 10 сек = ~2 минуты
+      while (attempts < maxAttempts) {
+        await new Promise(r => setTimeout(r, 10000)); // ждём 10 сек
+        match = await getMatch();
+
+        const parsedNow =
+          !!(match.objectives || (match.players && match.players.some(p => p.purchase_log)));
+
+        if (parsedNow) {
+          console.log(`Матч ${id} успешно распаршен`);
+          break;
+        }
+        attempts++;
+      }
+    }
+
+    // === 5. Сборка ответа ===
+    const players = (match.players || []).map(p => ({
+      player_slot: p.player_slot,
+      account_id: p.account_id,
+      hero_id: p.hero_id,
+      personaname: p.personaname,
+      gold_t: p.gold_t || [],
+      xp_t: p.xp_t || [],
+      lh_t: p.lh_t || [],
+      dn_t: p.dn_t || [],
+      obs_log: p.obs_log || [],
+      sen_log: p.sen_log || [],
+      ability_upgrades: p.ability_upgrades_arr || [],
+      purchase_log: p.purchase_log || [],
+      kills_log: p.kills_log || [],
+      damage_targets: p.damage_targets || {},
+      stuns: p.stuns || 0,
+    }));
+
+    const events = (match.objectives || []).map(o => ({
+      time: o.time,
+      type: o.type || o.key,
+      slot: o.slot,
+      unit: o.unit,
+      player_slot: o.player_slot,
+      x: o.x,
+      y: o.y
+    }));
+
+    res.json({
+      match_id: match.match_id,
+      parsed: !!(match.objectives || (match.players && match.players.some(p => p.purchase_log))),
+      duration: match.duration,
+      start_time: match.start_time,
+      radiant_win: match.radiant_win,
+      players,
+      events,
+    });
 
   } catch (err) {
-    console.error('Ошибка /match/:id/full:', err);
-    res.status(500).json({ error: 'Ошибка сервера' });
+    console.error(err);
+    res.status(500).json({ error: 'Ошибка сервера при обработке матча' });
   }
 });
 
