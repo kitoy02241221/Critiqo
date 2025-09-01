@@ -9,13 +9,11 @@ function AdminPanel() {
   const [tasks, setTasks] = useState([]);
   const [count, setCount] = useState(0);
   const [compliteAp, setCompliteAp] = useState(0);
-  const [matchData, setMatchData] = useState('');
+  const [matchData, setMatchData] = useState(null); // исправлено: null вместо ''
   const [isOpenModal, setIsOpenModal] = useState(false);
-
 
   const API_BASE_URL = "https://critiqo-1.onrender.com";
 
-  // Инпуты для каждой заявки
   const [inputValues, setInputValues] = useState({});
 
   useEffect(() => {
@@ -72,87 +70,81 @@ function AdminPanel() {
     getComplite();
   }, [update]);
 
-  // Отправка анализа
- async function resultAnalyze(match, taskInputs) {
-  setLoading(true);
+  async function resultAnalyze(match, taskInputs) {
+    setLoading(true);
 
-  // Проверка на пустые поля
-  if (!taskInputs.result.trim() || !taskInputs.advice.trim() || !taskInputs.grade.trim()) {
-    alert('Пожалуйста, заполните все поля!');
-    setLoading(false);
-    return;
-  }
-
-  try {
-    // 1. Берём текущего пользователя из backend-сессии (Steam)
-    const resUser = await fetch(`${API_BASE_URL}/get-user`, {
-      credentials: "include"
-    });
-    const dataUser = await resUser.json();
-
-    if (!resUser.ok || !dataUser.user_auth_uid) {
-      console.error("Ошибка при получении пользователя:", dataUser);
-      alert("Не удалось определить пользователя");
+    if (!taskInputs.result.trim() || !taskInputs.advice.trim() || !taskInputs.grade.trim()) {
+      alert('Пожалуйста, заполните все поля!');
       setLoading(false);
       return;
     }
 
-    const uid = dataUser.user_auth_uid;
-
-    // 2. Сохраняем анализ в Supabase
-    const { error } = await supabase
-      .from("ResultAnalyze")
-      .insert([{
-        result: taskInputs.result,
-        grade: taskInputs.grade,
-        advice: taskInputs.advice,
-        match_id: match,
-        user_auth_uid: uid
-      }]);
-
-    if (error) {
-      console.error("❌ Ошибка при добавлении:", error);
-      alert("Ошибка: " + error.message);
-      setLoading(false);
-      return;
-    }
-
-    // 3. Удаляем заявку после анализа
-    const { error: deleteError } = await supabase
-      .from("AnalyzeAplication")
-      .delete()
-      .eq("match", match);
-
-    if (deleteError) {
-      console.error("❌ Ошибка при удалении заявки:", deleteError);
-      alert("Ошибка: " + deleteError.message);
-    } else {
-      alert("✅ Заявка успешно обработана!");
-      setUpdate(prev => !prev);
-    }
-
-    // 4. Увеличиваем счётчик выполненных анализов
     try {
-      const res = await fetch(`${API_BASE_URL}/increment-application`, {
-        method: "POST",
-        credentials: "include",
+      const resUser = await fetch(`${API_BASE_URL}/get-user`, {
+        credentials: "include"
       });
+      const dataUser = await resUser.json();
 
-      if (!res.ok) throw new Error("Ошибка на сервере при обновлении счётчика");
+      if (!resUser.ok || !dataUser.user_auth_uid) {
+        console.error("Ошибка при получении пользователя:", dataUser);
+        alert("Не удалось определить пользователя");
+        setLoading(false);
+        return;
+      }
 
-      const data = await res.json();
-      console.log("Новое значение complite_aplication:", data.newValue);
+      const uid = dataUser.user_auth_uid;
+
+      const { error } = await supabase
+        .from("ResultAnalyze")
+        .insert([{
+          result: taskInputs.result,
+          grade: taskInputs.grade,
+          advice: taskInputs.advice,
+          match_id: match,
+          user_auth_uid: uid
+        }]);
+
+      if (error) {
+        console.error("❌ Ошибка при добавлении:", error);
+        alert("Ошибка: " + error.message);
+        setLoading(false);
+        return;
+      }
+
+      const { error: deleteError } = await supabase
+        .from("AnalyzeAplication")
+        .delete()
+        .eq("match", match);
+
+      if (deleteError) {
+        console.error("❌ Ошибка при удалении заявки:", deleteError);
+        alert("Ошибка: " + deleteError.message);
+      } else {
+        alert("✅ Заявка успешно обработана!");
+        setUpdate(prev => !prev);
+      }
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/increment-application`, {
+          method: "POST",
+          credentials: "include",
+        });
+
+        if (!res.ok) throw new Error("Ошибка на сервере при обновлении счётчика");
+
+        const data = await res.json();
+        console.log("Новое значение complite_aplication:", data.newValue);
+      } catch (err) {
+        console.error("Не удалось обновить complite_aplication:", err);
+      }
+
     } catch (err) {
-      console.error("Не удалось обновить complite_aplication:", err);
+      console.error("Ошибка в resultAnalyze:", err);
+      alert("Что-то пошло не так: " + err.message);
+    } finally {
+      setLoading(false);
     }
-
-  } catch (err) {
-    console.error("Ошибка в resultAnalyze:", err);
-    alert("Что-то пошло не так: " + err.message);
-  } finally {
-    setLoading(false);
   }
-}
 
   const getDataMatch = async (matchId) => {
     try {
@@ -184,7 +176,7 @@ function AdminPanel() {
         ) : (
           <div>
             <h3>Выполнено анализов:</h3>
-            <p>{compliteAp}</p>        
+            <p>{compliteAp}</p>
             <h3>Заявок в базе:</h3>
             <p>{count}</p>
           </div>
@@ -205,7 +197,6 @@ function AdminPanel() {
                 <h3>Проблемы в матче: {task.problem}</h3>
 
                 <textarea
-                  type="text"
                   placeholder="Введите результат анализа"
                   className="resultInput"
                   value={taskInputs.result}
@@ -216,7 +207,6 @@ function AdminPanel() {
                   required
                 />
                 <textarea
-                  type="text"
                   placeholder="Советы по игре"
                   className="resultInput"
                   value={taskInputs.advice}
@@ -227,7 +217,6 @@ function AdminPanel() {
                   required
                 />
                 <textarea
-                  type="text"
                   placeholder="Оценка матча"
                   className="resultInput"
                   value={taskInputs.grade}
@@ -240,13 +229,6 @@ function AdminPanel() {
 
                 <div className='matchButton'>
                   <button onClick={() => getDataMatch(task.match)}>Получить данные</button>
-
-                  <TakeMatchModal
-                    matchData={matchData}
-                    isOpenModal={isOpenModal}
-                    setIsOpenModal={setIsOpenModal}
-                  />
-
                   <button onClick={() => resultAnalyze(task.match, taskInputs)}>Отправить анализ</button>
                 </div>
               </div>
@@ -254,6 +236,13 @@ function AdminPanel() {
           })
         )}
       </div>
+
+      {/* модалка одна на весь список */}
+      <TakeMatchModal
+        matchData={matchData}
+        isOpenModal={isOpenModal}
+        setIsOpenModal={setIsOpenModal}
+      />
     </div>
   );
 }

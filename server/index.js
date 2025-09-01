@@ -248,12 +248,15 @@ app.put('/update-profile-image', async (req, res) => {
 });
 
 // === OpenDota proxy ===
+function safeJson(res) {
+  return res.ok ? res.json() : null;
+}
+
 app.get('/match/:id/full', async (req, res) => {
   const id = Number(req.params.id);
   if (!id) return res.status(400).json({ error: 'Не передан match_id' });
 
   try {
-    // Параллельные запросы
     const [
       matchRes,
       playersRes,
@@ -268,19 +271,18 @@ app.get('/match/:id/full', async (req, res) => {
       fetch(`https://api.opendota.com/api/matches/${id}/graphs`)
     ]);
 
-    if (![matchRes, playersRes, picksBansRes, timelinesRes, graphsRes].every(r => r.ok)) {
-      return res.status(502).json({ error: 'Ошибка получения данных из OpenDota' });
-    }
-
     const [match, players, picksBans, timelines, graphs] = await Promise.all([
-      matchRes.json(),
-      playersRes.json(),
-      picksBansRes.json(),
-      timelinesRes.json(),
-      graphsRes.json()
+      safeJson(matchRes),
+      safeJson(playersRes),
+      safeJson(picksBansRes),
+      safeJson(timelinesRes),
+      safeJson(graphsRes)
     ]);
 
-    // Собираем единый объект
+    if (!match) {
+      return res.status(502).json({ error: 'Нет данных о матче в OpenDota' });
+    }
+
     const fullMatch = {
       meta: {
         match_id: match.match_id,
@@ -291,11 +293,11 @@ app.get('/match/:id/full', async (req, res) => {
         radiant_score: match.radiant_score,
         dire_score: match.dire_score
       },
-      players_basic: match.players, // базовая инфа из /matches/{id}
-      players_detailed: players,    // полные данные по игрокам
-      picks_bans: picksBans,        // драфт
-      timelines: timelines,         // посекундные события
-      graphs: graphs                // gold/xp advantage
+      players_basic: match.players || [],
+      players_detailed: players,
+      picks_bans: picksBans,
+      timelines,
+      graphs
     };
 
     res.json(fullMatch);
