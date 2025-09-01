@@ -2,7 +2,6 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #fff;
 }
 
@@ -50,7 +49,6 @@
 .questionsItem.active h2::before {
   content: "✦";
   color: #00BFFF;
-  font-weight: bold;
   margin-right: 6px;
   transition: opacity 0.3s ease;
 }

@@ -8,7 +8,6 @@
     border-radius: 16px;
     padding: 30px 40px;
     color: #F1F1F1;
-    font-family: 'Arial', sans-serif;
 }
 
 .profileBlock h1 {
@@ -60,7 +59,6 @@
 .adminStatistics p {
     margin: 0 0 10px 0;
     color: #F1F1F1;
-    font-weight: 500;
 }
 
 .tasks {
@@ -88,7 +86,6 @@
 .aplicationCard h3 {
     margin: 8px 0;
     color: #00BFFF;
-    font-weight: 600;
 }
 
 .resultInput {
@@ -128,7 +125,6 @@
     padding: 10px 18px;
     border-radius: 10px;
     cursor: pointer;
-    font-weight: 600;
     transition: 0.25s ease;
 }
 
@@ -177,7 +173,6 @@
     border-radius: 12px;
     background-color: #00BFFF; /* синий неоновый */
     color: #121212;
-    font-weight: 600;
     cursor: pointer;
     transition: all 0.25s ease;
 }

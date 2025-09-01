@@ -12,8 +12,6 @@
 
 .modalAnalyze h1 {
   text-align: center;
-  font-size: 32px;
-  font-weight: 800;
   color: #00FF94;
   text-shadow: 0 0 12px rgba(0, 255, 148, 0.6);
   margin-bottom: 35px;
@@ -51,7 +49,6 @@
   color: #00BFFF;
   position: absolute;
   left: 0;
-  font-weight: bold;
 }
 
 .interactiveItem {
@@ -95,7 +92,6 @@
   border-radius: 12px;
   border: none;
   font-size: 1rem;
-  font-weight: 600;
   background: linear-gradient(135deg, #00FF94, #00BFFF);
   color: #121212;
   cursor: pointer;

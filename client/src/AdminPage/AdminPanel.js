@@ -8,7 +8,6 @@ function AdminPanel() {
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [count, setCount] = useState(0);
-  const [compliteAp, setCompliteAp] = useState(0);
   const [matchData, setMatchData] = useState(null); // исправлено: null вместо ''
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -46,24 +45,7 @@ function AdminPanel() {
 
       setCount(count);
       return count || 0;
-    }
-
-    async function getComplite() {
-      try {
-        const res = await fetch(`${API_BASE_URL}/complite-aplication`, {
-          credentials: 'include'
-        });
-
-        if (!res.ok) {
-          throw new Error('Ошибка при получении количества выполненых задач');
-        }
-
-        const data = await res.json();
-        setCompliteAp(data.complite_aplication);
-      } catch (err) {
-        console.error('Ошибка:' + err);
-      }
-    }
+    };
 
     fetchTasks();
     aplicationCount();
@@ -175,8 +157,6 @@ function AdminPanel() {
           <p>Загрузка...</p>
         ) : (
           <div>
-            <h3>Выполнено анализов:</h3>
-            <p>{compliteAp}</p>
             <h3>Заявок в базе:</h3>
             <p>{count}</p>
           </div>

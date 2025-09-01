@@ -26,7 +26,6 @@
 .tryFreeModal h1 {
   text-align: center;
   font-size: 32px;
-  font-weight: 800;
   color: #00FF94;
   text-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
   margin-bottom: 35px;
@@ -61,7 +60,6 @@
   content: "✦";
   color: #00BFFF;
   margin-right: 8px;
-  font-weight: bold;
 }
 
 .selectMatchBlock {
@@ -99,7 +97,6 @@
   border-radius: 12px;
   border: none;
   font-size: 1rem;
-  font-weight: 600;
   background: linear-gradient(135deg, #00FF94, #00BFFF);
   color: #121212;
   cursor: pointer;

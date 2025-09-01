@@ -23,7 +23,6 @@
 
 .banner h1 {
   font-size: 2rem;
-  font-weight: 800;
   color: #00FF94;
   margin: 0;
   cursor: pointer;
@@ -39,7 +38,6 @@
   color: #00BFFF;
   top: 23px;
   left: 13px;
-  font-weight: bold;
 }
 
 .banner h1:hover {
@@ -82,7 +80,6 @@
   padding: 10px 18px;
   border-radius: 12px;
   font-size: 0.95rem;
-  font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
 }
