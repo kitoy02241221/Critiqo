@@ -12,7 +12,7 @@
   justify-content: space-between;
   align-items: center;
 
-  background: rgba(18, 18, 18, 0.95); /* темно-графитовый фон */
+  background: rgba(18, 18, 18, 0.95);
   backdrop-filter: blur(6px);
   border-radius: 0 0 16px 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
@@ -43,10 +43,10 @@
 }
 
 .banner h1:hover {
-  color: #00BFFF; /* синий неоновый при наведении */
+  color: #00BFFF;
 }
 
-/* Центральные кнопки */
+
 .navbar-center {
   display: flex;
   gap: 24px;
@@ -66,7 +66,7 @@
 
 .navbar-center button:hover {
   background: #00BFFF;
-  color: #121212; /* темный текст на ярком фоне */
+  color: #121212; 
   transform: scale(1.05);
 }
 

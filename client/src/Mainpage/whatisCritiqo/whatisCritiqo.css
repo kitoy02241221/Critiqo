@@ -1,6 +1,6 @@
 .WhatisCritiqo {
   width: 800px;
-  height: 720px;
+  height: 635px;
   margin: 80px auto;
   padding: 40px;
   border-radius: 20px;
@@ -74,13 +74,6 @@
 }
 
 
-.WhatisCritiqo ul li:hover {
-  transform: translateY(-6px);
-  border-color: #00BFFF;
-  box-shadow: 0px 0px 18px rgba(0, 191, 255, 0.5);
-  background: linear-gradient(145deg, #1E1E1E, #222);
-}
-
 .blockName {
   font-size: 18px;
   font-weight: 700;
@@ -104,4 +97,14 @@
   line-height: 1.6;
   position: relative;
   z-index: 2;
+}
+.whyDoingCritiqo {
+  color: #00BFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  height: 100%;
+  text-align: center;
+  margin-bottom: 20px;
 }

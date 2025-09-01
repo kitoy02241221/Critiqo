@@ -17,7 +17,7 @@ function WhatisCritiqo() {
             от первых секунд на линии до ключевых сражений в лейте.
           </p><br/>
           <div>
-             <p>Что делает Critiqo:</p> <br/>
+             <h2 className='whyDoingCritiqo'>Что делает Critiqo:</h2> <br/>
              <ul>
                 <li>
                   <strong className="blockName">Находит</strong>
@@ -40,8 +40,6 @@ function WhatisCritiqo() {
                   Это позволяет сосредоточиться на <strong>главном</strong> и <strong>быстрее улучшать игру</strong>.</p>
                 </li>
              </ul>
-                <p>Сервис работает на базе искусственного интеллекта и настоящих игровых данных — без гаданий и шаблонов.
-                С Critiqo вы не просто узнаете, что пошло не так, — вы поймёте, почему и как это исправить.</p>
           </div>
         </div>
       </div>

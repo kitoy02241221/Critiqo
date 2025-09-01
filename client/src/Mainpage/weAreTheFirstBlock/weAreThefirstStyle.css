@@ -52,8 +52,3 @@
   transition: all 0.3s ease;
   color: #F1F1F1;
 }
-
-.weAreTheFirstBlock li:hover {
-  transform: translateX(6px);
-  box-shadow: 0 0 12px rgba(0, 255, 148, 0.3);
-}

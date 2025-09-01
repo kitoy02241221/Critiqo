@@ -8,17 +8,17 @@ footer {
   border-radius: 12px;
 
   display: flex;
-  flex-direction: column; /* теперь колонка */
-  align-items: center;    /* выравнивание всего содержимого по центру */
+  flex-direction: column;
+  align-items: center;
   gap: 2rem;
 }
 
 .footer-top {
   display: flex;
-  justify-content: center; /* все блоки по центру */
+  justify-content: center;
   align-items: flex-start;
   gap: 1.5rem;
-  flex-wrap: wrap;         /* перенос на новую строку при узком экране */
+  flex-wrap: wrap;
   width: 100%;
 }
 
@@ -43,20 +43,20 @@ h3 {
   text-align: center;
 }
 
-ul {
+.footer-top ul {
   list-style: none;
   padding: 0;
   margin: 0;
   text-align: center;
 }
 
-ul li {
+.footer-top ul li {
   margin-bottom: 0.5rem;
   transition: color 0.3s ease, transform 0.2s ease;
   cursor: pointer;
 }
 
-ul li:hover {
+.footer-top ul li:hover {
   color: #00FF94;
   text-shadow: 0 0 6px #00FF94;
   transform: translateX(5px);
