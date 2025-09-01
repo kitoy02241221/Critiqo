@@ -277,7 +277,7 @@ app.get('/match/:id/full', async (req, res) => {
 
       // === 4. Ждём завершения парсинга (polling) ===
       let attempts = 0;
-      const maxAttempts = 12; // ~2 минуты
+      const maxAttempts = 36; // ~2 минуты
       while (attempts < maxAttempts) {
         await new Promise(r => setTimeout(r, 10000)); // 10 сек
         match = await getMatch();
