@@ -156,7 +156,7 @@ function AdminPanel() {
 
   const getDataMatch = async (matchId) => {
     try {
-      const res = await fetch(`${API_BASE_URL}/match/${matchId}/opendota`);
+      const res = await fetch(`${API_BASE_URL}/match/${matchId}/full`);
       if (!res.ok) throw new Error(`Ошибка запроса: ${res.status} ${res.statusText}`);
 
       const data = await res.json();
