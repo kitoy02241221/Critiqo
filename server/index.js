@@ -250,58 +250,54 @@ app.put('/update-profile-image', async (req, res) => {
 // === OpenDota proxy ===
 // === Полный матч с автопарсингом ===
 app.get('/match/:id/full', async (req, res) => {
-  const id = Number(req.params.id);
-  if (!id) return res.status(400).json({ error: 'Не передан match_id' });
+  const matchId = Number(req.params.id);
+  if (!matchId) return res.status(400).json({ error: 'Не передан match_id' });
 
   try {
-    // === 1. Функция получения матча ===
+    // === 1. Функция получения матча с OpenDota ===
     const getMatch = async () => {
-      const resp = await fetch(`https://api.opendota.com/api/matches/${id}`);
+      const resp = await fetch(`https://api.opendota.com/api/matches/${matchId}`);
       if (!resp.ok) throw new Error('Ошибка при получении данных с OpenDota');
       return resp.json();
     };
 
-    // === 2. Первая попытка взять матч ===
+    // === 2. Первая попытка получить матч ===
     let match = await getMatch();
 
-    // Проверяем, распаршен ли матч
-    const isParsed =
-      !!(match.objectives || (match.players && match.players.some(p => p.purchase_log)));
+    // Проверка, распарсен ли матч
+    const isParsed = !!(match.objectives || (match.players && match.players.some(p => p.purchase_log)));
 
-    // === 3. Если матч не распаршен — запускаем парсинг ===
+    // === 3. Если не распарсен — запускаем request parse ===
     if (!isParsed) {
-      console.log(`Матч ${id} не распаршен. Запускаем парсинг...`);
-      const resp = await fetch(`https://api.opendota.com/api/request/${id}`, {
-        method: 'POST',
-      });
+      console.log(`Матч ${matchId} не распаршен. Запускаем парсинг...`);
+      const resp = await fetch(`https://api.opendota.com/api/request/${matchId}`, { method: 'POST' });
       if (!resp.ok) return res.status(502).json({ error: 'Не удалось запустить парсинг на OpenDota' });
       const job = await resp.json();
       console.log(`Парсинг запущен: jobId=${job.jobId}`);
 
-      // === 4. Ждём пока матч распарсится (polling) ===
+      // === 4. Ждём завершения парсинга (polling) ===
       let attempts = 0;
-      const maxAttempts = 12; // 12 попыток по 10 сек = ~2 минуты
+      const maxAttempts = 12; // ~2 минуты
       while (attempts < maxAttempts) {
-        await new Promise(r => setTimeout(r, 10000)); // ждём 10 сек
+        await new Promise(r => setTimeout(r, 10000)); // 10 сек
         match = await getMatch();
 
-        const parsedNow =
-          !!(match.objectives || (match.players && match.players.some(p => p.purchase_log)));
-
+        const parsedNow = !!(match.objectives || (match.players && match.players.some(p => p.purchase_log)));
         if (parsedNow) {
-          console.log(`Матч ${id} успешно распаршен`);
+          console.log(`Матч ${matchId} успешно распаршен`);
           break;
         }
         attempts++;
       }
     }
 
-    // === 5. Сборка ответа ===
+    // === 5. Формируем ответ с максимумом данных ===
     const players = (match.players || []).map(p => ({
       player_slot: p.player_slot,
       account_id: p.account_id,
       hero_id: p.hero_id,
       personaname: p.personaname,
+      networth_t: p.net_worth_t || [],
       gold_t: p.gold_t || [],
       xp_t: p.xp_t || [],
       lh_t: p.lh_t || [],
@@ -312,7 +308,7 @@ app.get('/match/:id/full', async (req, res) => {
       purchase_log: p.purchase_log || [],
       kills_log: p.kills_log || [],
       damage_targets: p.damage_targets || {},
-      stuns: p.stuns || 0,
+      stuns: p.stuns || 0
     }));
 
     const events = (match.objectives || []).map(o => ({
@@ -325,6 +321,7 @@ app.get('/match/:id/full', async (req, res) => {
       y: o.y
     }));
 
+    // === 6. Отдаём JSON с полным матчем ===
     res.json({
       match_id: match.match_id,
       parsed: !!(match.objectives || (match.players && match.players.some(p => p.purchase_log))),
