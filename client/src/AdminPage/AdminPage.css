@@ -40,10 +40,16 @@
 }
 
 .adminStatistics {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: #292929;
     padding: 20px;
     border-radius: 12px;
     margin-bottom: 30px;
+    text-align: center;
+    gap: 12px;
 }
 
 .adminStatistics h2 {
