@@ -49,7 +49,6 @@ function AdminPanel() {
 
     fetchTasks();
     aplicationCount();
-    getComplite();
   }, [update]);
 
   async function resultAnalyze(match, taskInputs) {
