@@ -3,24 +3,33 @@ function TakeMatchModal({ matchData, isOpenModal, setIsOpenModal }) {
     setIsOpenModal(false);
   }
 
-  const downloadJSON = () => {
-    if (!matchData) return;
+  const downloadJSON = async () => {
+  if (!matchData) return;
 
-    const dataStr = JSON.stringify(matchData, null, 2);
-    const blob = new Blob([dataStr], { type: "application/json" });
+  const matchId = matchData.local?.match || matchData.match_id || "data";
+
+  try {
+    // ⚡ Берём сырые данные напрямую, а не из state
+    const res = await fetch(`https://api.opendota.com/api/matches/${matchId}`);
+    const text = await res.text();
+
+    console.log("Размер JSON перед сохранением:", text.length);
+
+    const blob = new Blob([text], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement("a");
     link.href = url;
-
-    const matchId = matchData.local?.match || matchData.match_id || "data";
     link.download = `match_${matchId}.json`;
 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-  };
+  } catch (err) {
+    console.error("Ошибка при скачивании JSON:", err);
+  }
+};
 
   if (!isOpenModal) return null; // рендерим только если модалка открыта
 

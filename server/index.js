@@ -272,11 +272,7 @@ app.get("/match/:id/full", async (req, res) => {
   }
 });
 
-// старт сервера
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`API запущен на http://localhost:${PORT}`);
-});
+
 
 // === Misc routes ===
 app.get('/get-user', (req, res) => {
