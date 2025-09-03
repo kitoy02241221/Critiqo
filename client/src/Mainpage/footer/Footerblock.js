@@ -9,7 +9,7 @@ function Footerblock({ refs }) {
     if (ref.current && footerRef.current) {
       const footerHeight = footerRef.current.offsetHeight;
       const elementPosition = ref.current.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - footerHeight + 300;
+      const offsetPosition = elementPosition - footerHeight + 200;
 
       window.scrollTo({
         top: offsetPosition,
@@ -27,8 +27,7 @@ function Footerblock({ refs }) {
           <ul>
             <li onClick={() => scrollWithOffset(refs.aboutRef)}>О нас</li>
             <li onClick={() => scrollWithOffset(refs.advantagesRef)}>Наши преимущества</li>
-            <li onClick={() => scrollWithOffset(refs.tryFreeRef)}>Попробовать бесплатно</li>
-            <li onClick={() => scrollWithOffset(refs.matchAnalysisRef)}>Разбор матчей</li>
+            <li onClick={() => scrollWithOffset(refs.matchAnalysisRef)}>Заказать разбор</li>
           </ul>
         </div>
 

@@ -111,7 +111,7 @@
   background-color: #00BFFF;
   color: #121212;
   transform: scale(1.07);
-  box-shadow: 0 0 14px rgba(0, 191, 255, 0.6);
+  box-shadow: 0 0 18px rgba(0, 255, 148, 0.5), 0 0 18px rgba(0, 191, 255, 0.5);
 }
 
 .steamAuth a button {

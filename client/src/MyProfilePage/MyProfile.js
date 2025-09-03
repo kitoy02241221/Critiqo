@@ -3,6 +3,7 @@ import AnalyzeResult from "./AnalyzeResult/AnalyzeResult";
 import { data, Link } from "react-router-dom"
 import { useEffect, useState } from "react" 
 import { supabase } from '../createSupabase/supabase';
+import ByAnalyzeModal from "./AnalyzeResult/ByAnalyzeModal/ByAnalyzeModal";
 
 function MyProfile() {
   const [nameInput, setNameInput] = useState('')
@@ -15,8 +16,16 @@ function MyProfile() {
   const [activityLevel, setActivityLevel] = useState('')
   const [loading, setLoading] = useState(Boolean)
   const [siteRank, setSiteRank] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
   const API_BASE_URL = "https://critiqo-1.onrender.com";
+
+
+  const modalstyle = {display: isOpen ? "block" : "none"}
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -184,9 +193,13 @@ function MyProfile() {
       )}
       
       <AnalyzeResult/>
+      <ByAnalyzeModal
+      modalstyle={modalstyle}
+      onClose={handleClose}
+      />
 
       <div className="profileButton">
-        <Link to={"/"}><button>Заказать разбор</button></Link>
+        <button onClick={() => setIsOpen(prevState => !prevState)}>Заказать разбор</button>
         <Link to={"/"}><button>На главную</button></Link>
       </div>
     </div>

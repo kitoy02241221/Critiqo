@@ -8,7 +8,6 @@
   box-shadow: 0 0 30px rgba(0, 251, 255, 0.3);
   position: relative;
   overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   z-index: 1;
 }
 
@@ -25,9 +24,9 @@
       rgba(255, 255, 255, 0.04) 0px,
       rgba(0, 191, 255, 0.04) 1px,
       transparent 1px,
-      transparent 32px
+      transparent 200px
     );
-  animation: floatPattern 25s linear infinite;
+  animation: floatPattern 5s linear infinite;
   z-index: 0;
 }
 
@@ -36,37 +35,40 @@
   position: absolute;
   border-radius: 50%;
   opacity: 0.08;
-  z-index: 0;
+  z-index: 1;
 }
 
 /* Первый круг */
 .modalAnalyze .circle1 {
   width: 180px;
   height: 180px;
-  background: rgba(0, 255, 148, 0.15);
+  background: rgb(0, 255, 149, 0.5);
   top: -60px;
   left: -60px;
   animation: floatCircle1 28s linear infinite;
+  z-index: 1;
 }
 
 /* Второй круг */
 .modalAnalyze .circle2 {
   width: 140px;
   height: 140px;
-  background: rgba(0, 191, 255, 0.15);
+  background: rgba(0, 191, 255, 0.5);
   bottom: -60px;
   right: -60px;
   animation: floatCircle2 32s linear infinite;
+  z-index: 1;
 }
 
 /* Третий круг */
 .modalAnalyze .circle3 {
   width: 100px;
   height: 100px;
-  background: rgba(0, 255, 148, 0.1);
+  background: rgb(0, 255, 149, 0.5);
   top: 45%;
   left: 25%;
   animation: floatCircle3 36s linear infinite;
+  z-index: 1;
 }
 
 /* Анимации кругов */
@@ -105,6 +107,9 @@
 
 /* Информационный блок */
 .infoTakeAnalyze {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
   background: linear-gradient(145deg, #1E1E1E, #1C1C1C);
   padding: 25px 30px;
   border-radius: 14px;
@@ -113,12 +118,26 @@
   position: relative;
   z-index: 2;
 }
+/* Левая колонка (текст "Закажи анализ прямо сейчас!") */
+.infoTakeAnalyze .leftColumn {
+  flex: 1;
+  min-width: 280px;
+}
+
+/* Правая колонка (важная информация) */
+.infoTakeAnalyze .rightColumn {
+  flex: 1;
+  min-width: 280px;
+}
+
+.rightColumn h2 {
+  margin-left: 40px;
+}
 
 .infoTakeAnalyze h2 {
   color: #00BFFF;
   margin-bottom: 15px;
   font-size: 20px;
-  z-index: 2;
 }
 
 .infoTakeAnalyze p,
@@ -126,7 +145,6 @@
   font-size: 15px;
   line-height: 1.6;
   color: #B0BEC5;
-  z-index: 2;
 }
 
 .infoTakeAnalyze li {
@@ -134,7 +152,6 @@
   margin: 6px 0;
   position: relative;
   padding-left: 18px;
-  z-index: 2;
 }
 
 .infoTakeAnalyze li::before {
@@ -142,7 +159,12 @@
   color: #00BFFF;
   position: absolute;
   left: 0;
-  z-index: 2;
+}
+
+@media (max-width: 900px) {
+  .infoTakeAnalyze {
+    flex-direction: column;
+  }
 }
 
 /* Интерактивные элементы */

@@ -23,9 +23,9 @@
       rgba(255, 255, 255, 0.04) 0px,
       rgba(0, 191, 255, 0.04) 1px,
       transparent 1px,
-      transparent 30px
+      transparent 250px
     );
-  animation: floatPattern 25s linear infinite;
+  animation: floatPattern 5s linear infinite;
   z-index: 0;
 }
 

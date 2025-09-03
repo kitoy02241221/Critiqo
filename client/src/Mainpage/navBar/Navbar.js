@@ -57,7 +57,7 @@ function Navbar({ refs }) {
 
       <div className="navbar-center">
         <button onClick={() => scrollWithOffset(refs.aboutRef)}>Кто мы?</button>
-        <button onClick={() => scrollWithOffset(refs.tryFreeRef)}>Разбор матчей</button>
+        <button onClick={() => scrollWithOffset(refs.matchAnalysisRef)}>Разбор матчей</button>
 
         <Link to={"/myprofile"}><button>Мой профиль</button></Link>
         <Link to={"/faq"}><button>F.A.Q</button></Link>
