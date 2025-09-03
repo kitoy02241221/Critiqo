@@ -114,6 +114,7 @@ function handleSubmit(event) {
           className='selectMatch'
           type='number'
           placeholder='Введите id матча'
+          required
           onChange={(e) => setMatch(e.target.value)}
         />
 
