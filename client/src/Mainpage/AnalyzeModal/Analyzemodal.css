@@ -228,14 +228,179 @@
 }
 
 /* Адаптив */
-@media (max-width: 900px) {
+/* <=1175px */
+@media (max-width: 1175px) {
+  .modalAnalyze {
+    width: 700px;
+    padding: 35px 28px;
+  }
+
+  .modalAnalyze h1 {
+    font-size: 30px;
+  }
+
+  .infoTakeAnalyze {
+    gap: 24px;
+    padding: 20px 24px;
+  }
+
+  .infoTakeAnalyze h2 {
+    font-size: 18px;
+  }
+
+  .infoTakeAnalyze p,
+  .infoTakeAnalyze li {
+    font-size: 14px;
+  }
+}
+
+/* <=1030px */
+@media (max-width: 1030px) {
   .modalAnalyze {
     width: 90%;
-    padding: 30px 20px;
+    padding: 28px 22px;
+  }
+
+  .modalAnalyze h1 {
+    font-size: 26px;
+    margin-bottom: 25px;
+  }
+
+  .rightColumn h2 {
+    margin-left: 0px;
+  }
+
+  .rightColumn ul {
+    margin-left: -40px;
+  }
+
+  .infoTakeAnalyze {
+    gap: 20px;
+    padding: 18px 20px;
+  }
+
+  .infoTakeAnalyze h2 {
+    font-size: 16px;
   }
 
   .selectMatch,
   .interactiveItem textarea {
-    max-width: 100%;
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+
+  .submitMatch {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+}
+
+/* <=768px */
+@media (max-width: 768px) {
+  .modalAnalyze {
+    width: 100%;
+    margin: 120px auto 0 auto;
+    padding: 24px 18px;
+  }
+
+  .modalAnalyze h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .infoTakeAnalyze {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .infoTakeAnalyze .leftColumn,
+  .infoTakeAnalyze .rightColumn {
+    min-width: unset;
+  }
+
+  .rightColumn h2 {
+    margin-left: 0;
+    text-align: left;   /* прижатие к левому краю */
+  }
+
+  .rightColumn ul {
+    margin-left: -40px;
+  }
+
+  .infoTakeAnalyze h2 {
+    font-size: 15px;
+    text-align: left;   /* общий текст тоже по левому краю */
+  }
+
+  .infoTakeAnalyze p,
+  .infoTakeAnalyze li {
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;   /* выравнивание по левому */
+  }
+
+  .interactiveItem h3 {
+    font-size: 14px;
+    text-align: center;
+    align-self: center;
+  }
+
+  .selectMatch,
+  .interactiveItem textarea {
+    font-size: 0.85rem;
+    padding: 9px 11px;
+    max-height: 180px;
+  }
+
+  .submitMatch {
+    font-size: 0.85rem;
+    padding: 9px 18px;
+  }
+}
+
+/* <=354px */
+@media (max-width: 354px) {
+  .modalAnalyze {
+    width: 100%;
+    margin: 80px auto 0 auto;
+    padding: 18px 12px;
+  }
+
+  .modalAnalyze h1 {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  .infoTakeAnalyze {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .infoTakeAnalyze h2 {
+    font-size: 13px;
+    text-align: left;   /* прижатие к левому */
+  }
+
+  .infoTakeAnalyze p,
+  .infoTakeAnalyze li {
+    font-size: 12px;
+    text-align: left;   /* тоже влево */
+  }
+
+  .interactiveItem h3 {
+    font-size: 12px;
+  }
+
+  .selectMatch,
+  .interactiveItem textarea {
+    font-size: 0.75rem;
+    padding: 7px 9px;
+    max-height: 150px;
+  }
+
+  .submitMatch {
+    font-size: 0.75rem;
+    padding: 8px 14px;
   }
 }

@@ -6,7 +6,6 @@ import MyProfile from './MyProfilePage/MyProfile';
 import Navbar from './Mainpage/navBar/Navbar';
 import AdminPanel from './AdminPage/AdminPanel';
 import WeAreTheFirst from './Mainpage/weAreTheFirstBlock/WeAreTheFirst';
-import TryFreeModal from './Mainpage/AnalyzeModal/TryFreeModal/TryFreeModal';
 import Advantagesblock from './Mainpage/AdvantagesBlock/AdvantagesBlock';
 import FAQpage from './FAQpage/FAQpage';
 import Footerblock from './Mainpage/footer/Footerblock'

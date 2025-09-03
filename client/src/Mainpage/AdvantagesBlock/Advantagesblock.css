@@ -132,3 +132,166 @@
   opacity: 1;
   padding: 8px 10px;
 }
+
+/* <=1175px */
+@media (max-width: 1175px) {
+  .advantagesblock {
+    width: 700px;
+    padding: 32px 28px;
+    height: 540px; /* фиксированная, не зависит от dropdown */
+  }
+
+  .advantagesblock h1 {
+    font-size: 28px;
+  }
+
+  .advantageItem {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .advantageItem img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .textBlock p {
+    font-size: 15px;
+  }
+
+  .textBlock .description {
+    font-size: 13.5px;
+  }
+}
+
+/* <=930px */
+@media (max-width: 1030px) {
+  .advantagesblock {
+    width: 90%;
+    padding: 26px 22px;
+    margin: 150px auto 0 auto;
+    height: 520px;
+  }
+
+  .advantagesblock h1 {
+    font-size: 26px;
+    letter-spacing: 1px;
+  }
+
+  .advantageItem {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .advantageItem img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .textBlock p {
+    font-size: 14px;
+  }
+
+  .textBlock .description {
+    font-size: 13px;
+  }
+}
+
+/* <=768px */
+@media (max-width: 768px) {
+  .advantagesblock {
+    width: 100%;
+    padding: 20px 16px;
+    border-radius: 14px;
+    margin: 120px auto 0 auto;
+    height: 500px;
+  }
+
+  .advantagesblock h1 {
+    font-size: 22px;
+  }
+
+  .advantageItem {
+    padding: 9px 10px;
+    gap: 6px;
+    border-radius: 10px;
+  }
+
+  .advantageItem img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .textBlock p {
+    font-size: 13.5px;
+  }
+
+  .textBlock .description {
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+}
+
+/* <=480px */
+@media (max-width: 480px) {
+  .advantagesblock {
+    padding: 16px 12px;
+    margin: 100px auto 0 auto;
+    height: 480px;
+  }
+
+  .advantagesblock h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .advantageItem {
+    padding: 8px 9px;
+    gap: 5px;
+  }
+
+  .advantageItem img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .textBlock p {
+    font-size: 12.5px;
+  }
+
+  .textBlock .description {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+}
+
+/* <=354px */
+@media (max-width: 354px) {
+  .advantagesblock {
+    height: auto; /* теперь может растягиваться под dropdown */
+    min-height: 420px; /* чтобы не схлопнулся */
+  }
+
+  .advantagesblock h1 {
+    font-size: 18px;
+  }
+
+  .advantageItem {
+    padding: 7px 8px;
+    gap: 5px;
+  }
+
+  .advantageItem img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .textBlock p {
+    font-size: 12px;
+  }
+
+  .textBlock .description {
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+}

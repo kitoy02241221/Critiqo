@@ -129,3 +129,142 @@ h3 {
 .CritiqoAP {
   margin-top: -10px;
 }
+
+/* <=1175px */
+@media (max-width: 1175px) {
+  footer {
+    padding: 2rem 1.2rem;
+    height: auto;
+  }
+
+  h2.footerLogo {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  .footer-top {
+    gap: 1.5rem;
+  }
+}
+
+/* <=930px */
+@media (max-width: 930px) {
+  footer {
+    padding: 1.8rem 1rem;
+  }
+
+  h2.footerLogo {
+    font-size: 1.4rem;
+  }
+
+  h2.footerCopy {
+    font-size: 0.8rem;
+  }
+
+  .footer-top {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .navigate,
+  .contacts,
+  .policy {
+    flex: 1 1 180px;
+  }
+
+  h3 {
+    font-size: 0.95rem;
+  }
+
+  .footer-top ul li {
+    font-size: 0.9rem;
+  }
+}
+
+/* <=768px */
+@media (max-width: 768px) {
+  footer {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0.8rem;
+    border-radius: 0;
+    margin: 120px auto 0;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .navigate,
+  .contacts,
+  .policy {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  h2.footerLogo {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 0.9rem;
+  }
+
+  .footer-top ul li {
+    font-size: 0.85rem;
+  }
+}
+
+/* <=480px */
+@media (max-width: 480px) {
+  footer {
+    padding: 1.2rem 0.6rem;
+  }
+
+  h2.footerLogo {
+    font-size: 1.1rem;
+  }
+
+  h2.footerCopy {
+    font-size: 0.75rem;
+  }
+
+  h3 {
+    font-size: 0.85rem;
+  }
+
+  .footer-top ul li {
+    font-size: 0.8rem;
+  }
+}
+
+/* <=354px */
+@media (max-width: 354px) {
+  footer {
+    padding: 1rem 0.5rem;
+    margin: 80px auto 0;
+  }
+
+  h2.footerLogo {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  h2.footerCopy {
+    font-size: 0.7rem;
+  }
+
+  h3 {
+    font-size: 0.75rem;
+  }
+
+  .footer-top ul li {
+    font-size: 0.7rem;
+  }
+}

@@ -5,7 +5,7 @@
   transform: translateX(-50%);
   z-index: 1000;
 
-  width: 100%;
+  width: 90%;
   max-width: 1440px;
   padding: 16px 32px;
 
@@ -21,10 +21,6 @@
 }
 
 /* Логотип / название */
-.banner {
-  position: relative;
-}
-
 .banner h1 {
   font-size: 2rem;
   color: #00FF94;
@@ -38,19 +34,6 @@
 .banner h1:hover {
   color: #00BFFF;
   text-shadow: 0 0 8px rgba(0, 191, 255, 0.7);
-}
-
-.banner::before {
-  content: "";
-}
-
-.banner:hover::before {
-  content: "✦";
-  position: absolute;
-  color: #00BFFF;
-  top: 5px;
-  left: -22px;
-  font-size: 1.2rem;
 }
 
 /* Центральное меню */
@@ -124,4 +107,136 @@
   color: #121212;
   transform: scale(1.07);
   box-shadow: 0 0 14px rgba(255, 76, 76, 0.6);
+}
+
+/* ========= Адаптивность ========= */
+
+/* Планшеты (<=1024px) */
+/* ========= Адаптивность ========= */
+
+/* <=1175px */
+@media (max-width: 1175px) {
+  .navbar {
+    padding: 14px 24px;
+  }
+
+  .banner h1 {
+    font-size: 1.8rem;
+  }
+
+  .navbar-center {
+    gap: 20px;
+  }
+
+  .navbar-center button {
+    width: 150px;
+    font-size: 0.95rem;
+    padding: 8px 14px;
+  }
+
+  .steamAuth button {
+    width: 180px;
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+}
+
+/* <=930px */
+@media (max-width: 1030px) {
+  .navbar {
+    padding: 12px 20px;
+  }
+
+  .banner h1 {
+    font-size: 1.6rem;
+  }
+
+  .navbar-center {
+    gap: 14px;
+  }
+
+  .navbar-center button {
+    width: 130px;
+    font-size: 0.9rem;
+    padding: 7px 12px;
+  }
+
+  .steamAuth {
+    gap: 12px;
+  }
+
+  .steamAuth button {
+    width: 160px;
+    font-size: 0.85rem;
+    padding: 7px 12px;
+  }
+}
+
+/* <=768px */
+/* <=768px */
+@media (max-width: 768px) {
+  .navbar {
+    position: static;         /* снимаем fixed */
+    left: 0;
+    right: 0;
+    transform: none;          /* убираем смещение */
+    width: 100%;              /* на всю ширину */
+    max-width: none;          /* убираем ограничение */
+    flex-direction: column;   /* колоночная структура */
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 0;         /* убираем скругление */
+  }
+
+  .banner {
+    text-align: center;
+    width: 100%;
+  }
+
+  .banner h1 {
+    font-size: 1.5rem;
+  }
+
+  .navbar-center {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* кнопки в 2 колонки */
+    gap: 10px;
+    width: 100%;
+  }
+
+  .navbar-center button {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+
+  .steamAuth {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* кнопки авторизации тоже 2 колонки */
+    gap: 10px;
+    width: 100%;
+  }
+
+  .steamAuth button {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* <=480px */
+@media (max-width: 480px) {
+  .banner h1 {
+    font-size: 1.3rem;
+  }
+
+  .navbar-center {
+    grid-template-columns: 1fr; /* одна колонка */
+  }
+
+  .steamAuth {
+    grid-template-columns: 1fr; /* тоже одна колонка */
+  }
 }

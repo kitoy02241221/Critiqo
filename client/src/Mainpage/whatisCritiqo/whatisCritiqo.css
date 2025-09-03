@@ -133,3 +133,151 @@
   text-align: center;
   margin-bottom: 20px;
 }
+
+/* <=1175px */
+@media (max-width: 1175px) {
+  .WhatisCritiqo {
+    width: 700px;
+    height: auto;
+    padding: 30px;
+    margin: 70px auto;
+  }
+
+  .WhatisCritiqo h1 {
+    font-size: 34px;
+    letter-spacing: 2px;
+  }
+
+  .WhatisCritiqo > p {
+    font-size: 14px;
+    max-width: 600px;
+    margin-bottom: 30px;
+  }
+
+  .WhatisCritiqo ul {
+    gap: 20px;
+  }
+
+  .WhatisCritiqo ul li {
+    padding: 18px 16px;
+  }
+
+  .blockName {
+    font-size: 16px;
+  }
+
+  .WhatisCritiqo ul li p {
+    font-size: 13.5px;
+  }
+}
+
+/* <=930px */
+@media (max-width: 1030px) {
+  .WhatisCritiqo {
+    width: 90%;
+    padding: 24px;
+    margin: 60px auto;
+  }
+
+  .WhatisCritiqo h1 {
+    font-size: 30px;
+  }
+
+  .WhatisCritiqo > p {
+    font-size: 13.5px;
+    margin-bottom: 25px;
+  }
+
+  .WhatisCritiqo ul {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .WhatisCritiqo ul li {
+    padding: 16px 14px;
+  }
+
+  .blockName {
+    font-size: 15px;
+  }
+
+  .WhatisCritiqo ul li p {
+    font-size: 13px;
+  }
+}
+
+/* <=768px */
+@media (max-width: 768px) {
+  .WhatisCritiqo {
+    width: 100%;
+    padding: 20px 16px;
+    border-radius: 14px;
+    margin: 50px 0px 0px 0px;
+  }
+
+  .WhatisCritiqo h1 {
+    font-size: 26px;
+    letter-spacing: 1px;
+  }
+
+  .WhatisCritiqo > p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .WhatisCritiqo ul {
+    gap: 15px;
+  }
+
+  .WhatisCritiqo ul li {
+    padding: 14px 12px;
+  }
+
+  .blockName {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .WhatisCritiqo ul li p {
+    font-size: 12.5px;
+  }
+
+  .WhatisCritiqo > div > p:last-child {
+    font-size: 12.5px;
+  }
+}
+
+/* <=480px */
+@media (max-width: 480px) {
+  .WhatisCritiqo {
+    width: 100%;
+    padding: 16px 12px;
+    margin: 40px auto;
+  }
+
+  .WhatisCritiqo h1 {
+    font-size: 22px;
+  }
+
+  .WhatisCritiqo > p {
+    font-size: 12.5px;
+    margin-bottom: 20px;
+  }
+
+  .WhatisCritiqo ul li {
+    padding: 12px 10px;
+    border-radius: 10px;
+  }
+
+  .blockName {
+    font-size: 13px;
+  }
+
+  .WhatisCritiqo ul li p {
+    font-size: 12px;
+  }
+
+  .WhatisCritiqo > div > p:last-child {
+    font-size: 12px;
+  }
+}
