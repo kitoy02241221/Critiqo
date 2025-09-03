@@ -1,35 +1,22 @@
-// import { useState } from "react";
 import './TryFreeModal.css'
 
 function TryFreeModal() {
-    // const[freematchid, setFreeMatchId] = useState(0)
-    
-    return(
+    return (
         <div className="tryFreeModal">
-        <h1>Попробовать бесплатно</h1>
-            <div>
+            <h1>Попробовать бесплатно</h1>
+            <div className="tryFreeContent">
                 <div className="tryFreeInfoBlock">
-                    <h2>Важная информация:</h2>
-                    <div>
-                        <p>В пробной версии анализы выполняются по шаблону
-                        для демонстрации возможностей сервиса Critiqo. Полноценные анализы повторов
-                        твоих игр можно получить при заказе анализа. Подробнее узнать об отличиях можно через:
-                        <li>Окно заказа анализа</li>
-                        <li>Мой профиль → кнопка 'Заказать анализ'</li>
-                        <li>На главной странице в блоке 'Заказать анализ'</li>
-                        </p>
-                    </div>
+                    <h2>Важная информация</h2>
+                    <ul>
+                        <li>В пробной версии анализы выполняются по шаблону</li>
+                        <li>Полноценные анализы можно получить при заказе анализа</li>
+                        <li>Подробнее через: Окно заказа анализа или Мой профиль → кнопка 'Заказать анализ'</li>
+                    </ul>
+                    <p>Теперь каждый игрок получает доступ к аналитике уровня киберспорта.</p>
                 </div>
-
                 <div className="selectMatchBlock">
                     <h2>Выбор матча</h2>
-
-                    <input
-                    type='number'
-                    placeholder="Введите id матча"
-                    // onChange={(e) => setFreeMatchId(e.target.value)}
-                    />
-
+                    <input type="number" placeholder="Введите id матча" />
                     <button>Отправить</button>
                 </div>
             </div>

@@ -12,6 +12,33 @@ body {
   padding-top: 70px;
   font-family: 'Fira Sans', sans-serif;
   font-weight: 400;
+  color: #F1F1F1;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Фоновой узор */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(0,255,148,0.07) 0px, transparent 250px),
+    radial-gradient(circle at 85% 75%, rgba(0,191,255,0.07) 0px, transparent 250px),
+    /* шестиугольный паттерн */
+    repeating-linear-gradient(60deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 35px),
+    repeating-linear-gradient(-60deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 35px);
+  background-size: cover;
+  background-attachment: fixed;
+  animation: hexagonFlow 80s linear infinite;
+  z-index: -1;
+}
+
+/* Медленное движение узора */
+@keyframes hexagonFlow {
+  0%   { background-position: 0 0, 0 0, 0 0, 0 0; }
+  50%  { background-position: 200px 200px, -200px -200px, 300px 100px, -300px -100px; }
+  100% { background-position: 0 0, 0 0, 0 0, 0 0; }
 }
 
 h1 {

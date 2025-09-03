@@ -77,31 +77,31 @@ function AnalyzeResult() {
         
       </ul>
       {isOpenModal && analyzeData && (
-  <div className="modal-overlay" onClick={handleOverlayClick}>
-    <div className="modal">
-      <h3 className="modal-title">Результат анализа матча №{selectMatch}</h3>
-      
-      <div className="analysis-card">
-        <div className="analysis-section">
-          <h4>📊 Результат</h4>
-          <p>{analyzeData.result}</p>
+    <div className="modal-overlay" onClick={handleOverlayClick}>
+      <div className="modal">
+        <h3 className="modal-title">Результат анализа матча №{selectMatch}</h3>
+        
+        <div className="analysis-card">
+          <div className="analysis-section">
+            <h4>📊 Результат</h4>
+            <p>{analyzeData.result}</p>
+          </div>
+
+          <div className="analysis-section">
+            <h4>💡 Советы</h4>
+            <p>{analyzeData.advice}</p>
+          </div>
+
+          <div className="analysis-section grade">
+            <h4>⭐ Оценка</h4>
+            <p>{analyzeData.grade}</p>
+          </div>
         </div>
 
-        <div className="analysis-section">
-          <h4>💡 Советы</h4>
-          <p>{analyzeData.advice}</p>
-        </div>
-
-        <div className="analysis-section grade">
-          <h4>⭐ Оценка</h4>
-          <p>{analyzeData.grade}</p>
-        </div>
+        <button className="close-btn" onClick={closeModal}>Закрыть</button>
       </div>
-
-      <button className="close-btn" onClick={closeModal}>Закрыть</button>
     </div>
-  </div>
-)}
+    )}
     </div>
   )
 }

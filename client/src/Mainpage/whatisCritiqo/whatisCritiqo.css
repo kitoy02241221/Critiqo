@@ -4,35 +4,60 @@
   margin: 80px auto;
   padding: 40px;
   border-radius: 20px;
-  background: linear-gradient(145deg, #121212, #1E1E1E);
   color: #F1F1F1;
-  box-shadow: 0px 0px 20px rgba(0, 255, 148, 0.1);
   position: relative;
   overflow: hidden;
+  background: linear-gradient(145deg, #121212, #1a1a1a, #121212);
+  box-shadow: 0 0 30px rgba(0, 55, 255, 0.3);
+  z-index: 1;
 }
 
+/* фон с абстрактными линиями */
 .WhatisCritiqo::before {
   content: "";
   position: absolute;
-  top: -100px;
-  left: -100px;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(0,255,148,0.15), transparent 70%);
-  border-radius: 50%;
+  inset: 0;
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      rgba(0, 191, 255, 0.06) 0px,
+      rgba(0, 191, 255, 0.06) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(0, 255, 148, 0.05) 0px,
+      rgba(0, 255, 148, 0.05) 1px,
+      transparent 1px,
+      transparent 25px
+    );
+  opacity: 0.8;
   z-index: 0;
 }
 
+.WhatisCritiqo::before {
+  animation: moveLines 30s linear infinite;
+}
+
+@keyframes moveLines {
+  from {
+    background-position: 0 0, 0 0;
+  }
+  to {
+    background-position: 200px 200px, -200px -200px;
+  }
+}
+
 .WhatisCritiqo h1 {
-  text-align: center;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 800;
   letter-spacing: 3px;
-  margin-bottom: 30px;
+  text-align: center;
   color: #00FF94;
-  text-shadow: 0 0 8px rgba(0, 255, 148, 0.6);
   position: relative;
-  z-index: 2;
+  overflow: hidden;
+  text-transform: uppercase;
 }
 
 .WhatisCritiqo > p {
@@ -73,7 +98,6 @@
   position: relative;
 }
 
-
 .blockName {
   font-size: 18px;
   font-weight: 700;
@@ -98,6 +122,7 @@
   position: relative;
   z-index: 2;
 }
+
 .whyDoingCritiqo {
   color: #00BFFF;
   display: flex;

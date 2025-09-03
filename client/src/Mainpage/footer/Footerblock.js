@@ -9,7 +9,7 @@ function Footerblock({ refs }) {
     if (ref.current && footerRef.current) {
       const footerHeight = footerRef.current.offsetHeight;
       const elementPosition = ref.current.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - footerHeight - -408;
+      const offsetPosition = elementPosition - footerHeight + 300;
 
       window.scrollTo({
         top: offsetPosition,

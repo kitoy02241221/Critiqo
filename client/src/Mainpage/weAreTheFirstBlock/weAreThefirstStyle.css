@@ -1,30 +1,54 @@
 .weAreTheFirstBlock {
-  width: 820px;
-  margin: 200px auto 0px auto;
+  width: 800px;
+  margin: 150px auto;
   padding: 50px 40px;
   border-radius: 20px;
-  background: linear-gradient(145deg, #121212, #1E1E1E);
+  background: linear-gradient(-25deg, #101010, #161616);
   color: #F1F1F1;
   position: relative;
-  overflow: hidden;
-  box-shadow: 0 0 25px rgba(0, 255, 148, 0.1);
+  overflow: visible;
+  box-shadow: 0 0 25px rgba(0, 157, 255, 0.3);
+  z-index: 1;
 }
 
-.weAreTheFirstBlock::before { 
+/* Хаотичные линии на фоне */
+.weAreTheFirstBlock::before {
   content: "";
   position: absolute;
-  top: -80px;
-  right: -80px;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(0,191,255,0.15), transparent 70%);
-  border-radius: 50%;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(30deg, rgba(0, 255, 148, 0.05) 0px, rgba(0, 255, 148, 0.04) 2px, transparent 2px, transparent 35px),
+    repeating-linear-gradient(-45deg, rgba(0, 191, 255, 0.05) 0px, rgba(0, 191, 255, 0.03) 2px, transparent 2px, transparent 40px),
+    repeating-linear-gradient(60deg, rgba(0, 255, 148, 0.05) 0px, rgba(0, 255, 148, 0.02) 1px, transparent 1px, transparent 50px);
+  background-size: 60px 60px, 70px 70px, 100px 100px;
+  border-radius: 20px;
+  opacity: 0.5;
   z-index: 0;
+  animation: chaosLines 15s linear infinite;
 }
 
+@keyframes chaosLines {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  25% {
+    background-position: 50px 100px, -30px 60px, 20px -40px;
+  }
+  50% {
+    background-position: 100px 50px, -60px 120px, 40px -80px;
+  }
+  75% {
+    background-position: 30px 120px, -90px 30px, 60px -20px;
+  }
+  100% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+}
+/* Заголовок */
 .weAreTheFirstBlock h1 {
-  text-align: left;
   font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 2px;
   color: #00FF94;
   text-shadow: 0 0 12px rgba(0, 255, 148, 0.6);
   margin-bottom: 30px;
@@ -32,6 +56,18 @@
   z-index: 2;
 }
 
+.weAreTheFirstBlock h1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 23%;
+  height: 3px;
+  background: linear-gradient(90deg, #00FF94, transparent);
+  border-radius: 2px;
+}
+
+/* Основной текст */
 .weAreTheFirstBlock p {
   font-size: 16px;
   line-height: 1.7;
@@ -41,13 +77,27 @@
   z-index: 2;
 }
 
+/* Список */
 .weAreTheFirstBlock li {
   list-style: none;
   background: #1E1E1E;
-  border-left: 4px solid #00FF94;
-  padding: 12px 20px;
+  padding: 14px 20px 14px 28px;
   margin: 12px 0;
-  border-radius: 10px;
-  transition: all 0.3s ease;
+  border-radius: 12px;
   color: #F1F1F1;
+  font-size: 15px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+  border-left: 4px solid #00BFFF;
+  box-shadow: 0 0 12px rgba(0, 191, 255, 0.1);
+}
+
+.weAreTheFirstBlock li::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.05) inset;
+  z-index: 1;
 }

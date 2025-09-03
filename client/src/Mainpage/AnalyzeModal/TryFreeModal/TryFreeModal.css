@@ -1,28 +1,33 @@
 .tryFreeModal {
-  width: 780px;
-  margin: 200px auto 0px auto;
+  width: 800px;
+  margin: 200px auto 0 auto;
   padding: 45px 35px;
   border-radius: 20px;
-  background: linear-gradient(145deg, #121212, #1E1E1E);
+  background: linear-gradient(145deg, #121212, #1A1A1A);
   color: #F1F1F1;
-  box-shadow: 0 0 25px rgba(0, 191, 255, 0.15);
+  box-shadow: 0 0 25px rgba(0, 217, 255, 0.3);
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
-
+/* Волнистые линии на фоне */
 .tryFreeModal::before {
   content: "";
   position: absolute;
-  top: -60px;
-  left: -60px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(0,255,148,0.2), transparent 70%);
-  border-radius: 50%;
+  inset: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(0, 191, 255, 0.05),
+    rgba(0, 191, 255, 0.05) 1px,
+    transparent 2px,
+    transparent 10px
+  );
   z-index: 0;
+  border-radius: 20px;
 }
 
+/* Заголовок */
 .tryFreeModal h1 {
   text-align: center;
   font-size: 32px;
@@ -33,46 +38,58 @@
   z-index: 2;
 }
 
+/* Информационный блок */
 .tryFreeInfoBlock {
-  background: #1E1E1E;
+  background: linear-gradient(145deg, #1C1C1C, #121212);
   padding: 25px 30px;
   border-radius: 14px;
   margin-bottom: 40px;
-  box-shadow: inset 0 0 15px rgba(0, 255, 148, 0.15);
+  box-shadow: inset 0 0 15px rgba(0, 255, 148, 0.1);
+  position: relative;
+  z-index: 2;
 }
 
 .tryFreeInfoBlock h2 {
   color: #00BFFF;
   margin-bottom: 15px;
+  font-size: 20px;
 }
 
 .tryFreeInfoBlock p, .tryFreeInfoBlock li {
   color: #B0BEC5;
   line-height: 1.6;
   font-size: 15px;
+  margin: 6px 0;
 }
 
 .tryFreeInfoBlock li {
   list-style: none;
+  position: relative;
+  padding-left: 20px;
 }
 
 .tryFreeInfoBlock li::before {
   content: "✦";
   color: #00BFFF;
-  margin-right: 8px;
+  position: absolute;
+  left: 0;
 }
 
+/* Выбор матча */
 .selectMatchBlock {
   text-align: center;
-  background: #121212;
+  background: linear-gradient(145deg, #1A1A1A, #121212);
   padding: 30px;
   border-radius: 14px;
   box-shadow: inset 0 0 12px rgba(0, 191, 255, 0.1);
+  position: relative;
+  z-index: 2;
 }
 
 .selectMatchBlock h2 {
   color: #00BFFF;
   margin-bottom: 20px;
+  font-size: 20px;
 }
 
 .selectMatchBlock input {
@@ -88,22 +105,18 @@
 }
 
 .selectMatchBlock input:focus {
-  box-shadow: 0 0 8px rgba(0, 255, 148, 0.6);
   outline: none;
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
 }
 
+/* Кнопка */
 .selectMatchBlock button {
   padding: 12px 28px;
   border-radius: 12px;
   border: none;
   font-size: 1rem;
-  background: linear-gradient(135deg, #00FF94, #00BFFF);
+  background: #00BFFF;
   color: #121212;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.selectMatchBlock button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(0, 255, 148, 0.5), 0 0 15px rgba(0, 191, 255, 0.5);
 }

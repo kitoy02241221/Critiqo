@@ -1,40 +1,132 @@
 .modalAnalyze {
   width: 800px;
-  margin: 200px auto 0px auto;
+  margin: 200px auto 0 auto;
   padding: 40px 35px;
   border-radius: 20px;
-  background: linear-gradient(145deg, #121212, #1E1E1E);
+  background: linear-gradient(145deg, #101010, #1c1c1c);
   color: #F1F1F1;
-  box-shadow: 0 0 25px rgba(0, 255, 148, 0.15);
+  box-shadow: 0 0 30px rgba(0, 251, 255, 0.3);
   position: relative;
   overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1;
 }
 
+/* Фоновый узор (как у advantagesblock) */
+.modalAnalyze::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(0,255,148,0.05) 0px, transparent 120px),
+    radial-gradient(circle at 85% 70%, rgba(0,191,255,0.05) 0px, transparent 150px),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(0, 191, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 32px
+    );
+  animation: floatPattern 25s linear infinite;
+  z-index: 0;
+}
+
+/* Анимированные круги поверх узора, но под контентом */
+.modalAnalyze .circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  z-index: 0;
+}
+
+/* Первый круг */
+.modalAnalyze .circle1 {
+  width: 180px;
+  height: 180px;
+  background: rgba(0, 255, 148, 0.15);
+  top: -60px;
+  left: -60px;
+  animation: floatCircle1 28s linear infinite;
+}
+
+/* Второй круг */
+.modalAnalyze .circle2 {
+  width: 140px;
+  height: 140px;
+  background: rgba(0, 191, 255, 0.15);
+  bottom: -60px;
+  right: -60px;
+  animation: floatCircle2 32s linear infinite;
+}
+
+/* Третий круг */
+.modalAnalyze .circle3 {
+  width: 100px;
+  height: 100px;
+  background: rgba(0, 255, 148, 0.1);
+  top: 45%;
+  left: 25%;
+  animation: floatCircle3 36s linear infinite;
+}
+
+/* Анимации кругов */
+@keyframes floatCircle1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(380px, 280px) scale(1.2); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes floatCircle2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-280px, -220px) scale(1.1); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes floatCircle3 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(220px, -240px) scale(1.15); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes floatPattern {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to { background-position: 220px 220px, -220px -220px, 320px 320px; }
+}
+
+/* Заголовок */
 .modalAnalyze h1 {
   text-align: center;
   color: #00FF94;
   text-shadow: 0 0 12px rgba(0, 255, 148, 0.6);
   margin-bottom: 35px;
+  position: relative;
+  z-index: 2;
 }
 
+/* Информационный блок */
 .infoTakeAnalyze {
-  background: #1E1E1E;
+  background: linear-gradient(145deg, #1E1E1E, #1C1C1C);
   padding: 25px 30px;
   border-radius: 14px;
   margin-bottom: 40px;
-  box-shadow: inset 0 0 12px rgba(0, 191, 255, 0.1);
+  box-shadow: inset 0 0 15px rgba(0, 191, 255, 0.1);
+  position: relative;
+  z-index: 2;
 }
 
 .infoTakeAnalyze h2 {
   color: #00BFFF;
   margin-bottom: 15px;
+  font-size: 20px;
+  z-index: 2;
 }
 
-.infoTakeAnalyze p, 
+.infoTakeAnalyze p,
 .infoTakeAnalyze li {
   font-size: 15px;
   line-height: 1.6;
   color: #B0BEC5;
+  z-index: 2;
 }
 
 .infoTakeAnalyze li {
@@ -42,6 +134,7 @@
   margin: 6px 0;
   position: relative;
   padding-left: 18px;
+  z-index: 2;
 }
 
 .infoTakeAnalyze li::before {
@@ -49,12 +142,16 @@
   color: #00BFFF;
   position: absolute;
   left: 0;
+  z-index: 2;
 }
 
+/* Интерактивные элементы */
 .interactiveItem {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .interactiveItem h3 {
@@ -63,6 +160,7 @@
   align-self: flex-start;
 }
 
+/* Инпуты */
 .selectMatch,
 .interactiveItem textarea {
   width: 100%;
@@ -74,18 +172,21 @@
   color: #F1F1F1;
   font-size: 1rem;
   margin-bottom: 20px;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
   resize: none;
   max-height: 260px;
-  overflow-y: auto; 
+  overflow-y: auto;
+  z-index: 2;
 }
 
 .selectMatch:focus,
 .interactiveItem textarea:focus {
   outline: none;
-  box-shadow: 0 0 10px rgba(0, 255, 148, 0.6);
+  box-shadow: 0 0 12px rgba(0, 255, 148, 0.6), 0 0 8px rgba(0, 191, 255, 0.4);
+  transform: translateY(-1px);
 }
 
+/* Кнопка */
 .submitMatch {
   margin-top: 10px;
   padding: 12px 28px;
@@ -96,13 +197,15 @@
   color: #121212;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 2;
 }
 
 .submitMatch:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(0, 255, 148, 0.5), 0 0 15px rgba(0, 191, 255, 0.5);
+  box-shadow: 0 0 18px rgba(0, 255, 148, 0.5), 0 0 18px rgba(0, 191, 255, 0.5);
 }
 
+/* Адаптив */
 @media (max-width: 900px) {
   .modalAnalyze {
     width: 90%;
