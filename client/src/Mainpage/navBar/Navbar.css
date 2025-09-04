@@ -197,7 +197,7 @@ body, main {
 /* <=850px */
 @media (max-width: 850px) {
   body {
-    padding-top: 0 !important; /* убираем отступ, добавленный под фиксированный navbar */
+    padding-top: 0 !important;
   }
   .navbar {
     position: static;

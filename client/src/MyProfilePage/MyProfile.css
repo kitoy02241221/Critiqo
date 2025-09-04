@@ -1,13 +1,14 @@
 .profileBlock {
-    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    min-height: 600px;
     margin: 20px auto;
-    width: 1200px;
-    height: 900px;
     padding: 40px;
     border-radius: 20px;
     color: #F1F1F1;
     background: linear-gradient(145deg, #141414, #1E1E1E, #222);
     box-shadow: 0 0 30px rgba(0, 255, 148, 0.08), 0 0 60px rgba(0, 191, 255, 0.05);
+    position: relative;
     overflow: hidden;
 }
 
@@ -217,4 +218,161 @@
     text-align: center;
     color: #00FF94;
     text-shadow: 0 0 10px rgba(0,255,148,0.5);
+}
+
+/* <=1408px */
+@media (max-width: 1408px) {
+  .profileBlock {
+    max-width: 80%; /* примерно как navbar */
+    padding: 30px;
+  }
+
+  .profileBlock h1 {
+    font-size: 34px;
+  }
+
+  .userName {
+    font-size: 24px;
+  }
+
+  .statisticsBlock {
+    gap: 16px;
+  }
+
+  .statistics {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+/* <=930px */
+@media (max-width: 960px) {
+  .profileBlock {
+    max-width: 90%;
+    max-width: 800px;
+    padding: 24px;
+  }
+
+  .profileBlock h1 {
+    font-size: 30px;
+    margin-bottom: 18px;
+  }
+
+  .userName {
+    font-size: 22px;
+  }
+
+  .profileBlock input {
+    width: 260px;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+  }
+
+  .statistics {
+    width: 160px;
+    height: 160px;
+  }
+
+  .statistics strong {
+    font-size: 20px;
+  }
+}
+
+/* <=850px */
+@media (max-width: 850px) {
+  .profileBlock {
+    width: 94%;
+    max-width: 94%;
+    border-radius: 0;
+    padding: 18px;
+  }
+
+  .profileBlock h1 {
+    font-size: 28px;
+  }
+
+  .userName {
+    font-size: 20px;
+  }
+
+  .statisticsBlock {
+    gap: 12px;
+  }
+
+  .statistics {
+    width: 48%;
+    height: 150px;
+  }
+
+  .analyzeHistory {
+    width: 90%;
+    height: 160px;
+  }
+
+  .profileButton {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .profileButton button {
+    width: 100%;
+  }
+}
+
+/* <=768px */
+@media (max-width: 768px) {
+  .profileBlock {
+    width: 95%;
+    max-width: 95%;
+    padding: 18px;
+  }
+
+  .profileBlock h1 {
+    font-size: 26px;
+  }
+
+  .userName {
+    font-size: 18px;
+  }
+
+  .profileBlock input {
+    width: 100%;
+    margin: 8px 0;
+  }
+
+  .statistics {
+    width: 100%;
+    height: 140px;
+  }
+
+  .analyzeHistory {
+    padding: 16px;
+    height: 140px;
+  }
+}
+
+/* <=480px */
+@media (max-width: 480px) {
+  .profileBlock {
+    padding: 14px;
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .profileBlock h1 {
+    font-size: 22px;
+  }
+
+  .userName {
+    font-size: 16px;
+  }
+
+  .statistics {
+    height: 120px;
+  }
+
+  .profileButton button {
+    height: 48px;
+    font-size: 0.9rem;
+  }
 }

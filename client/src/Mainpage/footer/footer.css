@@ -203,6 +203,7 @@ h3 {
     padding: 1.5rem 0.8rem;
     border-radius: 0;
     margin: 120px auto 0;
+    padding: 20px 21px;
   }
 
   .footer-top {
@@ -234,7 +235,7 @@ h3 {
 /* <=480px */
 @media (max-width: 480px) {
   footer {
-    padding: 1.2rem 0.6rem;
+    padding: 20px 21px;
   }
 
   h2.footerLogo {
@@ -257,7 +258,7 @@ h3 {
 /* <=354px */
 @media (max-width: 354px) {
   footer {
-    padding: 1rem 0.5rem;
+    padding: 20px 21px;
     margin: 80px auto 0;
   }
 

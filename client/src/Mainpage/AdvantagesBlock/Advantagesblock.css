@@ -211,7 +211,7 @@
 @media (max-width: 768px) {
   .advantagesblock {
     width: 100%;
-    padding: 20px 16px;
+    padding: 20px 21px;
     border-radius: 14px;
     margin: 120px auto 0 auto;
     height: 500px;
@@ -245,7 +245,7 @@
 /* <=480px */
 @media (max-width: 480px) {
   .advantagesblock {
-    padding: 16px 12px;
+    padding: 20px 21px;
     margin: 100px auto 0 auto;
     height: 480px;
   }
@@ -280,6 +280,7 @@
   .advantagesblock {
     height: auto; /* теперь может растягиваться под dropdown */
     min-height: 420px; /* чтобы не схлопнулся */
+    padding: 20px 21px;
   }
 
   .advantagesblock h1 {
