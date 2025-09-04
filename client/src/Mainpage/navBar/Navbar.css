@@ -111,44 +111,63 @@
 
 /* ========= Адаптивность ========= */
 
-/* <=1408px */
-@media (max-width: 1408px) {
+/* Планшеты (<=1024px) */
+/* ========= Адаптивность ========= */
+
+/* <=1175px */
+@media (max-width: 1175px) {
   .navbar {
-    padding: 12px 22px;
-    flex-wrap: wrap; /* разрешаем перенос */
-    justify-content: center;
+    padding: 14px 24px;
   }
 
-  .navbar-center,
-  .steamAuth {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
+  .banner h1 {
+    font-size: 1.8rem;
   }
 
-  .navbar-center button,
-  .steamAuth button {
-    flex: 1 1 120px;   /* кнопки тянутся, но не меньше 120px */
-    max-width: 200px;
+  .navbar-center {
+    gap: 20px;
+  }
+
+  .navbar-center button {
+    width: 150px;
+    font-size: 0.95rem;
     padding: 8px 14px;
+  }
+
+  .steamAuth button {
+    width: 180px;
     font-size: 0.9rem;
+    padding: 8px 14px;
   }
 }
 
 /* <=930px */
-@media (max-width: 930px) {
+@media (max-width: 1030px) {
   .navbar {
-    padding: 12px 18px;
+    width: 100%;
+    padding: 12px 20px;
   }
 
   .banner h1 {
     font-size: 1.6rem;
   }
 
-  .navbar-center button,
+  .navbar-center {
+    gap: 14px;
+  }
+
+  .navbar-center button {
+    width: 130px;
+    font-size: 0.9rem;
+    padding: 7px 12px;
+  }
+
+  .steamAuth {
+    gap: 12px;
+  }
+
   .steamAuth button {
-    flex: 1 1 100px;
+    width: 160px;
     font-size: 0.85rem;
     padding: 7px 12px;
   }
@@ -158,6 +177,11 @@
 @media (max-width: 850px) {
   .navbar {
     position: static;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    max-width: none;
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
@@ -174,15 +198,80 @@
     font-size: 1.5rem;
   }
 
-  .navbar-center,
-  .steamAuth {
+  .navbar-center {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* кнопки в 2 колонки */
     gap: 10px;
     width: 100%;
   }
 
-  .navbar-center button,
+  .navbar-center button {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+
+  .steamAuth {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* кнопки авторизации тоже 2 колонки */
+    gap: 10px;
+    width: 100%;
+  }
+
+  .steamAuth button {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* <=768px */
+@media (max-width: 768px) {
+  .navbar {
+    position: static;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    max-width: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 0;
+  }
+
+  .banner {
+    text-align: center;
+    width: 100%;
+  }
+
+  .banner h1 {
+    font-size: 1.5rem;
+  }
+
+  .navbar-center {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* кнопки в 2 колонки */
+    gap: 10px;
+    width: 100%;
+  }
+
+  .navbar-center button {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+
+  .steamAuth {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* кнопки авторизации тоже 2 колонки */
+    gap: 10px;
+    width: 100%;
+  }
+
   .steamAuth button {
     width: 100%;
     padding: 6px 10px;
@@ -196,8 +285,11 @@
     font-size: 1.3rem;
   }
 
-  .navbar-center,
+  .navbar-center {
+    grid-template-columns: 1fr; /* одна колонка */
+  }
+
   .steamAuth {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* тоже одна колонка */
   }
 }
