@@ -184,6 +184,16 @@ h3 {
   }
 }
 
+@media (max-width: 850px) {
+  footer {
+    width: 100%;
+    padding: 20px 21px;
+    border-radius: 14px;
+    margin: 50px 0px 0px 0px;
+    margin-left: -10px;
+  }
+}
+
 /* <=768px */
 @media (max-width: 768px) {
   footer {
