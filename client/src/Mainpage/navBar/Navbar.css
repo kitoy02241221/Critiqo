@@ -111,63 +111,44 @@
 
 /* ========= Адаптивность ========= */
 
-/* Планшеты (<=1024px) */
-/* ========= Адаптивность ========= */
-
-/* <=1175px */
-@media (max-width: 1175px) {
+/* <=1408px */
+@media (max-width: 1408px) {
   .navbar {
-    padding: 14px 24px;
+    padding: 12px 22px;
+    flex-wrap: wrap; /* разрешаем перенос */
+    justify-content: center;
   }
 
-  .banner h1 {
-    font-size: 1.8rem;
+  .navbar-center,
+  .steamAuth {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
   }
 
-  .navbar-center {
-    gap: 20px;
-  }
-
-  .navbar-center button {
-    width: 150px;
-    font-size: 0.95rem;
-    padding: 8px 14px;
-  }
-
+  .navbar-center button,
   .steamAuth button {
-    width: 180px;
-    font-size: 0.9rem;
+    flex: 1 1 120px;   /* кнопки тянутся, но не меньше 120px */
+    max-width: 200px;
     padding: 8px 14px;
+    font-size: 0.9rem;
   }
 }
 
 /* <=930px */
-@media (max-width: 1030px) {
+@media (max-width: 930px) {
   .navbar {
-    width: 100%;
-    padding: 12px 20px;
+    padding: 12px 18px;
   }
 
   .banner h1 {
     font-size: 1.6rem;
   }
 
-  .navbar-center {
-    gap: 14px;
-  }
-
-  .navbar-center button {
-    width: 130px;
-    font-size: 0.9rem;
-    padding: 7px 12px;
-  }
-
-  .steamAuth {
-    gap: 12px;
-  }
-
+  .navbar-center button,
   .steamAuth button {
-    width: 160px;
+    flex: 1 1 100px;
     font-size: 0.85rem;
     padding: 7px 12px;
   }
