@@ -2,7 +2,6 @@
     width: 90%;
     max-width: 1200px;
     min-height: 600px;
-    margin: 20px auto;
     padding: 40px;
     border-radius: 20px;
     color: #F1F1F1;
@@ -223,7 +222,7 @@
 /* <=1408px */
 @media (max-width: 1408px) {
   .profileBlock {
-    max-width: 80%; /* примерно как navbar */
+    max-width: 80%;
     padding: 30px;
   }
 
@@ -243,13 +242,28 @@
     width: 180px;
     height: 180px;
   }
+
+  .modalWindow {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .inputModal {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .infoModal {
+    width: 90%;
+    max-width: 90%;
+  }
 }
 
-/* <=930px */
+/* <=960px */
 @media (max-width: 960px) {
   .profileBlock {
+    width: 90%;
     max-width: 90%;
-    max-width: 800px;
     padding: 24px;
   }
 
@@ -275,6 +289,21 @@
 
   .statistics strong {
     font-size: 20px;
+  }
+
+  .modalWindow {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .inputModal {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .infoModal {
+    width: 90%;
+    max-width: 90%;
   }
 }
 
@@ -317,6 +346,21 @@
   .profileButton button {
     width: 100%;
   }
+
+  .modalWindow {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .inputModal {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .infoModal {
+    width: 90%;
+    max-width: 90%;
+  }
 }
 
 /* <=768px */
@@ -349,6 +393,21 @@
     padding: 16px;
     height: 140px;
   }
+
+  .modalWindow {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .inputModal {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .infoModal {
+    width: 90%;
+    max-width: 90%;
+  }
 }
 
 /* <=480px */
@@ -357,7 +416,7 @@
     padding: 14px;
     width: 90%;
     max-width: 90%;
-  }
+}
 
   .profileBlock h1 {
     font-size: 22px;
@@ -374,5 +433,20 @@
   .profileButton button {
     height: 48px;
     font-size: 0.9rem;
+  }
+
+  .modalWindow {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .inputModal {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .infoModal {
+    width: 90%;
+    max-width: 90%;
   }
 }

@@ -1,4 +1,6 @@
 import "./ByAnalyzeModal.css"
+import ByModalinProfile from "../../../ByModal/ByModalinProfile/ByModalInProfile";
+import { useState } from "react";
 
 function ByAnalyzeModal({ modalstyle, onClose }) {
   const handleOverlayClick = (e) => {
@@ -7,6 +9,8 @@ function ByAnalyzeModal({ modalstyle, onClose }) {
       onClose();
     }
   };
+
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div
@@ -41,8 +45,13 @@ function ByAnalyzeModal({ modalstyle, onClose }) {
           <input type="text" placeholder="Например: Не мог найти фарм" />
         </div>
 
-        <button>Оплатить</button>
+        <button onClick={() => setIsOpen(true)}>Оплатить</button>
       </div>
+
+      <ByModalinProfile
+      ByModalIsOpen={isOpen}
+      setByModalIsOpen={setIsOpen}
+      />
     </div>
   );
 }

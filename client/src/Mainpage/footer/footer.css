@@ -15,6 +15,7 @@ footer {
   position: relative;
   overflow: hidden;
   height: 200px;
+  z-index: 0;
 }
 
 /* Подсветка на фоне */

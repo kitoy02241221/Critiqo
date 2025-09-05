@@ -1,0 +1,120 @@
+/* Фон и выравнивание по центру */
+.privacy-wrapper {
+  height: 100%;
+  margin-top: 60px; /* отступ сверху для Navbar */
+  background: #0f1116; /* тёмный фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e4e6eb;
+}
+
+/* Основной контейнер документа */
+.privacy-container {
+  max-width: 900px;
+  width: 100%;
+  padding: 40px 20px;
+  background: #1a1d23; /* чуть светлее фон блока */
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  overflow-y: auto;
+  max-height: 95vh; /* чтобы документ не выходил за экран */
+  line-height: 1.6;
+  color: #e4e6eb;
+    margin-left: auto;
+  margin-right: auto;
+}
+
+/* Заголовок */
+.privacy-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Дата вступления */
+.privacy-date {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 40px;
+  color: #aaa;
+}
+
+/* Скролл документа */
+.privacy-scroll {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 8px; /* место для скролла */
+}
+
+/* Разделы */
+.privacy-section {
+  margin-bottom: 24px;
+}
+
+.privacy-section h2 {
+  font-size: 1.3rem;
+  margin: 20px 0 10px;
+  color: #fff;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+  padding-bottom: 5px;
+}
+
+/* Параграфы */
+.privacy-section p {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 15px;
+}
+
+/* Списки */
+.privacy-section ul {
+  margin: 10px 0 20px;
+  padding-left: 20px;
+}
+
+.privacy-section li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: #ddd;
+}
+
+/* Ссылки */
+.privacy-section a {
+  color: #4fa3ff;
+  text-decoration: none;
+}
+
+.privacy-section a:hover {
+  color: #73b8ff;
+  text-decoration: underline;
+}
+
+/* Адаптивность */
+@media (max-width: 1408px) {
+  .privacy-container {
+    margin-top: 80px;
+    padding: 25px 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  body, html {
+    align-items: flex-start; /* блок сверху */
+  }
+
+  .privacy-container {
+    margin: 10px;
+    padding: 20px 15px;
+  }
+
+  .privacy-title {
+    font-size: 1.6rem;
+  }
+
+  .privacy-section h2 {
+    font-size: 1.1rem;
+  }
+}

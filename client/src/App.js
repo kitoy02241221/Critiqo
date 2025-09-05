@@ -10,12 +10,18 @@ import Advantagesblock from './Mainpage/AdvantagesBlock/AdvantagesBlock';
 import FAQpage from './FAQpage/FAQpage';
 import Footerblock from './Mainpage/footer/Footerblock'
 import Support from './supportPage/support';
+import PolicyOffer from './CritiqoPolicy/PolicyOffer';
+import TermsOfUse from './CritiqoPolicy/UsePolicy';
+import PrivacyPolicy from './CritiqoPolicy/PrivacyPolicy';
 import './Mainpage/App.css';
 
 function App() {
   const location = useLocation();  
   const isSupportPage = location.pathname === "/support"
   const isHomePage = location.pathname === "/";
+  const isPolicyOffer = location.pathname === "/policy-offer"
+  const isUsePolicy = location.pathname ==="/use-policy"
+  const isPrivacyPolicy = location.pathname ==="/privacy-policy"
 
 
   const aboutRef = useRef(null);
@@ -54,6 +60,20 @@ function App() {
         <>
           <Support/>
         </>
+      )}
+
+      {isPolicyOffer && (
+        <>
+          <PolicyOffer/>
+        </>
+      )}
+      {isUsePolicy && (
+        <>
+        <TermsOfUse/>
+        </>
+      )}
+      {isPrivacyPolicy && (
+        <PrivacyPolicy/>
       )}
     </div>
   );

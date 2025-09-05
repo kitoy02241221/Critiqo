@@ -1,0 +1,207 @@
+/* Оверлей модалки */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Контейнер модалки */
+.modal-content {
+  width: 400px;
+  max-width: 90%;
+  padding: 30px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #121212, #1a1a1a, #121212);
+  box-shadow: 0 0 30px rgba(0, 55, 255, 0.3);
+  color: #F1F1F1;
+  position: relative;
+  text-align: center;
+}
+
+/* Заголовок */
+.modal-content h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #00FF94;
+  margin-bottom: 15px;
+}
+
+/* Описание */
+.modal-content p {
+  font-size: 14px;
+  color: #B0BEC5;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+/* Кнопки */
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Закрыть */
+.close-btn {
+  background: #1E1E1E;
+  color: #00BFFF;
+  border: 1px solid rgba(0, 191, 255, 0.2);
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+}
+
+.close-btn:hover {
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #00FF94, #00BFFF);
+  color: #121212;
+  padding: 20px 15px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 40px;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+}
+
+/* Обертка для цены, чтобы разместить ярлык */
+.price-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Старая цена / скидка в виде наклонного ярлыка */
+.price-wrapper .old-price {
+  position: absolute;
+  top: -10px;
+  right: -20px;
+  font-size: 12px;
+  color: #FF4D4D;
+  font-weight: 700;
+  transform: rotate(20deg);
+  background: rgba(255, 247, 247, 0.32);
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  text-decoration: line-through; /* добавлено перечеркивание */
+}
+
+/* Текущая цена */
+.confirm-btn .new-price {
+  font-size: 16px;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.confirm-btn:hover {
+    transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(0, 255, 148, 0.5), 0 0 18px rgba(0, 191, 255, 0.5);
+}
+
+/* Список информации внутри модалки */
+.modalInfo {
+  list-style-type: disc; /* стандартные буллеты */
+  padding-left: 20px; /* отступ для маркеров */
+  margin-bottom: 25px;
+  text-align: left; /* выравнивание текста по левому краю */
+  color: #B0BEC5; /* светло-серый для контраста с фоном */
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.modalInfo li {
+  margin-bottom: 10px;
+  list-style: none;
+}
+
+.modalInfo li::before {
+  content: "✦";
+  color: #00BFFF;
+  position: absolute;
+  left: 30px;
+}
+
+.checkPolicy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #B0BEC5;
+  margin-top: 15px;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+}
+
+/* Скрываем стандартный чекбокс */
+.checkPolicy input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #555;
+  border-radius: 4px;
+  background: #1E1E1E;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-block;
+}
+
+/* Анимация при наведении */
+.checkPolicy input[type="checkbox"]:hover {
+  border-color: #00BFFF;
+  box-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
+}
+
+/* Галочка с плавной анимацией */
+.checkPolicy input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  border: solid #00FF94;
+  border-width: 0 2px 2px 0;
+  top: 1px;
+  left: 6px;
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Показываем галочку при checked */
+.checkPolicy input[type="checkbox"]:checked::after {
+  transform: rotate(45deg) scale(1);
+}
+
+/* Ссылки внутри текста */
+.checkPolicy a {
+  color: #00BFFF;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.checkPolicy a:hover {
+  color: #00FF94;
+}

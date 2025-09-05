@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import '../AnalyzeModal/Analyzemodal.css';
 import { supabase } from '../../createSupabase/supabase';
+import ByModal from '../../ByModal/ByModal';
+
 
 function Modal() {
 
-    const [match, setMatch] = useState(0)
+  const [match, setMatch] = useState(0)
   const [task, setTask] = useState('')
   const [problem, setProblem] = useState('')
+  const [ByModalIsOpen, setByModalIsOpen] = useState(false)
 
   const API_BASE_URL = "https://critiqo-1.onrender.com";
 
@@ -71,6 +74,10 @@ function handleSubmit(event) {
   onAddTask(testAnalyze)
 }
 
+ function openByModal () {
+  
+ }
+
 
   const refArea1 = useRef(null);
   const refArea2 = useRef(null);
@@ -81,6 +88,12 @@ function handleSubmit(event) {
       ref.current.style.height = ref.current.scrollHeight + 'px';
     }
   };
+
+
+  function openModal() {
+    setByModalIsOpen(true)
+  }
+
 
   return (
     <div className='modalAnalyze'>
@@ -135,14 +148,20 @@ function handleSubmit(event) {
           onChange={(e) => setProblem(e.target.value)}
           rows={1}
         />
-
-        <button className='submitMatch' onClick={handleSubmit}>
-          Отправить
+        
+        {/*onClick={handleSubmit} */}
+        <button className='submitMatch' onClick={openModal}> 
+          Оплатить
         </button>
         <div class="circle circle1"></div>
         <div class="circle circle2"></div>
         <div class="circle circle3"></div>
       </div>
+
+      <ByModal
+      ByModalIsOpen={ByModalIsOpen}
+      setByModalIsOpen={setByModalIsOpen}
+      />
     </div>
   );
 }

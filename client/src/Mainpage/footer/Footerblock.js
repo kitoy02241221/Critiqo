@@ -35,7 +35,7 @@ function Footerblock({ refs }) {
           <h3>Связаться с нами</h3>
           <ul>
             <li>
-              <a href="https://mail.ru/">CritiqoSupport@mail.ru</a>
+              <a href="mailto:CritiqoSupport@mail.ru">CritiqoSupport@mail.ru</a>
             </li>
             <Link to="/support">
               <li>Написать в техподдержку</li>
@@ -45,11 +45,14 @@ function Footerblock({ refs }) {
 
         <div className="policy">
           <ul>
-            <Link to="/">
+            <Link to="/privacy-policy">
               <li>Политика конфиденциальности</li>
             </Link>
-            <Link to="/">
+            <Link to="/use-policy">
               <li>Условия использования</li>
+            </Link>
+            <Link to="/policy-offer">
+              <li>Публичная оферта</li>
             </Link>
           </ul>
         </div>

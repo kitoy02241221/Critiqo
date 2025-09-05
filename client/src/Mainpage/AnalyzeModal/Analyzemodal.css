@@ -216,7 +216,7 @@
   border: none;
   font-size: 1rem;
   background: linear-gradient(135deg, #00FF94, #00BFFF);
-  color: #121212;
+  color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   z-index: 2;
@@ -225,6 +225,8 @@
 .submitMatch:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 18px rgba(0, 255, 148, 0.5), 0 0 18px rgba(0, 191, 255, 0.5);
+  color: rgba(0, 0, 0, 1);
+  transition: 0.3s;
 }
 
 /* Адаптив */

@@ -1,0 +1,117 @@
+/* Фон и выравнивание по центру */
+.fullscreen-wrapper {
+  height: 100%;
+  margin-top: 60px; /* можно регулировать отдельно */
+  background: #0f1116; /* тёмный фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e4e6eb;
+}
+
+/* Контейнер всего документа */
+.PolicyOffer {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 900px;
+  width: 100%;
+  padding: 40px 20px;
+  line-height: 1.6;
+  color: #e4e6eb;
+  background: #1a1d23; /* чуть светлее фон блока */
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  overflow-y: auto;
+  max-height: 95vh; /* чтобы документ не выходил за экран */
+}
+
+/* Заголовки */
+.PolicyOffer h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.PolicyOffer p {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 40px;
+  color: #aaa;
+}
+
+.PolicyOffer h2 {
+  font-size: 1.3rem;
+  margin: 25px 0 10px;
+  color: #fff;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+  padding-bottom: 5px;
+}
+
+/* Списки */
+.PolicyOffer ul {
+  margin: 15px 0 25px;
+  padding-left: 20px;
+}
+
+.PolicyOffer li {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: #ddd;
+}
+
+/* Подразделы (6.1, 6.2 и т.д.) */
+.PolicyOffer p {
+  margin: 15px 0 5px;
+  font-weight: 600;
+  color: #ccc;
+}
+
+/* Реквизиты */
+.PolicyOffer div ul {
+  list-style: none;
+  padding: 0;
+}
+
+.PolicyOffer div li {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+/* Ссылки */
+.PolicyOffer a {
+  color: #4fa3ff;
+  text-decoration: none;
+}
+
+.PolicyOffer a:hover {
+  text-decoration: underline;
+  color: #73b8ff;
+}
+@media (max-width: 1408px) {
+    .PolicyOffer {
+    margin-top: 80px;
+    padding: 20px 15px;
+  }
+}
+
+/* Для мобильных */
+@media (max-width: 600px) {
+  body, html {
+    align-items: flex-start; /* на телефоне блок будет сверху */
+  }
+
+  .PolicyOffer {
+    margin: 10px;
+    padding: 20px 15px;
+  }
+
+  .PolicyOffer h1 {
+    font-size: 1.6rem;
+  }
+
+  .PolicyOffer h2 {
+    font-size: 1.1rem;
+  }
+}
