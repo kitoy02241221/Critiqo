@@ -19,113 +19,86 @@ function AdminPanel() {
     async function fetchTasks() {
       setLoading(true);
 
-      const { data, error } = await supabase
-        .from('AnalyzeAplication')
-        .select('match, task, problem, id')
-        .order('created_at', { ascending: false });
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/tasks`, {
+          method: 'GET',
+          credentials: 'include',
+        });
 
-      if (error) {
-        console.error('Ошибка при загрузке:', error.message);
-      } else {
+        if (!response.ok) {
+          throw new Error(`Ошибка: ${response.status}`);
+        }
+
+        const data = await response.json();
         setTasks(data);
+      } catch (err) {
+        console.error('Ошибка при загрузке:', err.message);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     }
 
     async function aplicationCount() {
-      const { count, error } = await supabase
-        .from('AnalyzeAplication')
-        .select('*', { count: 'exact' });
+  try {
+    const response = await fetch('https://critiqo-1.onrender.com/api/tasks/count', {
+      method: 'GET',
+      credentials: 'include'
+    });
 
-      if (error) {
-        console.error('Ошибка:' + error.message);
-        return 0;
-      }
+    if (!response.ok) {
+      throw new Error(`Ошибка: ${response.status}`);
+    }
 
-      setCount(count);
-      return count || 0;
-    };
+    const { count } = await response.json();
+    setCount(count);
+    return count || 0;
+  } catch (err) {
+    console.error('Ошибка:', err.message);
+    setCount(0);
+    return 0;
+  }
+}
 
     fetchTasks();
     aplicationCount();
   }, [update]);
 
   async function resultAnalyze(match, taskInputs) {
-    setLoading(true);
+  setLoading(true);
 
-    if (!taskInputs.result.trim() || !taskInputs.advice.trim() || !taskInputs.grade.trim()) {
-      alert('Пожалуйста, заполните все поля!');
-      setLoading(false);
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/result-analyze`, {
+      method: "POST",
+      credentials: "include", // передаём куки для сессии
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        match,
+        result: taskInputs.result,
+        grade: taskInputs.grade,
+        advice: taskInputs.advice,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert("❌ Ошибка: " + (data.error || "Неизвестная ошибка"));
       return;
     }
 
-    try {
-      const resUser = await fetch(`${API_BASE_URL}/get-user`, {
-        credentials: "include"
-      });
-      const dataUser = await resUser.json();
+    alert("✅ Заявка успешно обработана!");
+    setUpdate((prev) => !prev);
+    console.log("Новое значение complite_aplication:", data.newCompliteValue);
 
-      if (!resUser.ok || !dataUser.user_auth_uid) {
-        console.error("Ошибка при получении пользователя:", dataUser);
-        alert("Не удалось определить пользователя");
-        setLoading(false);
-        return;
-      }
-
-      const uid = dataUser.user_auth_uid;
-
-      const { error } = await supabase
-        .from("ResultAnalyze")
-        .insert([{
-          result: taskInputs.result,
-          grade: taskInputs.grade,
-          advice: taskInputs.advice,
-          match_id: match,
-          user_auth_uid: uid
-        }]);
-
-      if (error) {
-        console.error("❌ Ошибка при добавлении:", error);
-        alert("Ошибка: " + error.message);
-        setLoading(false);
-        return;
-      }
-
-      const { error: deleteError } = await supabase
-        .from("AnalyzeAplication")
-        .delete()
-        .eq("match", match);
-
-      if (deleteError) {
-        console.error("❌ Ошибка при удалении заявки:", deleteError);
-        alert("Ошибка: " + deleteError.message);
-      } else {
-        alert("✅ Заявка успешно обработана!");
-        setUpdate(prev => !prev);
-      }
-
-      try {
-        const res = await fetch(`${API_BASE_URL}/increment-application`, {
-          method: "POST",
-          credentials: "include",
-        });
-
-        if (!res.ok) throw new Error("Ошибка на сервере при обновлении счётчика");
-
-        const data = await res.json();
-        console.log("Новое значение complite_aplication:", data.newValue);
-      } catch (err) {
-        console.error("Не удалось обновить complite_aplication:", err);
-      }
-
-    } catch (err) {
-      console.error("Ошибка в resultAnalyze:", err);
-      alert("Что-то пошло не так: " + err.message);
-    } finally {
-      setLoading(false);
-    }
+  } catch (err) {
+    console.error("Ошибка в resultAnalyze:", err);
+    alert("Что-то пошло не так: " + err.message);
+  } finally {
+    setLoading(false);
   }
+}
 
   const getDataMatch = async (matchId) => {
     try {

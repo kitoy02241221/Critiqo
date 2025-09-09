@@ -76,6 +76,129 @@ app.use(session({
   }
 }));
 
+
+
+
+
+app.get('/api/tasks', async (req, res) => {
+  if (!req.session.authUid) {
+    return res.status(401).json({ error: 'Не авторизован' });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('AnalyzeAplication')
+      .select('match, task, problem, id')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    res.json(data);
+  } catch (err) {
+    console.error('Ошибка /api/tasks:', err.message);
+    res.status(500).json({ error: 'Не удалось получить задачи' });
+  }
+});
+
+
+
+
+
+app.get('/api/tasks/count', async (req, res) => {
+  if (!req.session.authUid) {
+    return res.status(401).json({ error: 'Не авторизован' });
+  }
+
+  try {
+    const { count, error } = await supabase
+      .from('AnalyzeAplication')
+      .select('*', { count: 'exact', head: true }); 
+      // head: true -> вернёт только count, без самих данных
+
+    if (error) throw error;
+
+    res.json({ count });
+  } catch (err) {
+    console.error('Ошибка /api/tasks/count:', err.message);
+    res.status(500).json({ error: 'Не удалось получить количество заявок' });
+  }
+});
+
+
+
+
+
+
+app.post('/api/result-analyze', async (req, res) => {
+  if (!req.session.authUid) {
+    return res.status(401).json({ error: 'Не авторизован' });
+  }
+
+  const { match, result, grade, advice } = req.body;
+
+  if (!result?.trim() || !grade?.trim() || !advice?.trim()) {
+    return res.status(400).json({ error: 'Заполните все поля' });
+  }
+
+  try {
+    // 1. Добавляем результат
+    const { error: insertError } = await supabase
+      .from("ResultAnalyze")
+      .insert([{
+        result,
+        grade,
+        advice,
+        match_id: match,
+        user_auth_uid: req.session.authUid
+      }]);
+
+    if (insertError) throw insertError;
+
+    // 2. Удаляем заявку
+    const { error: deleteError } = await supabase
+      .from("AnalyzeAplication")
+      .delete()
+      .eq("match", match);
+
+    if (deleteError) throw deleteError;
+
+    // 3. Инкрементируем complite_aplication
+    const { data: userData, error: userError } = await supabase
+      .from("Users")
+      .select("complite_aplication")
+      .eq("auth_uid", req.session.authUid)
+      .single();
+
+    if (userError) throw userError;
+
+    const newValue = (userData?.complite_aplication ?? 0) + 1;
+
+    await supabase
+      .from("Users")
+      .update({ complite_aplication: newValue })
+      .eq("auth_uid", req.session.authUid);
+
+    res.json({
+      success: true,
+      message: "Заявка обработана",
+      newCompliteValue: newValue
+    });
+
+  } catch (err) {
+    console.error("Ошибка /api/result-analyze:", err.message);
+    res.status(500).json({ error: "Не удалось обработать заявку" });
+  }
+});
+
+
+
+
+
+
+
+
+
+
 // === Лог запросов ===
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} | authUid: ${req.session?.authUid || 'none'}`);
@@ -332,7 +455,7 @@ app.post("/create-payment", async (req, res) => {
       amount: { value: "575.00", currency: "RUB" },
       confirmation: {
         type: "redirect",
-        return_url: `${FRONTEND_ORIGIN}/payment-check`, // страница фронта после оплаты
+        return_url: `${FRONTEND_ORIGIN}/Critiqo`,
       },
       capture: true,
       description: JSON.stringify({ match, task, problem, authUid: req.session.authUid }),
