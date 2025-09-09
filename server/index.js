@@ -357,7 +357,7 @@ app.post("/create-payment", async (req, res) => {
       payment_id: response.data.id,
     });
   } catch (err) {
-    console.error("Ошибка create-payment:", err.response ? err.response.data : err);
+    console.error("Ошибка create-payment:", err.response?.data || err.message);
     res.status(500).json({ error: "Не удалось создать платёж" });
   }
 });
