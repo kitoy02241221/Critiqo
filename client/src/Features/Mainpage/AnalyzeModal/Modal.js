@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import '../AnalyzeModal/Analyzemodal.css';
-import { supabase } from '../../createSupabase/supabase';
-import ByModal from '../../ByModal/ByModal';
+import { supabase } from '../../../Shared/createSupabase/supabase';
+import ByModal from '../../ByModal/MainModal/ByModal';
 
 
 function Modal() {
@@ -15,64 +15,21 @@ function Modal() {
   const API_BASE_URL = "https://critiqo-1.onrender.com";
 
 
-const onAddTask = async (task) => {
-  try {
-
-    const res = await fetch(`${API_BASE_URL}/take-session-auth_id`, { credentials: 'include' });
-    if (!res.ok) throw new Error("Не удалось получить сессию");
-
-    const data = await res.json();
-    const authUid = data.authUid;
-
-    const newTask = { ...task, user_auth_uid: authUid };
-    const { data: existingMatches, error: checkError } = await supabase
-      .from('AnalyzeAplication')
-      .select('match')
-      .eq('match', task.match);
-
-    if (checkError) throw checkError;
-
-    if (existingMatches && existingMatches.length > 0) {
-      alert('Заявка на этот матч уже в обработке');
-      return;
-    }
-
-
-    const { error: insertError } = await supabase
-      .from('AnalyzeAplication')
-      .insert([newTask]);
-
-    if (insertError) throw insertError;
-
-
-    const incrementRes = await fetch(`${API_BASE_URL}/increment-num-application`, {
-      method: 'POST',
-      credentials: 'include'
-    });
-
-    if (!incrementRes.ok) throw new Error("Не удалось обновить счётчик заявок");
-
-    const incrementData = await incrementRes.json();
-
-    alert(`✅ Заявка добавлена и счётчик обновлён! Новое значение: ${incrementData.newValue}`);
-
-  } catch (err) {
-    console.error("Ошибка в onAddTask:", err);
-    alert("Сначала авторизируйся!");
-  }
-};
-
-function handleSubmit(event) {
-  event.preventDefault()
-
-  const testAnalyze = {
-    match: match,
-    task: task,
-    problem: problem
-  }
-
-  onAddTask(testAnalyze)
+function openModal() {
+  setByModalIsOpen(true);
 }
+
+// function handleSubmit(event) {
+//   event.preventDefault()
+
+//   const testAnalyze = {
+//     match: match,
+//     task: task,
+//     problem: problem
+//   }
+
+//   // onAddTask(testAnalyze)
+// }
 
  function openByModal () {
   
@@ -159,9 +116,12 @@ function handleSubmit(event) {
       </div>
 
       <ByModal
-      ByModalIsOpen={ByModalIsOpen}
-      setByModalIsOpen={setByModalIsOpen}
-      />
+  ByModalIsOpen={ByModalIsOpen}
+  setByModalIsOpen={setByModalIsOpen}
+  match={match}
+  task={task}
+  problem={problem}
+/>
     </div>
   );
 }

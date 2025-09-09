@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../ByModalinProfile/byModalInProfile.css";
+import "./byModalInProfile.css";
 
 function ByModalinProfile({ ByModalIsOpen, setByModalIsOpen }) {
   const closeModal = () => setByModalIsOpen(false);

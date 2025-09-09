@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../createSupabase/supabase';
-import TakeMatchModal from '../AdminPage/DataMatchModal';
+import { supabase } from '../../../Shared/DataBase/SupaBase';
+import TakeMatchModal from '../DataMatchModal';
 import './AdminPage.css';
 
 function AdminPanel() {
@@ -8,7 +8,7 @@ function AdminPanel() {
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [count, setCount] = useState(0);
-  const [matchData, setMatchData] = useState(null); // исправлено: null вместо ''
+  const [matchData, setMatchData] = useState(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const API_BASE_URL = "https://critiqo-1.onrender.com";

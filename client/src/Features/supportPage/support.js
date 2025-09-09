@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './support.css'
-import { supabase } from '../createSupabase/supabase';
+import { supabase } from '../../Shared/createSupabase/supabase';
 
 function Support() {
   const API_BASE_URL = "https://critiqo-1.onrender.com";

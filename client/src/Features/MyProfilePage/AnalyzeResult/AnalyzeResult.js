@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../createSupabase/supabase";
+import { supabase } from "../../../Shared/createSupabase/supabase";
 
 function AnalyzeResult() {
   const [matchIds, setMatchIds] = useState([]);

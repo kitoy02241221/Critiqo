@@ -4,15 +4,15 @@ import Modal from './Mainpage/AnalyzeModal/Modal';
 import WhatisCritiqo from './Mainpage/whatisCritiqo/WhatisCritiqo';
 import MyProfile from './MyProfilePage/MyProfile';
 import Navbar from './Mainpage/navBar/Navbar';
-import AdminPanel from './AdminPage/AdminPanel';
+import AdminPanel from './AdminPage/AdminPage/AdminPanel';
 import WeAreTheFirst from './Mainpage/weAreTheFirstBlock/WeAreTheFirst';
 import Advantagesblock from './Mainpage/AdvantagesBlock/AdvantagesBlock';
 import FAQpage from './FAQpage/FAQpage';
 import Footerblock from './Mainpage/footer/Footerblock'
 import Support from './supportPage/support';
-import PolicyOffer from './CritiqoPolicy/PolicyOffer';
-import TermsOfUse from './CritiqoPolicy/UsePolicy';
-import PrivacyPolicy from './CritiqoPolicy/PrivacyPolicy';
+import PolicyOffer from './CritiqoPolicy/PolicyOffer/PolicyOffer';
+import TermsOfUse from './CritiqoPolicy/UsePolicy/UsePolicy';
+import PrivacyPolicy from './CritiqoPolicy/PrivacyPolicy/PrivacyPolicy'
 import './Mainpage/App.css';
 
 function App() {

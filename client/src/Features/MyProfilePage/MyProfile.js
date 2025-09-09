@@ -2,7 +2,7 @@ import "./MyProfile.css"
 import AnalyzeResult from "./AnalyzeResult/AnalyzeResult";
 import { data, Link } from "react-router-dom"
 import { useEffect, useState } from "react" 
-import { supabase } from '../createSupabase/supabase';
+import { supabase } from '../../Shared/createSupabase/supabase';
 import ByAnalyzeModal from "./AnalyzeResult/ByAnalyzeModal/ByAnalyzeModal";
 
 function MyProfile() {

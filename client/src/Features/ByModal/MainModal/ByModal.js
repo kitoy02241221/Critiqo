@@ -1,8 +1,29 @@
 import { Link } from "react-router-dom";
 import "./ByModal.css";
 
-function ByModal({ ByModalIsOpen, setByModalIsOpen}) {
+function ByModal({ ByModalIsOpen, setByModalIsOpen, match, task, problem }) {
   const closeModal = () => setByModalIsOpen(false);
+
+  const handlePayment = async () => {
+    try {
+      const res = await fetch("https://critiqo-1.onrender.com/create-payment", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ match, task, problem })
+      });
+
+      const data = await res.json();
+      if (data.confirmation_url) {
+        window.location.href = data.confirmation_url; // редирект на YooKassa
+      } else {
+        alert("Ошибка при создании платежа");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Ошибка при оплате");
+    }
+  };
 
   if (!ByModalIsOpen) return null;
 
@@ -20,17 +41,13 @@ function ByModal({ ByModalIsOpen, setByModalIsOpen}) {
         </label>
 
         <div className="modal-actions">
-          <button className="close-btn" onClick={closeModal}>
-            Закрыть
+          <button className="close-btn" onClick={closeModal}>Закрыть</button>
+          <button className="confirm-btn" onClick={handlePayment}>
+            <span className="price-wrapper">
+              <span className="old-price">700 ₽</span>
+              <span className="new-price">Оплатить 575 ₽</span>
+            </span>
           </button>
-
-            <button className="confirm-btn">
-                <span class="price-wrapper">
-                    <span class="old-price">700 ₽</span>
-                    <span class="new-price">Оплатить  575 ₽</span>
-                </span>
-            </button>
-
         </div>
       </div>
     </div>

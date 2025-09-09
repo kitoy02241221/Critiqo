@@ -31,8 +31,8 @@ function TakeMatchModal({ matchData, isOpenModal, setIsOpenModal }) {
   }
 };
 
-  if (!isOpenModal) return null; // рендерим только если модалка открыта
-
+  if (!isOpenModal) return null;
+  
   return (
     <div className="takeModal-overlay">
       <div className="takeModal">
