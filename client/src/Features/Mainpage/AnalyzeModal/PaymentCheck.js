@@ -5,8 +5,8 @@ function PaymentCheck() {
     <div>
       <h1>Спасибо за оплату!</h1>
       <p>Ваш анализ будет доступен в профиле в течение 24 часов.</p>
-    </div>
+    </div>   
   );
 }
-
+// asd
 export default PaymentCheck;
