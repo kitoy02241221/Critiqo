@@ -445,69 +445,106 @@ app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
 
 
-app.post("/create-payment", async (req, res) => {
-  if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
+// app.post("/create-payment", async (req, res) => {
+//   if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
 
-  const { match, task, problem } = req.body;
+//   const { match, task, problem } = req.body;
 
-  try {
-    const payment = {
-      amount: { value: "575.00", currency: "RUB" },
-      confirmation: {
-        type: "redirect",
-        return_url: `${FRONTEND_ORIGIN}/Critiqo`,
-      },
-      capture: true,
-      description: JSON.stringify({ match, task, problem, authUid: req.session.authUid }),
-    };
+//   try {
+//     const payment = {
+//       amount: { value: "575.00", currency: "RUB" },
+//       confirmation: {
+//         type: "redirect",
+//         return_url: `${FRONTEND_ORIGIN}/Critiqo`,
+//       },
+//       capture: true,
+//       description: JSON.stringify({ match, task, problem, authUid: req.session.authUid }),
+//     };
 
-    const response = await axios.post(
-      "https://api.yookassa.ru/v3/payments",
-      payment,
-      {
-        auth: {
-          username: process.env.YOOKASSA_SHOP_ID,
-          password: process.env.YOOKASSA_API_KEY,
-        },
-        headers: {
-          "Idempotence-Key": Math.random().toString(36).substring(2, 15),
-        },
-      }
-    );
+//     const response = await axios.post(
+//       "https://api.yookassa.ru/v3/payments",
+//       payment,
+//       {
+//         auth: {
+//           username: process.env.YOOKASSA_SHOP_ID,
+//           password: process.env.YOOKASSA_API_KEY,
+//         },
+//         headers: {
+//           "Idempotence-Key": Math.random().toString(36).substring(2, 15),
+//         },
+//       }
+//     );
 
-    res.json({
-      confirmation_url: response.data.confirmation.confirmation_url,
-      payment_id: response.data.id,
-    });
-  } catch (err) {
-    console.error("Ошибка create-payment:", err.response?.data || err.message);
-    res.status(500).json({ error: "Не удалось создать платёж" });
-  }
-});
-
-
+//     res.json({
+//       confirmation_url: response.data.confirmation.confirmation_url,
+//       payment_id: response.data.id,
+//     });
+//   } catch (err) {
+//     console.error("Ошибка create-payment:", err.response?.data || err.message);
+//     res.status(500).json({ error: "Не удалось создать платёж" });
+//   }
+// });
 
 
 
-app.post("/yookassa/webhook", async (req, res) => {
-  try {
-    const event = req.body;
 
-    if (event.event === "payment.succeeded") {
-      const { match, task, problem, authUid } = JSON.parse(event.object.description);
 
-      // Создаем заявку в Supabase
-      await supabase.from("AnalyzeAplication").insert([
-        { match, task, problem, user_auth_uid: authUid }
-      ]);
+// app.post("/yookassa/webhook", async (req, res) => {
+//   try {
+//     const event = req.body;
 
-      // Инкрементируем счетчик
-      await supabase.rpc("increment", { x: 1 });
-    }
+//     // проверяем, что пришло успешное событие
+//     if (event.event === "payment.succeeded") {
+//       const { match, task, problem, authUid } = JSON.parse(event.object.description);
 
-    res.status(200).send("OK");
-  } catch (err) {
-    console.error("Ошибка вебхука:", err.message);
-    res.status(500).send("FAIL");
-  }
-});
+//       // 1. Создаём заявку в AnalyzeAplication
+//       const { error: insertError } = await supabase
+//         .from("AnalyzeAplication")
+//         .insert([
+//           {
+//             match,
+//             task,
+//             problem,
+//             user_auth_uid: authUid,
+//             created_at: new Date().toISOString()
+//           }
+//         ]);
+
+//       if (insertError) {
+//         console.error("❌ Ошибка при добавлении заявки:", insertError);
+//         return res.status(500).send("FAIL: insert error");
+//       }
+
+//       // 2. Инкрементируем счётчик заявок у пользователя
+//       const { data: userData, error: selectError } = await supabase
+//         .from("Users")
+//         .select("numAplication")
+//         .eq("auth_uid", authUid)
+//         .single();
+
+//       if (selectError) {
+//         console.error("❌ Ошибка при получении пользователя:", selectError);
+//         return res.status(500).send("FAIL: user not found");
+//       }
+
+//       const newValue = (userData?.numAplication ?? 0) + 1;
+
+//       const { error: updateError } = await supabase
+//         .from("Users")
+//         .update({ numAplication: newValue })
+//         .eq("auth_uid", authUid);
+
+//       if (updateError) {
+//         console.error("❌ Ошибка при обновлении счётчика:", updateError);
+//         return res.status(500).send("FAIL: update error");
+//       }
+
+//       console.log(`✅ Заявка создана и numAplication увеличен: ${newValue}`);
+//     }
+
+//     res.status(200).send("OK");
+//   } catch (err) {
+//     console.error("Ошибка вебхука:", err.message, err.stack);
+//     res.status(500).send("FAIL");
+//   }
+// });
