@@ -20,6 +20,7 @@ const sessionSecret = process.env.SESSION_SECRET;
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN;
 const BASE_URL = process.env.BASE_URL;
 const FRONTEND_PATH = process.env.FRONTEND_PATH;
+const app = express();
 
 const axios = require('axios');
 
@@ -114,7 +115,7 @@ app.post("/yookassa/webhook", async (req, res) => {
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // === Express app ===
-const app = express();
+
 app.set('trust proxy', 1); // важно для secure cookies за прокси
 
 const isProd = process.env.NODE_ENV === 'production';
