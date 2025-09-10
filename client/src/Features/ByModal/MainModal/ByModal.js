@@ -5,6 +5,8 @@ import "./ByModal.css";
 function ByModal({ ByModalIsOpen, setByModalIsOpen, match, task, problem }) {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [acceptedPolicy, setAcceptedPolicy] = useState(false);
+  const [policyError, setPolicyError] = useState("");
 
   const closeModal = () => setByModalIsOpen(false);
 
@@ -22,7 +24,12 @@ function ByModal({ ByModalIsOpen, setByModalIsOpen, match, task, problem }) {
       setEmailError("Введите корректный email");
       return;
     }
-    setEmailError(""); // очистить ошибку если все ок
+    if (!acceptedPolicy) {
+      setPolicyError("Необходимо принять оферту и политику конфиденциальности");
+      return;
+    }
+    setEmailError("");
+    setPolicyError("");
 
     try {
       const res = await fetch("https://critiqo-1.onrender.com/create-payment", {
@@ -88,11 +95,16 @@ function ByModal({ ByModalIsOpen, setByModalIsOpen, match, task, problem }) {
         {emailError && <p className="error-text">{emailError}</p>}
 
         <label className="checkPolicy">
-          <input type="checkbox" required />
+          <input
+            type="checkbox"
+            checked={acceptedPolicy}
+            onChange={(e) => setAcceptedPolicy(e.target.checked)}
+          />
           Я принимаю{" "}
           <Link to={"/policy-offer"}>оферту</Link> и{" "}
           <Link to={""}>политику конфиденциальности</Link>
         </label>
+        {policyError && <p className="error-text">{policyError}</p>}
 
         <div className="modal-actions">
           <button className="close-btn" onClick={closeModal}>
