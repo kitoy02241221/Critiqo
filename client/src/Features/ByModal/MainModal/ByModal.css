@@ -205,3 +205,33 @@
 .checkPolicy a:hover {
   color: #00FF94;
 }
+
+.modal-content input[type="email"] {
+  width: 90%;
+  padding: 10px 14px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  background: #1E1E1E;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #F1F1F1;
+}
+
+.modal-content input[type="email"]:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 4px rgba(74, 144, 226, 0.5);
+}
+
+.modal-content input[type="email"].error {
+  border-color: #e74c3c;
+  background-color: #fdf2f2;
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: -6px;
+  margin-bottom: 10px;
+}

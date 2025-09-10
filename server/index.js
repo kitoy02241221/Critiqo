@@ -522,10 +522,16 @@ app.get("/analyze-results/:matchId", async (req, res) => {
 
 
 app.post("/create-payment", async (req, res) => {
-  if (!req.session.authUid) return res.status(401).json({ error: 'Не авторизован' });
-  
-  const { match, task, problem } = req.body;
-  
+  if (!req.session.authUid) {
+    return res.status(401).json({ error: "Не авторизован" });
+  }
+
+  const { match, task, problem, email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email обязателен" });
+  }
+
   try {
     const payment = {
       amount: { value: "575.00", currency: "RUB" },
@@ -534,9 +540,30 @@ app.post("/create-payment", async (req, res) => {
         return_url: `${FRONTEND_ORIGIN}/Critiqo`,
       },
       capture: true,
-      description: JSON.stringify({ match, task, problem, authUid: req.session.authUid }),
+      description: JSON.stringify({
+        match,
+        task,
+        problem,
+        authUid: req.session.authUid,
+      }),
+      receipt: {
+        customer: {
+          email: email,
+        },
+        items: [
+          {
+            description: "Анализ матча Critiqo",
+            quantity: "1.00",
+            amount: {
+              value: "575.00",
+              currency: "RUB",
+            },
+            vat_code: 1,
+          },
+        ],
+      },
     };
-    
+
     const response = await axios.post(
       "https://api.yookassa.ru/v3/payments",
       payment,
@@ -550,14 +577,16 @@ app.post("/create-payment", async (req, res) => {
         },
       }
     );
-    
+
     res.json({
       confirmation_url: response.data.confirmation.confirmation_url,
       payment_id: response.data.id,
     });
   } catch (err) {
     console.error("Ошибка create-payment:", err.response?.data || err.message);
-    res.status(500).json({ error: "Не удалось создать платёж" });
+    res
+      .status(500)
+      .json({ error: "Не удалось создать платёж", details: err.response?.data });
   }
 });
 
