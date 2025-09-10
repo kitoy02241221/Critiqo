@@ -31,81 +31,66 @@ function MyProfile() {
     let isMounted = true;
     setLoading(true)
 
-    async function fetchData() {
-      try {
-        const res = await fetch(`${API_BASE_URL}/take-session-auth_id`, { credentials: 'include' });
-        if (!res.ok) throw new Error('Сессия не установлена');
-        const authdata = await res.json();
-        if (!authdata.authUid) throw new Error('Нет authUid в сессии');
-        const authUid = authdata.authUid;
-        if (isMounted) setSessionid(authUid);
+   async function fetchData() {
+  try {
+    // 1. Получаем authUid
+    const res = await fetch(`${API_BASE_URL}/take-session-auth_id`, { credentials: 'include' });
+    if (!res.ok) throw new Error('Сессия не установлена');
+    const { authUid } = await res.json();
+    if (!authUid) throw new Error('Нет authUid в сессии');
+    if (isMounted) setSessionid(authUid);
 
-        const authRes = await fetch(`${API_BASE_URL}/check-auth`, { credentials: 'include' });
-        if (!authRes.ok) throw new Error('Ошибка при проверке авторизации');
-        if (isMounted) setUserAuth(true);
+    // 2. Проверяем авторизацию
+    const authRes = await fetch(`${API_BASE_URL}/check-auth`, { credentials: 'include' });
+    if (!authRes.ok) throw new Error('Ошибка при проверке авторизации');
+    if (isMounted) setUserAuth(true);
 
-        const nameRes = await fetch(`${API_BASE_URL}/take-name`, { credentials: 'include' });
-        if (!nameRes.ok) throw new Error('Ошибка при получении имени');
-        const nameData = await nameRes.json();
-        if (isMounted && nameData.name) setSavedName(nameData.name);
+    // 3. Имя пользователя
+    const nameRes = await fetch(`${API_BASE_URL}/take-name`, { credentials: 'include' });
+    if (!nameRes.ok) throw new Error('Ошибка при получении имени');
+    const { name } = await nameRes.json();
+    if (isMounted && name) setSavedName(name);
 
-        const { data: userData, error: userError } = await supabase
-          .from('Users')
-          .select('numAplication, created_at')
-          .eq('auth_uid', authUid)
-          .single();
+    // 4. Инфа о пользователе (numAplication, created_at)
+    const userRes = await fetch(`${API_BASE_URL}/user-info`, { credentials: 'include' });
+    if (!userRes.ok) throw new Error('Ошибка при получении информации о пользователе');
+    const { numAplication, created_at } = await userRes.json();
 
-        if (userError) throw userError;
+    if (isMounted) {
+      setTestsOrder(numAplication ?? 0);
 
-        if (isMounted) {
-
-          setTestsOrder(userData.numAplication ?? 0);
-
-          const createdDate = new Date(userData.created_at);
-          const now = new Date();
-          const diffDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
-          setDaysSinceRegistration(diffDays);
-        }
-
-
-        async function activityLevel() {
-          const {data, error} = await supabase
-          .from('Users')
-          .select('numAplication')
-          .eq('auth_uid', authdata.authUid)
-          .single()
-
-
-          if (error) {
-            console.error('Ошибка при получении количества заказанных анализов: ' + error.message);
-          } else if (data.numAplication < 1) {
-            setActivityLevel('Неактивный');
-            setSiteRank('Курьер')
-          } else if (data.numAplication >= 1 && data.numAplication <= 3) {
-            setActivityLevel('Иногда заходит');
-            setSiteRank('Сапорт')
-          } else if (data.numAplication >= 4 && data.numAplication <= 8) {
-            setActivityLevel('Постоянный пользователь');
-            setSiteRank('Керри')
-          } else if (data.numAplication >= 9 && data.numAplication <= 14) {
-            setActivityLevel('Продвинутый');
-            setSiteRank('Иммортал')
-          } else if (data.numAplication >= 15 && data.numAplication <= 19) {
-            setActivityLevel('Суперактивный');
-            setSiteRank('Герой патча')
-          } else if (data.numAplication >= 20) {
-            setActivityLevel('Хардкорный');
-            setSiteRank('Легенда')
-          }
-
-        }
-
-        activityLevel()
-
-      } catch (err) {
-        console.error(err.message);
-      }
+      const createdDate = new Date(created_at);
+      const now = new Date();
+      const diffDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+      setDaysSinceRegistration(diffDays);
     }
+
+    // 5. Активность
+    if (numAplication < 1) {
+      setActivityLevel('Неактивный');
+      setSiteRank('Курьер');
+    } else if (numAplication >= 1 && numAplication <= 3) {
+      setActivityLevel('Иногда заходит');
+      setSiteRank('Сапорт');
+    } else if (numAplication >= 4 && numAplication <= 8) {
+      setActivityLevel('Постоянный пользователь');
+      setSiteRank('Керри');
+    } else if (numAplication >= 9 && numAplication <= 14) {
+      setActivityLevel('Продвинутый');
+      setSiteRank('Иммортал');
+    } else if (numAplication >= 15 && numAplication <= 19) {
+      setActivityLevel('Суперактивный');
+      setSiteRank('Герой патча');
+    } else if (numAplication >= 20) {
+      setActivityLevel('Хардкорный');
+      setSiteRank('Легенда');
+    }
+
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
 
     fetchData();
     setLoading(false)

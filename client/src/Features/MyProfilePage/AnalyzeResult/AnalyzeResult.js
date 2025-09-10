@@ -12,48 +12,42 @@ function AnalyzeResult() {
   // Загружаем список матчей при монтировании
   useEffect(() => {
     async function takeAnalyzeResult() {
-      try {
-        const res = await fetch(`${API_BASE_URL}/take-session-auth_id`, {
-          credentials: "include",
-        });
-        const userData = await res.json();
-        const authUid = userData.authUid;
+  try {
+    const res = await fetch(`${API_BASE_URL}/analyze-results`, {
+      credentials: "include",
+    });
 
-        const { data, error } = await supabase
-          .from("ResultAnalyze")
-          .select("match_id")
-          .eq("user_auth_uid", authUid);
+    if (!res.ok) throw new Error("Ошибка при загрузке анализов");
 
-        if (error) throw error;
-
-        setMatchIds(data.map((item) => item.match_id));
-      } catch (err) {
-        console.error("Ошибка загрузки анализов:", err.message);
-      }
-    }
+    const { matchIds } = await res.json();
+    setMatchIds(matchIds);
+  } catch (err) {
+    console.error("Ошибка загрузки анализов:", err.message);
+  }
+}
 
     takeAnalyzeResult();
   }, []);
 
   // Открыть модалку и загрузить данные
   async function openModal(matchId) {
-    setSelectMatch(matchId);
-    setIsOpenModal(true);
-    setAnalyzeData(null); // очищаем прошлые данные, показываем "Загрузка..."
+  setSelectMatch(matchId);
+  setIsOpenModal(true);
+  setAnalyzeData(null); // очищаем прошлые данные, показываем "Загрузка..."
 
-    try {
-      const { data, error } = await supabase
-        .from("ResultAnalyze")
-        .select("result, grade, advice, match_id")
-        .eq("match_id", matchId)
-        .single();
+  try {
+    const res = await fetch(`${API_BASE_URL}/analyze-results/${matchId}`, {
+      credentials: "include",
+    });
 
-      if (error) throw error;
-      setAnalyzeData(data);
-    } catch (err) {
-      console.error("Ошибка:", err.message);
-    }
+    if (!res.ok) throw new Error("Ошибка при загрузке анализа");
+
+    const data = await res.json();
+    setAnalyzeData(data);
+  } catch (err) {
+    console.error("Ошибка:", err.message);
   }
+}
 
   // Закрыть модалку
   function closeModal() {

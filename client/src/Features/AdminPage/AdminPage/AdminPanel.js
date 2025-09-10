@@ -69,7 +69,7 @@ function AdminPanel() {
   try {
     const response = await fetch(`${API_BASE_URL}/api/result-analyze`, {
       method: "POST",
-      credentials: "include", // передаём куки для сессии
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
