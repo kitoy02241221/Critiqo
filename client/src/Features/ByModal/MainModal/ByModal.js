@@ -29,7 +29,7 @@ function ByModal({ ByModalIsOpen, setByModalIsOpen, match, task, problem }) {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ match, task, problem, email })
+        body: JSON.stringify({ match, task, problem, email }),
       });
 
       const data = await res.json();
@@ -41,6 +41,28 @@ function ByModal({ ByModalIsOpen, setByModalIsOpen, match, task, problem }) {
     } catch (err) {
       console.error(err);
       alert("Ошибка при оплате");
+    }
+  };
+
+  // тест без оплаты
+  const handleTestPayment = async () => {
+    try {
+      const res = await fetch("https://critiqo-1.onrender.com/test-create-application", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ match, task, problem }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        alert("✅ Тестовая заявка успешно создана!");
+      } else {
+        alert("❌ Ошибка тестовой заявки: " + (data.error || "Неизвестно"));
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Ошибка при тестовой заявке");
     }
   };
 
@@ -81,6 +103,9 @@ function ByModal({ ByModalIsOpen, setByModalIsOpen, match, task, problem }) {
               <span className="old-price">700 ₽</span>
               <span className="new-price">Оплатить 575 ₽</span>
             </span>
+          </button>
+          <button className="test-btn" onClick={handleTestPayment}>
+            🔧 Тест без оплаты
           </button>
         </div>
       </div>

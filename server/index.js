@@ -656,6 +656,74 @@ app.post("/yookassa/webhook", async (req, res) => {
 
 
 
+app.post("/test-create-application", async (req, res) => {
+  try {
+    const { match, task, problem } = req.body;
+
+    if (!req.session?.authUid) {
+      return res.status(401).json({ error: "Не авторизован" });
+    }
+
+    const authUid = req.session.authUid;
+
+    // 1. Создаём заявку
+    const { error: insertError } = await supabase
+      .from("AnalyzeAplication")
+      .insert([
+        {
+          match,
+          task,
+          problem,
+          user_auth_uid: authUid,
+          created_at: new Date().toISOString()
+        }
+      ]);
+
+    if (insertError) {
+      console.error("❌ Ошибка при добавлении заявки:", insertError);
+      return res.status(500).json({ error: "Ошибка при добавлении заявки" });
+    }
+
+    // 2. Берём текущий счётчик у пользователя
+    const { data: userData, error: selectError } = await supabase
+      .from("Users")
+      .select("numAplication")
+      .eq("auth_uid", authUid)
+      .single();
+
+    if (selectError) {
+      console.error("❌ Ошибка при получении пользователя:", selectError);
+      return res.status(500).json({ error: "Ошибка при получении пользователя" });
+    }
+
+    const newValue = (userData?.numAplication ?? 0) + 1;
+
+    // 3. Обновляем счётчик
+    const { error: updateError } = await supabase
+      .from("Users")
+      .update({ numAplication: newValue })
+      .eq("auth_uid", authUid);
+
+    if (updateError) {
+      console.error("❌ Ошибка при обновлении счётчика:", updateError);
+      return res.status(500).json({ error: "Ошибка при обновлении счётчика" });
+    }
+
+    console.log(`✅ Тестовая заявка создана. Новый numAplication: ${newValue}`);
+
+    res.json({
+      success: true,
+      message: "Тестовая заявка создана",
+      newNumAplication: newValue
+    });
+  } catch (err) {
+    console.error("❌ Ошибка тестового эндпоинта:", err.message, err.stack);
+    res.status(500).json({ error: "Ошибка сервера" });
+  }
+});
+
+
+
 
 
 // === Start server ===
