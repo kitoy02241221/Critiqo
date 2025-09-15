@@ -20,6 +20,52 @@
   gap: 32px;
 }
 
+/* Обертка для редактирования имени */
+.editName {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+}
+
+/* Само имя (по умолчанию как .userName) */
+.editName .userName {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: #CCCCCC;
+  margin-top: 8px;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+
+.editName .userName:hover {
+  color: #F5F5F5;
+}
+
+/* Инпут редактирования имени */
+.editName input[type="text"] {
+  font-size: 28px;
+  font-weight: 600;
+  color: #E0E0E0;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #666;
+  outline: none;
+  text-align: center;
+  width: 100%;
+  padding: 4px 8px;
+  margin-top: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.editName input[type="text"]:focus {
+  border-color: #00FF94;
+  box-shadow: 0 2px 8px rgba(0, 255, 148, 0.3);
+}
+
+
 /* Анимационный паттерн */
 .profileBlock::before {
   content: "";
@@ -54,16 +100,6 @@
   z-index: 1;
 }
 
-.userName {
-  text-align: center;
-  font-size: 28px;
-  font-weight: 600;
-  color: #CCCCCC;
-  margin-top: 8px;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
-  z-index: 1;
-}
-
 /* === Контент: статистика + история === */
 .profileMainContent {
   flex: 1;
@@ -71,8 +107,9 @@
   flex-direction: row;
   gap: 24px;
   z-index: 1;
-  height: 780px;
-  max-height: 780px;
+  height: 700px;
+  max-height: 700px;
+  margin-top: 120px;
 }
 
 /* Левая колонка */
@@ -81,12 +118,13 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+
 }
 
 /* Карточки статистики */
 .statistics {
   flex: none;
-  height: 180px;
+  height: 150px;
   background: #1E1E1E;
   border-radius: 14px;
   display: flex;
