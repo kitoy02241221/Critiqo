@@ -58,9 +58,10 @@ function ByModal({ ByModalIsOpen, setByModalIsOpen, match, task, problem }) {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <h2>Оплата услуги</h2>
         <ul className="modalInfo">
+          <li>Матч должен быть сыгран не более 7 дней назад</li>
           <li>Убедись в точности id матча</li>
-          <li>Результат анализа можно будет посмотреть в текстовом формате в профиле</li>
-          <li>После оплаты в профиле будут изменены соответствующие данные</li>
+          <li>После отправки заявки, результат появится в профиле
+                в истории анализов</li>
         </ul>
 
         <input
@@ -78,9 +79,11 @@ function ByModal({ ByModalIsOpen, setByModalIsOpen, match, task, problem }) {
             checked={acceptedPolicy}
             onChange={(e) => setAcceptedPolicy(e.target.checked)}
           />
-          Я принимаю{" "}
-          <Link to={"/policy-offer"}>оферту</Link> и{" "}
-          <Link to={""}>политику конфиденциальности</Link>
+          <p>
+            Я принимаю
+          <Link to={"/policy-offer"}> оферту </Link> и{" "}
+          <Link to={"/privacy-policy"}>политику конфиденциальности</Link>
+          </p>
         </label>
         {policyError && <p className="error-text">{policyError}</p>}
 

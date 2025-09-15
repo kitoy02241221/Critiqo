@@ -22,6 +22,7 @@ function App() {
   const isPolicyOffer = location.pathname === "/policy-offer"
   const isUsePolicy = location.pathname ==="/use-policy"
   const isPrivacyPolicy = location.pathname ==="/privacy-policy"
+  const isWhatIsCritiqo = location.pathname === "/whatIsCritiqo"
 
 
   const aboutRef = useRef(null);
@@ -33,7 +34,7 @@ function App() {
     <div className='header'>
       <Navbar 
         onScrollTo={(ref) => ref.current?.scrollIntoView({ behavior: "smooth" })}
-        refs={{ aboutRef, weAreRef, matchAnalysisRef }}
+        refs={{ aboutRef, weAreRef, matchAnalysisRef, advantagesRef }}
       />
 
       <Routes>
@@ -44,15 +45,15 @@ function App() {
 
       {isHomePage && (
         <>
-          <div ref={aboutRef}><WhatisCritiqo /></div>
-          <div ref={advantagesRef}><Advantagesblock/></div>
-          <div ref={weAreRef}><WeAreTheFirst /></div>
           <div ref={matchAnalysisRef}><Modal/></div>
+          {/* <div ref={aboutRef}><WhatisCritiqo /></div>
+          <div ref={advantagesRef}><Advantagesblock/></div>
+          <div ref={weAreRef}><WeAreTheFirst /></div> */}
           
-          <Footerblock
+          {/* <Footerblock
           onScrollTo={(ref) => ref.current?.scrollIntoView({ behavior: "smooth" })}
           refs={{ aboutRef, advantagesRef, matchAnalysisRef }}
-         />
+         /> */}
         </>
       )}
 
@@ -74,6 +75,9 @@ function App() {
       )}
       {isPrivacyPolicy && (
         <PrivacyPolicy/>
+      )}
+      {isWhatIsCritiqo && (
+        <WhatisCritiqo/>
       )}
     </div>
   );

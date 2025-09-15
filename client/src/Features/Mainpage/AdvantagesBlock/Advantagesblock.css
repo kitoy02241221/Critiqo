@@ -10,30 +10,6 @@
   height: 575px;
 }
 
-/* Фоновый узор */
-.advantagesblock::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 10% 20%, rgba(0,255,148,0.05) 0px, transparent 100px),
-    radial-gradient(circle at 90% 80%, rgba(0,191,255,0.05) 0px, transparent 120px),
-    repeating-linear-gradient(
-      45deg,
-      rgba(255, 255, 255, 0.04) 0px,
-      rgba(0, 191, 255, 0.04) 1px,
-      transparent 1px,
-      transparent 250px
-    );
-  animation: floatPattern 5s linear infinite;
-  z-index: 0;
-}
-
-@keyframes floatPattern {
-  from { background-position: 0 0, 0 0, 0 0; }
-  to { background-position: 200px 200px, -200px -200px, 300px 300px; }
-}
-
 /* Заголовок */
 .advantagesblock h1 {
   margin-bottom: 25px;

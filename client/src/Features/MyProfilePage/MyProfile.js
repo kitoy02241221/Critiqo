@@ -155,29 +155,33 @@ function MyProfile() {
       {savedName && !isEditing && <h2 className="userName">{savedName}</h2>}
 
       {loading ? (
-        <h1>Загрузка...</h1>
-      ) : (
-        <div className="statisticsBlock">
-        <div className="statistics">
-          <p>Ты с нами уже</p>
-          <strong>{daysSinceRegistration} Дней!</strong>
-        </div>
-        <div className="statistics">
-          <p>Заказано разборов</p>
-          <strong>{testsOrdered}</strong>
-        </div>
-        <div className="statistics">
-          <p>Уровень активности</p>
-          <strong>{activityLevel}</strong>
-        </div>
-        <div className="statistics">
-          <p>Ранг на сайте</p>
-          <strong>{siteRank}</strong>
-        </div>
+  <h1>Загрузка...</h1>
+) : (
+  <div className="profileMainContent">
+    <div className="statisticsBlock">
+      <div className="statistics">
+        <p>Ты с нами уже</p>
+        <strong>{daysSinceRegistration} Дней!</strong>
       </div>
-      )}
-      
-      <AnalyzeResult/>
+      <div className="statistics">
+        <p>Заказано разборов</p>
+        <strong>{testsOrdered}</strong>
+      </div>
+      <div className="statistics">
+        <p>Уровень активности</p>
+        <strong>{activityLevel}</strong>
+      </div>
+      <div className="statistics">
+        <p>Ранг на сайте</p>
+        <strong>{siteRank}</strong>
+      </div>
+    </div>
+
+    <div className="analyzeHistory">
+      <AnalyzeResult />
+    </div>
+  </div>
+)}
       <ByAnalyzeModal
       modalstyle={modalstyle}
       onClose={handleClose}

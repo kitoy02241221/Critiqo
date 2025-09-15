@@ -54,10 +54,8 @@ function Navbar({ refs }) {
           Critiqo
         </h1>
       </div>
-
       <div className="navbar-center">
-        <button onClick={() => scrollWithOffset(refs.aboutRef)}>Кто мы?</button>
-        <button onClick={() => scrollWithOffset(refs.matchAnalysisRef)}>Разбор матчей</button>
+        <Link to={"/whatIsCritiqo"}><button>Кто мы?</button></Link>
 
         <Link to={"/myprofile"}><button>Мой профиль</button></Link>
         <Link to={"/faq"}><button>F.A.Q</button></Link>
@@ -77,6 +75,38 @@ function Navbar({ refs }) {
             <button>Админ панель</button>
           </Link>
         )}
+      </div>
+      <div className='footer'>
+
+        <div className='footer-top'>
+          <div className="contacts">
+            <h3>Связаться с нами</h3>
+            <ul>
+              <li>
+                <a href="mailto:CritiqoSupport@mail.ru">CritiqoSupport@mail.ru</a>
+              </li>
+              <Link to="/support">
+                <li>Написать в техподдержку</li>
+              </Link>
+            </ul>
+          </div>
+
+          <div className="policy">
+            <ul>
+              <Link to="/privacy-policy">
+                <li>Политика конфиденциальности</li>
+              </Link>
+              <Link to="/use-policy">
+                <li>Условия использования</li>
+              </Link>
+              <Link to="/policy-offer">
+                <li>Публичная оферта</li>
+              </Link>
+            </ul>
+          </div>
+        </div>
+
+        <h2 className='CritiqoAP'>© 2025 Critiqo</h2>
       </div>
     </div>
   );

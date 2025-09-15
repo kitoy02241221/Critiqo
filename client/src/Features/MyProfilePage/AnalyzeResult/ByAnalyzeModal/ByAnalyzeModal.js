@@ -3,14 +3,19 @@ import ByModalinProfile from "../../../ByModal/ByModalinProfile/ByModalInProfile
 import { useState } from "react";
 
 function ByAnalyzeModal({ modalstyle, onClose }) {
+  const [match, setMatch] = useState(0);
+  const [task, setTask] = useState('');
+  const [problem, setProblem] = useState('');
+  const [isOpen, setIsOpen] = useState(false)
+
+
+
   const handleOverlayClick = (e) => {
-    // если клик именно по фону (overlay), а не по окну
     if (e.target.classList.contains("modalOverlay")) {
       onClose();
     }
   };
 
-  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div
@@ -36,21 +41,24 @@ function ByAnalyzeModal({ modalstyle, onClose }) {
 
         <div className="inputModal">
           <h3>Выбор матча:</h3>
-          <input type="number" required placeholder="Введите id матча" />
+          <input type="number" required placeholder="Введите id матча" onChange={(e) => setMatch(e.target.value)}/>
 
           <h3>Над чем будем работать?</h3>
-          <input type="text" placeholder="Например: Фарм, билд" />
+          <input type="text" placeholder="Например: Фарм, билд" onChange={(e) => setTask(e.target.value)}/>
 
           <h3>Какие трудности были в матче?</h3>
-          <input type="text" placeholder="Например: Не мог найти фарм" />
+          <input type="text" placeholder="Например: Не мог найти фарм" onChange={(e) => setProblem(e.target.value)}/>
         </div>
 
         <button onClick={() => setIsOpen(true)}>Оплатить</button>
       </div>
 
       <ByModalinProfile
-      ByModalIsOpen={isOpen}
-      setByModalIsOpen={setIsOpen}
+        ByModalIsOpen={isOpen}
+        setByModalIsOpen={setIsOpen}
+        match={match}
+        task={task}
+        problem={problem}
       />
     </div>
   );

@@ -1,7 +1,8 @@
-.modal-overlay-inProfile {
+/* Оверлей модалки */
+.modal-overlay-profile {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(18, 18, 18, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,36 +10,37 @@
 }
 
 /* Контейнер модалки */
-.modal-content-inProfile {
+.modal-content-profile {
   width: 400px;
   max-width: 90%;
   padding: 30px;
   border-radius: 20px;
-  background: linear-gradient(145deg, #121212, #1a1a1a, #121212);
-  box-shadow: 0 0 30px rgba(0, 55, 255, 0.3);
-  color: #F1F1F1;
+  background: rgba(40, 40, 40, 0.85);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 25px rgba(0,0,0,0.5);
+  color: #E0E0E0;
   position: relative;
   text-align: center;
 }
 
 /* Заголовок */
-.modal-content-inProfile h2 {
+.modal-content-profile h2 {
   font-size: 28px;
   font-weight: 800;
-  color: #00FF94;
+  color: #F5F5F5;
   margin-bottom: 15px;
 }
 
 /* Описание */
-.modal-content-inProfile p {
+.modal-content-profile p {
   font-size: 14px;
-  color: #B0BEC5;
+  color: #AAAAAA;
   margin-bottom: 25px;
   line-height: 1.6;
 }
 
 /* Кнопки */
-.modal-actions-inProfile {
+.modal-actions-profile {
   display: flex;
   justify-content: center;
   gap: 15px;
@@ -47,65 +49,75 @@
 }
 
 /* Закрыть */
-.close-btn-inProfile {
-  background: #1E1E1E;
-  color: #00BFFF;
-  border: 1px solid rgba(0, 191, 255, 0.2);
+.close-btn-profile {
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  color: #E0E0E0;
   padding: 12px 20px;
-  border-radius: 12px;
+  border-radius: 14px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  height: 40px;
+  height: 50px;
   margin-top: 20px;
-}
-
-.close-btn-inProfile:hover {
-  box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
-}
-
-.confirm-btn-inProfile {
-  background: linear-gradient(135deg, #00FF94, #00BFFF);
-  color: #121212;
-  padding: 20px 15px;
   border: none;
-  border-radius: 12px;
+}
+
+.close-btn-profile:hover {
+  background: #CCCCCC;
+  color: #262626;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.15);
+}
+
+/* Подтвердить */
+.confirm-btn {
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  color: #E0E0E0;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 14px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  min-height: 40px;
-  box-sizing: border-box;
+  min-height: 50px;
   text-align: center;
   position: relative;
 }
 
-.confirm-btn-inProfile:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(0, 255, 148, 0.5), 0 0 18px rgba(0, 191, 255, 0.5);
+.confirm-btn-profile {
+  width: 100%;
+  height: 50px;
+}
+
+.confirm-btn-profile:hover {
+  background: #CCCCCC;
+  color: #262626;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.15);
+}
+
+.confirm-btn-profile:hover .new-price-profile {
+  color: #262626;
 }
 
 /* Обертка для цены */
-.price-wrapper-inProfile {
+.price-wrapper-profile {
   position: relative;
   display: inline-block;
 }
 
 /* Старая цена / скидка */
-.old-price-inProfile {
+.price-wrapper-profile .old-price-profile {
   position: absolute;
-  top: -10px;
+  top: -5px;
   right: -20px;
   font-size: 12px;
-  color: #FF4D4D;
+  color: #FF6B6B;
   font-weight: 700;
   transform: rotate(20deg);
-  background: rgba(255, 247, 247, 0.32);
+  background: rgba(255, 255, 255, 0.1);
   padding: 2px 6px;
   border-radius: 4px;
   white-space: nowrap;
@@ -113,98 +125,125 @@
 }
 
 /* Текущая цена */
-.new-price-inProfile {
+.confirm-btn-profile .new-price-profile {
   font-size: 16px;
   font-weight: 900;
-  color: rgba(0, 0, 0, 0.5);
+  color: #E0E0E0;
 }
 
 /* Список информации */
-.modalInfo-inProfile {
+.modalInfo-profile {
   list-style-type: disc;
   padding-left: 20px;
   margin-bottom: 25px;
   text-align: left;
-  color: #B0BEC5;
+  color: #AAAAAA;
   font-size: 14px;
   line-height: 1.6;
 }
 
-.modalInfo-inProfile li {
+.modalInfo-profile li {
   margin-bottom: 10px;
   list-style: none;
-  position: relative;
 }
 
-.modalInfo-inProfile li::before {
+.modalInfo-profile li::before {
   content: "✦";
-  color: #00BFFF;
+  color: #00eeff;
   position: absolute;
-  left: -20px;
+  left: 30px;
 }
-.checkPolicy-inProfile {
+
+/* Политика и чекбокс */
+.checkPolicy-profile {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-size: 13px;
-  color: #B0BEC5;
+  color: #AAAAAA;
   margin-top: 15px;
   cursor: pointer;
   user-select: none;
+  text-align: left;
+  width: 420px;
 }
 
-/* Обертка чекбокса */
-.checkPolicy-inProfile .checkbox-wrapper {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  position: relative;
-  flex-shrink: 0;
+.checkPolicy-profile p {
+  margin-top: 25px;
+  margin-left: 5px;
 }
 
-/* Сам input */
-.checkPolicy-inProfile input[type="checkbox"] {
+.checkPolicy-profile input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+  width: 20px;
+  height: 20px;
   border: 2px solid #555;
   border-radius: 4px;
-  background: #1E1E1E;
-  cursor: pointer;
-  box-sizing: border-box;
+  background: #2c2c2c;
   position: relative;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-/* Hover */
-.checkPolicy-inProfile input[type="checkbox"]:hover {
-  border-color: #00BFFF;
-  box-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
+.checkPolicy-profile input[type="checkbox"]:hover {
+  border-color: #E0E0E0;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
 }
 
-/* Галочка */
-.checkPolicy-inProfile input[type="checkbox"]::after {
+.checkPolicy-profile input[type="checkbox"]::after {
   content: "";
   position: absolute;
-  width: 6px;
-  height: 12px;
-  border: solid #00FF94;
+  width: 5px;
+  height: 10px;
+  border: solid #E0E0E0;
   border-width: 0 2px 2px 0;
-  top: 2px;
-  left: 6px;
+  top: 0px;
+  left: 5px;
   transform: rotate(45deg) scale(0);
   transition: transform 0.2s ease-in-out;
 }
 
-.checkPolicy-inProfile a {
-    color: #00BFFF;
-    text-decoration: underline;
-    transition: color 0.2s ease;
+.checkPolicy-profile input[type="checkbox"]:checked::after {
+  transform: rotate(45deg) scale(1);
 }
 
-/* Галочка при checked */
-.checkPolicy-inProfile input[type="checkbox"]:checked::after {
-  transform: rotate(45deg) scale(1);
+.checkPolicy-profile a {
+  color: #E0E0E0;
+  text-decoration: underline;
+}
+
+.checkPolicy-profile a:hover {
+  color: #CCCCCC;
+}
+
+/* Email input */
+.modal-content-profile input[type="email"] {
+  width: 90%;
+  padding: 10px 14px;
+  margin: 10px 0;
+  border: 1px solid #555;
+  background: #2c2c2c;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #E0E0E0;
+}
+
+.modal-content-profile input[type="email"]:focus {
+  border-color: #CCCCCC;
+  box-shadow: 0 0 4px rgba(255,255,255,0.1);
+}
+
+.modal-content-profile input[type="email"].error {
+  border-color: #e74c3c;
+  background-color: #3a1a1a;
+}
+
+.error-text-profile {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: -6px;
+  margin-bottom: 10px;
 }

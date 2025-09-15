@@ -1,293 +1,242 @@
 .WhatisCritiqo {
-  width: 800px;
-  height: 665px;
-  margin: 80px auto;
+  position: absolute;          /* фиксируем относительно страницы */
+  top: 0;
+  left: 240px;                 /* ширина navbar */
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: #E0E0E0;
+  overflow-y: auto;            /* скролл внутри блока при переполнении */
+  overflow-x: hidden;
+  padding: 40px 0;
+  box-sizing: border-box;
+  /* фон не задаем */
+}
+.content {
+  max-width: 1600px;
+  width: 100%;
   padding: 40px;
   border-radius: 20px;
-  color: #F1F1F1;
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(145deg, #121212, #1a1a1a, #121212);
-  box-shadow: 0 0 30px rgba(0, 55, 255, 0.3);
-  z-index: 1;
+  text-align: center;
+  background: rgba(40, 40, 40, 0.85); /* вот тут фон нужен */
+  backdrop-filter: blur(12px);
+  animation: fadeIn 1s ease forwards;
+  box-sizing: border-box;
 }
 
-/* фон с абстрактными линиями */
-.WhatisCritiqo::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: 
-    repeating-linear-gradient(
-      45deg,
-      rgba(0, 191, 255, 0.06) 0px,
-      rgba(0, 191, 255, 0.06) 1px,
-      transparent 1px,
-      transparent 80px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(0, 255, 148, 0.05) 0px,
-      rgba(0, 255, 148, 0.05) 1px,
-      transparent 1px,
-      transparent 80px
-    );
-  opacity: 0.8;
-  z-index: 0;
-}
-
-.WhatisCritiqo::before {
-  animation: moveLines 30s linear infinite;
-}
-
-@keyframes moveLines {
-  from {
-    background-position: 0 0, 0 0;
-  }
-  to {
-    background-position: 200px 200px, -200px -200px;
-  }
-}
-
+/* Заголовки и текст */
 .WhatisCritiqo h1 {
-  font-size: 40px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  text-align: center;
-  color: #00FF94;
-  position: relative;
-  overflow: hidden;
-  text-transform: uppercase;
+  font-size: 42px;
+  color: #F5F5F5;
+  margin-bottom: 20px;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
-.WhatisCritiqo > p {
-  text-align: center;
-  font-size: 15px;
+.aboutText {
+  font-size: 16px;
   line-height: 1.7;
-  color: #B0BEC5;
+  color: #B0B0B0;
   margin-bottom: 40px;
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 2;
 }
 
-.WhatisCritiqo ul {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
-  padding: 0;
-  margin: 0 auto 30px auto;
-  list-style: none;
-  position: relative;
-  z-index: 2;
-}
-
-.WhatisCritiqo ul li {
-  background: #1E1E1E;
-  border: 1px solid rgba(0, 191, 255, 0.2);
-  border-radius: 14px;
-  padding: 22px 18px;
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  text-align: left;
-  box-shadow: 0px 0px 10px rgba(0, 191, 255, 0.1);
-  position: relative;
-}
-
-.blockName {
-  font-size: 18px;
-  font-weight: 700;
-  color: #00BFFF;
-  margin-bottom: 10px;
+.whyDoingCritiqo {
+  font-size: 24px;
+  color: #CCCCCC;
+  margin-bottom: 25px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.WhatisCritiqo ul li p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #ccc;
+/* Слайдер */
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+  min-height: 200px;
 }
 
-.WhatisCritiqo > div > p:last-child {
-  text-align: center;
-  margin-top: 25px;
-  font-size: 14px;
-  color: #B0BEC5;
-  line-height: 1.6;
+.slide {
+  flex: 1;
+  padding: 26px;
+  border-radius: 16px;
+  background-color: #1E1E1E;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  min-height: 180px;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.blockName {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #AAAAAA;
+  text-transform: uppercase;
+}
+
+.slider-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  background: none;
+  border: none;
+  font-size: 38px;
+  cursor: pointer;
+  color: #CCCCCC;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.slider-btn:hover {
+  color: #262626;
+  border-radius: 40px;
+  padding-bottom: 7px;
+  padding-right: 7px;
+  background: #CCCCCC;
+}
+
+.dots {
+  margin-top: 20px;
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: #444;
+  border-radius: 50%;
+  margin: 0 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dot.active {
+  background: #CCCCCC;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================= Advantages ======================= */
+.advantagesblock {
+  color: #E0E0E0;
+  max-width: 1200px;
+  width: 100%;
+  margin: 40px auto 0 auto;
+  padding: 40px 35px;
+  border-radius: 20px;
+  position: relative;
+  background-color: #1a1a1a;
+}
+
+.advantagesblock h1 {
+  margin-bottom: 25px;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #F5F5F5;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+}
+
+.accordion-input {
+  display: none;
+}
+
+.advantageItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background-color: #2c2c2c;
+  margin-bottom: 18px;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   z-index: 2;
 }
 
-.whyDoingCritiqo {
-  color: #00BFFF;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  height: 100%;
-  text-align: center;
-  margin-bottom: 20px;
+.advantageItem:hover {
+  transform: translateY(-3px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.1);
 }
 
-/* <=1175px */
-@media (max-width: 1175px) {
-  .WhatisCritiqo {
-    width: 700px;
-    height: auto;
-    padding: 30px;
-    margin: 70px auto;
-  }
-
-  .WhatisCritiqo h1 {
-    font-size: 34px;
-    letter-spacing: 2px;
-  }
-
-  .WhatisCritiqo > p {
-    font-size: 14px;
-    max-width: 600px;
-    margin-bottom: 30px;
-  }
-
-  .WhatisCritiqo ul {
-    gap: 20px;
-  }
-
-  .WhatisCritiqo ul li {
-    padding: 18px 16px;
-  }
-
-  .blockName {
-    font-size: 16px;
-  }
-
-  .WhatisCritiqo ul li p {
-    font-size: 13.5px;
-  }
+.advantageItem img {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  filter: invert(1);
+  transition: all 0.3s ease;
+  margin-top: 2px;
 }
 
-/* <=930px */
-@media (max-width: 1030px) {
-  .WhatisCritiqo {
-    width: 90%;
-    padding: 24px;
-    margin: 60px auto;
-  }
-
-  .WhatisCritiqo h1 {
-    font-size: 30px;
-  }
-
-  .WhatisCritiqo > p {
-    font-size: 13.5px;
-    margin-bottom: 25px;
-  }
-
-  .WhatisCritiqo ul {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .WhatisCritiqo ul li {
-    padding: 16px 14px;
-  }
-
-  .blockName {
-    font-size: 15px;
-  }
-
-  .WhatisCritiqo ul li p {
-    font-size: 13px;
-  }
+.advantageItem:hover img {
+  transform: rotate(6deg) scale(1.08);
+  filter: invert(1);
 }
 
-@media (max-width: 850px) {
-  .WhatisCritiqo {
-    width: 100%;
-    padding: 20px 21px;
-    border-radius: 14px;
-    margin: 50px 0px 0px 0px;
-    margin-left: -10px;
-  }
+.textBlock {
+  flex: 1;                 /* занимает всё доступное место справа от иконки */
+}
+.textBlock p {
+  display: block;          /* обычный блочный параграф */
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #AAAAAA;
+  margin: 0;
+  transition: color 0.3s ease;
+  text-align: left;        /* на всякий случай, чтобы не центрировался */
+  line-height: 1.4;
 }
 
-/* <=768px */
-@media (max-width: 768px) {
-  .WhatisCritiqo {
-    width: 100%;
-    padding: 20px 21px;
-    border-radius: 14px;
-    margin: 50px 0px 0px 0px;
-  }
-
-  .WhatisCritiqo h1 {
-    font-size: 26px;
-    letter-spacing: 1px;
-  }
-
-  .WhatisCritiqo > p {
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .WhatisCritiqo ul {
-    gap: 15px;
-  }
-
-  .WhatisCritiqo ul li {
-    padding: 14px 12px;
-  }
-
-  .blockName {
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-
-  .WhatisCritiqo ul li p {
-    font-size: 12.5px;
-  }
-
-  .WhatisCritiqo > div > p:last-child {
-    font-size: 12.5px;
-  }
+.advantageItem:hover .textBlock p {
+  color: #FFFFFF;
 }
 
-/* <=480px */
-@media (max-width: 480px) {
-  .WhatisCritiqo {
-    width: 100%;
-    padding: 20px 21px;
-    margin: 40px auto;
-  }
+.textBlock .description {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  color: #E0E0E0;
+  line-height: 1.5;
+  margin-top: 8px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: left;        /* переносы строго влево */
+  word-wrap: break-word;   /* длинные слова переносятся */
+  white-space: normal;     /* обычное поведение текста */
+}
 
-  .WhatisCritiqo h1 {
-    font-size: 22px;
-  }
-
-  .WhatisCritiqo > p {
-    font-size: 12.5px;
-    margin-bottom: 20px;
-  }
-
-  .WhatisCritiqo ul li {
-    padding: 12px 10px;
-    border-radius: 10px;
-  }
-
-  .blockName {
-    font-size: 13px;
-  }
-
-  .WhatisCritiqo ul li p {
-    font-size: 12px;
-  }
-
-  .WhatisCritiqo > div > p:last-child {
-    font-size: 12px;
-  }
+.accordion-input:checked + .advantageItem .description {
+  max-height: 140px;
+  opacity: 1;
+  padding: 8px 10px;
 }

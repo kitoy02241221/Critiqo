@@ -583,7 +583,7 @@ app.post("/create-payment", async (req, res) => {
       payment_id: response.data.id,
     });
   } catch (err) {
-    console.error("Ошибка create-payment:", err.response?.data || err.message);
+    console.error("", err.response?.data || err.message);
     res
       .status(500)
       .json({ error: "Не удалось создать платёж", details: err.response?.data });
@@ -640,11 +640,12 @@ app.post("/yookassa/webhook", async (req, res) => {
       .eq("auth_uid", authUid);
       
       if (updateError) {
-        console.error("❌ Ошибка при обновлении счётчика:", updateError);
+        console.error("", updateError);
         return res.status(500).send("FAIL: update error");
       }
       
-      console.log(`✅ Заявка создана и numAplication увеличен: ${newValue}`);
+      console.log(`✅ Заявка создана
+        `);
     }
     
     res.status(200).send("OK");

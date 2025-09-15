@@ -1,418 +1,149 @@
+/* Общий контейнер модалки */
 .modalAnalyze {
-  width: 800px;
-  margin: 200px auto 0 auto;
-  padding: 40px 35px;
+  width: 100%;
+  margin-top: 48px;
+  height: 1000px;
+  max-width: 1600px;
+  margin-left: 280px;
   border-radius: 20px;
-  background: linear-gradient(145deg, #101010, #1c1c1c);
-  color: #F1F1F1;
-  box-shadow: 0 0 30px rgba(0, 251, 255, 0.3);
+  padding: 40px 35px;
+  background: rgba(40, 40, 40, 0.85);
+  color: #E0E0E0;
   position: relative;
   overflow: hidden;
-  z-index: 1;
+  min-height: 90vh;
+  box-sizing: border-box;
 }
 
-/* Фоновый узор (как у advantagesblock) */
-.modalAnalyze::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 15% 25%, rgba(0,255,148,0.05) 0px, transparent 120px),
-    radial-gradient(circle at 85% 70%, rgba(0,191,255,0.05) 0px, transparent 150px),
-    repeating-linear-gradient(
-      45deg,
-      rgba(255, 255, 255, 0.04) 0px,
-      rgba(0, 191, 255, 0.04) 1px,
-      transparent 1px,
-      transparent 200px
-    );
-  animation: floatPattern 5s linear infinite;
-  z-index: 0;
-}
-
-/* Анимированные круги поверх узора, но под контентом */
-.modalAnalyze .circle {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.08;
-  z-index: 1;
-}
-
-/* Первый круг */
-.modalAnalyze .circle1 {
-  width: 180px;
-  height: 180px;
-  background: rgb(0, 255, 149, 0.5);
-  top: -60px;
-  left: -60px;
-  animation: floatCircle1 28s linear infinite;
-  z-index: 1;
-}
-
-/* Второй круг */
-.modalAnalyze .circle2 {
-  width: 140px;
-  height: 140px;
-  background: rgba(0, 191, 255, 0.5);
-  bottom: -60px;
-  right: -60px;
-  animation: floatCircle2 32s linear infinite;
-  z-index: 1;
-}
-
-/* Третий круг */
-.modalAnalyze .circle3 {
-  width: 100px;
-  height: 100px;
-  background: rgb(0, 255, 149, 0.5);
-  top: 45%;
-  left: 25%;
-  animation: floatCircle3 36s linear infinite;
-  z-index: 1;
-}
-
-/* Анимации кругов */
-@keyframes floatCircle1 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(380px, 280px) scale(1.2); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-@keyframes floatCircle2 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-280px, -220px) scale(1.1); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-@keyframes floatCircle3 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(220px, -240px) scale(1.15); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-@keyframes floatPattern {
-  from { background-position: 0 0, 0 0, 0 0; }
-  to { background-position: 220px 220px, -220px -220px, 320px 320px; }
-}
-
-/* Заголовок */
 .modalAnalyze h1 {
   text-align: center;
-  color: #00FF94;
-  text-shadow: 0 0 12px rgba(0, 255, 148, 0.6);
-  margin-bottom: 35px;
-  position: relative;
-  z-index: 2;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #F5F5F5;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
 }
 
-/* Информационный блок */
-.infoTakeAnalyze {
+/* Контейнер для двух колонок */
+.analyzeContent {
   display: flex;
   justify-content: space-between;
-  gap: 30px;
-  background: linear-gradient(145deg, #1E1E1E, #1C1C1C);
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+}
+
+/* Левая колонка — информация */
+.infoTakeAnalyze {
+  flex: 0 0 380px;
+  height: 358px;
+  max-width: 400px;
+  background: linear-gradient(145deg, #1f1f1f, #1a1a1a);
   padding: 25px 30px;
   border-radius: 14px;
-  margin-bottom: 40px;
-  box-shadow: inset 0 0 15px rgba(0, 191, 255, 0.1);
-  position: relative;
-  z-index: 2;
-}
-/* Левая колонка (текст "Закажи анализ прямо сейчас!") */
-.infoTakeAnalyze .leftColumn {
-  flex: 1;
-  min-width: 280px;
-}
-
-/* Правая колонка (важная информация) */
-.infoTakeAnalyze .rightColumn {
-  flex: 1;
-  min-width: 280px;
-}
-
-.rightColumn h2 {
-  margin-left: 40px;
 }
 
 .infoTakeAnalyze h2 {
-  color: #00BFFF;
+  font-size: 1.4rem;
   margin-bottom: 15px;
-  font-size: 20px;
-}
-
-.infoTakeAnalyze p,
-.infoTakeAnalyze li {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #B0BEC5;
+  color: #CCCCCC;
 }
 
 .infoTakeAnalyze li {
   list-style: none;
-  margin: 6px 0;
-  position: relative;
-  padding-left: 18px;
+  margin-bottom: 16px;
+  line-height: 1.4;
+  font-size: 0.95rem;
+  color: #B0B0B0;
 }
 
 .infoTakeAnalyze li::before {
   content: "✦";
-  color: #00BFFF;
-  position: absolute;
-  left: 0;
+  color: #00eeff;
+  margin-right: 5px;
 }
 
-@media (max-width: 900px) {
-  .infoTakeAnalyze {
-    flex-direction: column;
-  }
+.rightColumn li {
+  margin-left: -40px;
 }
 
-/* Интерактивные элементы */
+/* Правая колонка — форма */
 .interactiveItem {
+  flex: 1;
+  background: linear-gradient(145deg, #1f1f1f, #1a1a1a);
+  padding: 25px 30px;
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: relative;
+  gap: 20px;
   z-index: 2;
 }
 
 .interactiveItem h3 {
-  color: #00BFFF;
-  margin: 20px 0 8px 0;
-  align-self: flex-start;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: #CCCCCC;
 }
 
-/* Инпуты */
+/* Инпуты и текстовые поля */
 .selectMatch,
 .interactiveItem textarea {
   width: 100%;
-  max-width: 380px;
-  padding: 12px 15px;
-  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: -15px;
   border: none;
-  background: #1E1E1E;
-  color: #F1F1F1;
+  border-radius: 10px;
+  background: #2c2c2c;
+  color: #F5F5F5;
   font-size: 1rem;
-  margin-bottom: 20px;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
   resize: none;
-  max-height: 260px;
-  overflow-y: auto;
-  z-index: 2;
-}
-
-.selectMatch:focus,
-.interactiveItem textarea:focus {
-  outline: none;
-  box-shadow: 0 0 12px rgba(0, 255, 148, 0.6), 0 0 8px rgba(0, 191, 255, 0.4);
-  transform: translateY(-1px);
+  box-sizing: border-box;
 }
 
 /* Кнопка */
 .submitMatch {
-  margin-top: 10px;
-  padding: 12px 28px;
-  border-radius: 12px;
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
   border: none;
-  font-size: 1rem;
-  background: linear-gradient(135deg, #00FF94, #00BFFF);
-  color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: #E0E0E0;
+  font-weight: 500;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  z-index: 2;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .submitMatch:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(0, 255, 148, 0.5), 0 0 18px rgba(0, 191, 255, 0.5);
-  color: rgba(0, 0, 0, 1);
-  transition: 0.3s;
+  background: #CCCCCC;
+  color: #262626;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.15);
 }
 
-/* Адаптив */
-/* <=1175px */
-@media (max-width: 1175px) {
-  .modalAnalyze {
-    width: 700px;
-    padding: 35px 28px;
-  }
-
-  .modalAnalyze h1 {
-    font-size: 30px;
-  }
-
-  .infoTakeAnalyze {
-    gap: 24px;
-    padding: 20px 24px;
-  }
-
-  .infoTakeAnalyze h2 {
-    font-size: 18px;
-  }
-
-  .infoTakeAnalyze p,
-  .infoTakeAnalyze li {
-    font-size: 14px;
-  }
+/* Декоративные круги */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  pointer-events: none;
+  background: #FFFFFF;
 }
 
-/* <=1030px */
-@media (max-width: 1030px) {
-  .modalAnalyze {
-    width: 90%;
-    padding: 28px 22px;
-  }
-
-  .modalAnalyze h1 {
-    font-size: 26px;
-    margin-bottom: 25px;
-  }
-
-  .rightColumn h2 {
-    margin-left: 0px;
-  }
-
-  .rightColumn ul {
-    margin-left: -40px;
-  }
-
-  .infoTakeAnalyze {
-    gap: 20px;
-    padding: 18px 20px;
-  }
-
-  .infoTakeAnalyze h2 {
-    font-size: 16px;
-  }
-
-  .selectMatch,
-  .interactiveItem textarea {
-    font-size: 0.9rem;
-    padding: 10px 12px;
-  }
-
-  .submitMatch {
-    font-size: 0.9rem;
-    padding: 10px 20px;
-  }
+textarea {
+  max-height: 260px;
 }
 
-@media (max-width: 850px) {
-  .modalAnalyze {
-    width: 100%;
-    padding: 20px 21px;
-    border-radius: 14px;
-    margin: 50px 0px 0px 0px;
-    margin-left: -10px;
-  }
+.backgroundModal {
+  position: absolute;
+  top: 520px;
+  left: 20px;
+  opacity: 0.01;
+  font-size: 420px;
+  margin-top: 0px;
+  max-height: 400px;
+  z-index: 1;
+  color: #FFFFFF;
 }
 
-/* <=768px */
-@media (max-width: 768px) {
-  .modalAnalyze {
-    width: 100%;
-    margin: 120px auto 0 auto;
-    padding: 20px 21px;
-  }
-
-  .modalAnalyze h1 {
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
-
-  .infoTakeAnalyze {
-    flex-direction: column;
-    gap: 16px;
-    padding: 16px;
-  }
-
-  .infoTakeAnalyze .leftColumn,
-  .infoTakeAnalyze .rightColumn {
-    min-width: unset;
-  }
-
-  .rightColumn h2 {
-    margin-left: 0;
-    text-align: left;   /* прижатие к левому краю */
-  }
-
-  .rightColumn ul {
-    margin-left: -40px;
-  }
-
-  .infoTakeAnalyze h2 {
-    font-size: 15px;
-    text-align: left;   /* общий текст тоже по левому краю */
-  }
-
-  .infoTakeAnalyze p,
-  .infoTakeAnalyze li {
-    font-size: 13px;
-    line-height: 1.5;
-    text-align: left;   /* выравнивание по левому */
-  }
-
-  .interactiveItem h3 {
-    font-size: 14px;
-    text-align: center;
-    align-self: center;
-  }
-
-  .selectMatch,
-  .interactiveItem textarea {
-    font-size: 0.85rem;
-    padding: 9px 11px;
-    max-height: 180px;
-  }
-
-  .submitMatch {
-    font-size: 0.85rem;
-    padding: 9px 18px;
-  }
-}
-
-/* <=354px */
-@media (max-width: 354px) {
-  .modalAnalyze {
-    width: 100%;
-    margin: 80px auto 0 auto;
-    padding: 20px 21px;
-  }
-
-  .modalAnalyze h1 {
-    font-size: 18px;
-    margin-bottom: 14px;
-  }
-
-  .infoTakeAnalyze {
-    padding: 12px;
-    gap: 12px;
-  }
-
-  .infoTakeAnalyze h2 {
-    font-size: 13px;
-    text-align: left;   /* прижатие к левому */
-  }
-
-  .infoTakeAnalyze p,
-  .infoTakeAnalyze li {
-    font-size: 12px;
-    text-align: left;   /* тоже влево */
-  }
-
-  .interactiveItem h3 {
-    font-size: 12px;
-  }
-
-  .selectMatch,
-  .interactiveItem textarea {
-    font-size: 0.75rem;
-    padding: 7px 9px;
-    max-height: 150px;
-  }
-
-  .submitMatch {
-    font-size: 0.75rem;
-    padding: 8px 14px;
-  }
+.backgroundModal:hover {
+  cursor: default;
 }

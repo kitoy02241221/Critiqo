@@ -1,327 +1,216 @@
 .navbar {
   position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-
-  width: 90%;
-  max-width: 1440px;
-  padding: 16px 32px;
-
+  left: 0;
+  width: 250px;
+  height: 100vh;          /* занимает весь экран */
+  padding: 24px 16px;
+  background: rgba(28,28,28,0.95);
+  backdrop-filter: blur(12px);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-
-  background: rgba(18, 18, 18, 0.85);
-  backdrop-filter: blur(10px);
-  border-radius: 0 0 18px 18px;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.7),
-              inset 0 -1px 0 rgba(0, 255, 148, 0.2);
+  gap: 32px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+  overflow-y: auto;       /* вертикальный скролл только внутри */
+  box-sizing: border-box;
 }
 
-/* Логотип / название */
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .banner h1 {
-  font-size: 2rem;
-  color: #00FF94;
-  margin: 0;
+  font-size: 2.2rem;
+  color: #E0E0E0;
+  font-weight: 800;
+  text-align: center;
   cursor: pointer;
   letter-spacing: 1px;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-  will-change: color, text-shadow;
+  transition: all 0.3s ease;
 }
 
 .banner h1:hover {
-  color: #00BFFF;
-  text-shadow: 0 0 8px rgba(0, 191, 255, 0.7);
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
 }
-
 /* Центральное меню */
 .navbar-center {
   display: flex;
-  gap: 28px;
+  flex-direction: column;
+  width: 100%;
+  gap: 18px;
 }
 
 .navbar-center button {
-  width: 170px;
-  background: transparent;
-  border: 2px solid rgba(0, 191, 255, 0.8);
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  border: none;
+  border-radius: 14px;
+  color: #E0E0E0;
   font-size: 1rem;
-  color: #F1F1F1;
-  padding: 10px 18px;
-  border-radius: 12px;
+  font-weight: 600;
+  text-align: left;
   cursor: pointer;
-  transition: 
-    background-color 0.25s ease,
-    color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-  will-change: transform, box-shadow, background-color, color;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+.navbar a button {
+  text-decoration: none;
 }
 
 .navbar-center button:hover {
-  background-color: #00BFFF;
-  color: #121212; 
-  transform: scale(1.06);
-  box-shadow: 0 0 12px rgba(0, 191, 255, 0.6);
+  background: #CCCCCC;
+  color: #262626;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.15);
 }
 
 /* Блок авторизации */
 .steamAuth {
+  margin-top: -15px;
   display: flex;
+  flex-direction: column;
   gap: 16px;
+  width: 100%;
 }
 
 .steamAuth button {
-  width: 200px;
-  background: linear-gradient(135deg, #00FF94, #00BFFF);
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  color: #E0E0E0;
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 14px;
   border: none;
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-size: 0.95rem;
-  color: #121212;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: 
-    background-color 0.25s ease,
-    color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-  will-change: transform, box-shadow, background-color, color;
+  transition: all 0.3s ease;
 }
 
 .steamAuth button:hover {
-  background-color: #00BFFF;
-  color: #121212;
-  transform: scale(1.07);
-  box-shadow: 0 0 18px rgba(0, 255, 148, 0.5), 0 0 18px rgba(0, 191, 255, 0.5);
+  background: #CCCCCC;
+  color: #262626;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.15);
 }
 
-.steamAuth a button {
-  background: #FF4C4C;
-  color: #F1F1F1;
+/* Футер в navbar */
+.footer {
+  margin-top: auto;
+  width: 100%;
+  text-align: center;
 }
 
-.steamAuth a button:hover {
-  background-color: #FF6A6A;
-  color: #121212;
-  transform: scale(1.07);
-  box-shadow: 0 0 14px rgba(255, 76, 76, 0.6);
+.footer ul li {
+  list-style: none;
+  margin-top: 5px;
+  margin-left: -40px;
+}
+
+.footer a {
+  color: #999999;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: rgb(199, 199, 199);
 }
 
 /* ========= Адаптивность ========= */
 
-/* <=1408px */
-@media (max-width: 1408px) {
+/* <=1024px - уменьшаем navbar */
+@media (max-width: 1024px) {
   .navbar {
-    width: 100%;
-    max-width: 100vh;
-    padding: 12px 22px;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 0px;
+    top: 16px;
+    left: 16px;
+    width: 180px;
+    padding: 20px 12px;
+    gap: 24px;
   }
 
-  /* центр навигации */
-  .navbar-center {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 колонки */
-    gap: 12px;
-    width: 100%;
-    justify-content: center;
+  .banner h1 {
+    font-size: 1.8rem;
   }
 
   .navbar-center button {
-    width: 100%;
-    padding: 8px 14px;
+    padding: 10px 16px;
     font-size: 0.95rem;
   }
 
-  /* блок авторизации */
-  .steamAuth {
-    display: grid;
-    grid-template-columns: 1fr; /* одна колонка */
-    gap: 12px;
-    width: 100%;
-    justify-content: center;
-  }
-
   .steamAuth button {
-    width: 100%;
-    padding: 8px 14px;
+    padding: 10px 16px;
     font-size: 0.95rem;
   }
 }
 
-/* <=930px */
-@media (max-width: 930px) {
-  .navbar {
-    width: 100%;
-    padding: 12px 18px;
-    gap: 10px;
-  }
-
-  .banner h1 {
-    font-size: 1.6rem;
-  }
-
-  /* центр навигации */
-  .navbar-center {
-    grid-template-columns: repeat(2, 1fr); /* сохраняем 2 колонки */
-    gap: 10px;
-  }
-
-  .navbar-center button {
-    width: 100%;
-    font-size: 0.85rem;
-    padding: 7px 12px;
-  }
-
-  /* авторизация остаётся в одну колонку */
-  .steamAuth {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .steamAuth button {
-    width: 100%;
-    font-size: 0.85rem;
-    padding: 7px 12px;
-  }
-}
-
-/* <=850px */
-@media (max-width: 850px) {
-  body {
-    padding-top: 0 !important;
-  }
-  .navbar {
-    position: static;
-    left: 0;
-    right: 0;
-    top: 0; /* закрепляем у верхней границы */
-    margin-top: 0; /* убираем внешний отступ */
-    padding-top: 0; /* убираем внутренний отступ сверху */
-    transform: none;
-    width: 100%;
-    max-width: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    padding: 20px 16px;
-    border-radius: 0;
-  }
-
-  .banner {
-    text-align: center;
-    width: 100%;
-    margin-top: 0 !important; /* на всякий случай сброс */
-  }
-
-  .banner h1 {
-    font-size: 1.5rem;
-  }
-
-  .navbar-center {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* кнопки в 2 колонки */
-    gap: 10px;
-    width: 100%;
-  }
-
-  .navbar-center button {
-    width: 100%;
-    padding: 6px 10px;
-    font-size: 0.9rem;
-    border-radius: 10px;
-  }
-
-  .steamAuth {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* кнопки авторизации тоже 2 колонки */
-    gap: 10px;
-    width: 100%;
-  }
-
-  .steamAuth button {
-    width: 100%;
-    padding: 6px 10px;
-    font-size: 0.9rem;
-  }
-}
-
-/* <=768px */
+/* <=768px - превращаем в горизонтальный navbar сверху */
 @media (max-width: 768px) {
   .navbar {
-    position: static;
-    left: 0;
-    right: 0;
+    position: fixed;
     top: 0;
-    margin-top: 0;
-    padding-top: 0;
-    transform: none;
+    left: 0;
     width: 100%;
-    max-width: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    padding: 20px 16px;
+    height: auto;
+    min-height: unset;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 12px 16px;
     border-radius: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
   }
 
   .banner {
-    text-align: center;
-    width: 100%;
-    margin-top: 0 !important;
-  }
-
-  .banner h1 {
-    font-size: 1.5rem;
+    display: none; /* скрываем логотип для экономии места */
   }
 
   .navbar-center {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    width: 100%;
+    flex-direction: row;
+    gap: 12px;
   }
 
   .navbar-center button {
-    width: 100%;
-    padding: 6px 10px;
+    flex: 1;
+    padding: 8px 12px;
     font-size: 0.9rem;
-    border-radius: 10px;
+    text-align: center;
   }
 
   .steamAuth {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    width: 100%;
+    flex-direction: row;
+    gap: 8px;
   }
 
   .steamAuth button {
-    width: 100%;
-    padding: 6px 10px;
+    flex: 1;
+    padding: 8px 12px;
     font-size: 0.9rem;
   }
 }
 
-/* <=480px */
+/* <=480px - упрощаем до одной строки кнопок */
 @media (max-width: 480px) {
-  .banner h1 {
-    font-size: 1.3rem;
-  }
-
-  .navbar {
-    padding: 20px 16px;
-  }
-
   .navbar-center {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
   }
 
   .steamAuth {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
   }
 }

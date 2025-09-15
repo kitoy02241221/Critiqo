@@ -2,25 +2,26 @@
   max-width: 800px;
   margin: 3rem auto;
   padding: 2rem;
-  background-color: #1E1E1E;
+  background-color: rgba(40, 40, 40, 0.85); /* как WhatisCritiqo */
+  backdrop-filter: blur(12px);
   border-radius: 16px;
-  box-shadow: 0 0 20px rgba(0, 255, 148, 0.15);
-  color: #F1F1F1;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+  color: #E0E0E0;
 }
 
 .supportpage h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: center;
-  color: #00BFFF;
-  text-shadow: 0 0 8px #00BFFF;
+  color: #F5F5F5;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 .supportpage p {
   font-size: 1rem;
   margin-bottom: 1.2rem;
   line-height: 1.6;
-  color: #B0BEC5;
+  color: #AAAAAA;
   text-align: center;
 }
 
@@ -28,10 +29,10 @@
   width: 95%;
   min-height: 150px;
   padding: 1rem;
-  border-radius: 12px;
-  border: 2px solid #00BFFF;
-  background-color: #121212;
-  color: #F1F1F1;
+  border-radius: 14px;
+  border: none;
+  background-color: #2c2c2c;
+  color: #E0E0E0;
   font-size: 1rem;
   resize: vertical;
   margin-bottom: 1.5rem;
@@ -40,8 +41,30 @@
 
 .supportpage textarea:focus {
   outline: none;
-  border-color: #00FF94;
-  box-shadow: 0 0 10px rgba(0, 255, 148, 0.3);
+  border-color: #CCCCCC;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.supportpage input {
+  width: 95%;
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  border: none;
+  background-color: #2c2c2c;
+  color: #E0E0E0;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.supportpage input::placeholder {
+  color: #AAAAAA;
+}
+
+.supportpage input:focus {
+  outline: none;
+  border-color: #CCCCCC;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
 }
 
 .supportpage button {
@@ -49,43 +72,23 @@
   margin: 0 auto;
   padding: 0.8rem 2rem;
   border-radius: 10px;
-  background-color: #00FF94;
-  color: #121212;
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  color: #E0E0E0;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  border: inherit;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  border: none;
 }
 
 .supportpage button:hover {
+  background: #CCCCCC;
+  color: #262626;
   transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(0, 255, 148, 0.5);
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.15);
 }
 
 .supportpage button:active {
   transform: translateY(1px);
-  box-shadow: 0 0 8px rgba(0, 255, 148, 0.3);
-}
-
-.supportpage input {
-  width: 95%;
-  padding: 0.8rem 1rem;
-  border-radius: 12px;
-  border: 2px solid #00BFFF;
-  background-color: #121212;
-  color: #F1F1F1;
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.supportpage input::placeholder {
-  color: #B0BEC5;
-}
-
-.supportpage input:focus {
-  outline: none;
-  border-color: #00FF94;
-  box-shadow: 0 0 10px rgba(0, 255, 148, 0.3);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
 }

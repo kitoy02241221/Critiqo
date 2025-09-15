@@ -2,7 +2,7 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
-  color: #fff;
+  color: #E0E0E0;
 }
 
 /* Заголовок */
@@ -10,7 +10,8 @@
   font-size: 2rem;
   text-align: center;
   margin-bottom: 40px;
-  color: #00ff94;
+  color: #F5F5F5;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 /* Вопросы */
@@ -22,24 +23,29 @@
 
 /* Карточка вопроса */
 .questionsItem {
-  background: #1e1e1e;
+  background: #1a1a1a;
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 255, 148, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.3s ease;
   cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .questionsItem:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 255, 148, 0.25);
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .questionsItem h2 {
   font-size: 1.2rem;
   margin: 0;
-  color: #00BFFF;
+  color: #CCCCCC;
   transition: color 0.3s ease;
+}
+
+.questionsItem.active h2 {
+  color: #F5F5F5;
 }
 
 .questionsItem h2::before {
@@ -48,17 +54,16 @@
 
 .questionsItem.active h2::before {
   content: "✦";
-  color: #00BFFF;
+  color: #AAAAAA;
   margin-right: 6px;
   transition: opacity 0.3s ease;
 }
-
 
 .questionsDescription {
   margin-top: 12px;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #d1d1d1;
+  color: #B0B0B0;
   display: none;
 }
 
@@ -71,4 +76,3 @@
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
