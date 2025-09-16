@@ -43,9 +43,9 @@
 .modal-actions-profile {
   display: flex;
   justify-content: center;
-  gap: 15px;
   flex-direction: column;
   align-items: center;
+  padding-top: 40px;
 }
 
 /* Закрыть */
@@ -59,7 +59,6 @@
   transition: all 0.3s ease;
   width: 100%;
   height: 50px;
-  margin-top: 20px;
   border: none;
 }
 
@@ -166,6 +165,7 @@
   user-select: none;
   text-align: left;
   width: 420px;
+  margin-top: 40px;
 }
 
 .checkPolicy-profile p {

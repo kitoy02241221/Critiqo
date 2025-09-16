@@ -147,3 +147,107 @@ textarea {
 .backgroundModal:hover {
   cursor: default;
 }
+
+
+@media (max-width: 1880px) {
+  .modalAnalyze {
+    max-width: 80%;
+  }
+
+  .backgroundModal {
+    margin-top: 70px;
+    margin-left: 150px;
+    font-size: 300px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .backgroundModal {
+    margin-left: 50px;
+  }
+}
+
+@media (max-width: 1480px) {
+  .modalAnalyze {
+    max-width: 75%;
+  }
+
+  .infoTakeAnalyze {
+    max-width: 200px;
+    width: 100%;
+    overflow-y: scroll;
+  }
+
+  .backgroundModal {
+    margin-left: 5%;
+    font-size: 250px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .backgroundModal {
+    font-size: 200px;
+  }
+  .modalAnalyze {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .modalAnalyze {
+    max-width: 60%;
+    overflow-y: hidden;
+  }
+
+  .analyzeContent {
+    display: block;
+  }
+
+  .infoTakeAnalyze {
+    max-width: 89%;
+  }
+
+  .interactiveItem {
+    max-width: 90%;
+    margin-top: 20px;
+  }
+  
+  .backgroundModal {
+    display: none;
+  }
+}
+
+@media (max-width: 850px) {
+  .infoTakeAnalyze {
+    max-width: 86%;
+  }
+}
+
+@media (max-width: 768px) {
+  .modalAnalyze {
+    margin: 0px;
+    max-width: 100%;
+  }
+
+  .infoTakeAnalyze {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 560px) {
+  .infoTakeAnalyze {
+    max-width: 87%;
+  }
+}
+
+@media (max-width: 450px) {
+  .infoTakeAnalyze {
+    max-width: 83%;
+  }
+}
+
+@media (max-width: 350px) {
+  .infoTakeAnalyze {
+    max-width: 75%;
+  }
+}

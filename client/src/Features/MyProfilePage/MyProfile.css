@@ -10,7 +10,7 @@
   padding-top: 0px;
   border-radius: 20px;
   color: #E0E0E0;
-  background: rgba(40, 40, 40, 0.85); /* фон как в WhatisCritiqo */
+  background: rgba(40, 40, 40, 0.85);
   backdrop-filter: blur(12px);
   position: relative;
   overflow: hidden;
@@ -20,31 +20,33 @@
   gap: 32px;
 }
 
-/* Обертка для редактирования имени */
+/* Имя + кнопки в одной строке */
 .editName {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px; /* расстояние между именем и кнопкой */
-  z-index: 2;
+  gap: 14px;
   margin-top: 8px;
+  flex-wrap: wrap; /* чтобы не ломало на маленьких экранах */
 }
 
-/* Само имя */
-.editName .userName {
+/* Имя пользователя */
+.userName {
   font-size: 28px;
   font-weight: 600;
   color: #CCCCCC;
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
-  cursor: pointer;
+  cursor: default;
   transition: color 0.3s ease;
+  margin: auto;
+  white-space: nowrap;
 }
 
-.editName .userName:hover {
+.userName:hover {
   color: #F5F5F5;
 }
 
-/* Инпут редактирования имени */
+/* Инпут для редактирования имени */
 .editName input[type="text"] {
   font-size: 28px;
   font-weight: 600;
@@ -54,8 +56,8 @@
   border-bottom: 2px solid #666;
   outline: none;
   text-align: center;
-  width: auto;
   min-width: 180px;
+  max-width: 280px;
   padding: 4px 8px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -65,7 +67,7 @@
   box-shadow: 0 2px 8px rgba(0, 255, 148, 0.3);
 }
 
-/* Кнопка редактирования рядом с именем */
+/* Кнопки рядом с именем */
 .editName button {
   padding: 6px 14px;
   border-radius: 8px;
@@ -76,6 +78,8 @@
   font-weight: 500;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+  z-index: 0;
 }
 
 .editName button:hover {
@@ -84,7 +88,6 @@
   transform: translateY(-2px) scale(1.03);
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
-
 
 /* Анимационный паттерн */
 .profileBlock::before {
@@ -130,6 +133,7 @@
   height: 700px;
   max-height: 700px;
   margin-top: 20px;
+  overflow: hidden; /* защита от выхода контента */
 }
 
 /* Левая колонка */
@@ -138,13 +142,12 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-
 }
 
 /* Карточки статистики */
 .statistics {
   flex: none;
-  height: 150px;
+  height: 120px;
   background: #1E1E1E;
   border-radius: 14px;
   display: flex;
@@ -184,6 +187,11 @@
   background-color: #1a1a1a;
   overflow-y: auto;
   position: relative;
+  padding-top: 0px;
+}
+
+.modalOverlay {
+  z-index: 1000;
 }
 
 /* Инпуты */
@@ -232,7 +240,6 @@
   justify-content: center;
   gap: 24px;
   margin-top: -10px;
-  z-index: 2;
 }
 
 .profileButton button {
@@ -240,6 +247,7 @@
   height: 55px;
   font-size: 1rem;
   font-weight: 600;
+  z-index: 0;
 }
 
 /* Модалка */
@@ -263,4 +271,83 @@
   text-align: center;
   color: #F5F5F5;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 1880px) {
+  .profileBlock {
+    max-width: 75%;
+    width: 90%;
+  }
+}
+
+@media (max-width: 1470px) {
+  .profileBlock {
+    max-width: 65%;
+    width: 90%;
+  }
+
+  .analyzeHistory {
+    max-width: 50%;
+    padding-top: 0px;
+  }
+}
+
+@media (max-width: 1026px) {
+  .profileBlock {
+    max-width: 65%;
+    margin-left: 25%;
+  }
+
+  .statistics {
+    min-width: 220px;
+  }
+
+  .analyzeHistory {
+    padding-top: 0px;
+    height: 515px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profileBlock {
+    margin: 0px;
+    max-width: 100%;
+    height: 100vh;
+  }
+
+  .profileButton button {
+    width: 200px;
+  }
+}
+
+@media (max-width: 600px) {
+  .profileMainContent {
+    overflow-y: scroll;
+  }
+
+  .profileMainContent {
+    display: block;
+  }
+  .statistics {
+    height: 160px;
+  }
+
+  .analyzeHistory {
+    margin-top: 60px;
+    max-width: 100%;
+  }
+
+  .analyzeHistory h2 {
+    margin-top: 0px;
+  }
+
+  .profileButton {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 468px) {
+  .profileButton button {
+    width: 140px;
+  }
 }
