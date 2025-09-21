@@ -1,6 +1,6 @@
 /* Оверлей модалки */
 .modal-overlay-profile {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(18, 18, 18, 0.85);
   display: flex;
@@ -246,4 +246,75 @@
   font-size: 14px;
   margin-top: -6px;
   margin-bottom: 10px;
+}
+
+
+@media (max-width: 2500px) {
+  .modalOverlay {
+    width: 100%;
+  }
+  
+  .modal-content-profile {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 960px) {
+  .modal-content-profile {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 600px) {
+  .modal-overlay-profile {
+    height: 120vh;
+  }
+}
+
+@media (max-width: 500px) {
+  .modal-overlay-profile {
+    height: 120vh;
+  }
+
+  .modal-content-profile {
+    max-width: 300px;
+  }
+
+  .checkPolicy-profile input[type="checkbox"] {
+    margin-top: 10px;
+    margin-bottom: -15px;
+    margin-right: 30px;
+  }
+
+  .checkPolicy-profile {
+    position: relative;
+    display: inline;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal-overlay-profile {
+    height: 170vh;
+  }
+
+  .modalInfo-profile li {
+    line-height: 17px;
+  }
+
+  .modal-content-profile {
+    max-width: 200px; 
+  }
+
+  .checkPolicy-profile input[type="checkbox"] {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-left: 25px;
+  }
+
+  .checkPolicy-profile {
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+  }
 }

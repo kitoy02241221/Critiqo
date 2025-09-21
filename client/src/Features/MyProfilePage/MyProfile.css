@@ -1,23 +1,44 @@
-/* === Основной контейнер профиля === */
 .profileBlock {
   width: 100%;
   max-width: 1520px;
-  max-height: 960px;
-  height: 100%;
   margin-left: 280px;
   margin-top: 48px;
-  padding: 40px;
-  padding-top: 0px;
+  padding: 40px 40px 0;
   border-radius: 20px;
   color: #E0E0E0;
   background: rgba(40, 40, 40, 0.85);
   backdrop-filter: blur(12px);
   position: relative;
-  overflow: hidden;
-
   display: flex;
   flex-direction: column;
   gap: 32px;
+
+  /* без фиксированных ограничений */
+  max-height: 1040px;
+}
+
+.profileMainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  z-index: 1;
+
+  /* убираем фиксированные размеры */
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.analyzeHistory {
+  flex: 2;
+  border-radius: 14px;
+  padding: 24px;
+  background-color: #1a1a1a;
+
+  /* именно здесь оставляем скролл */
+  overflow-y: auto;
+  position: relative;
 }
 
 /* Имя + кнопки в одной строке */
@@ -121,19 +142,6 @@
   font-size: 38px;
   position: relative;
   z-index: 1;
-}
-
-/* === Контент: статистика + история === */
-.profileMainContent {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  z-index: 1;
-  height: 700px;
-  max-height: 700px;
-  margin-top: 20px;
-  overflow: hidden; /* защита от выхода контента */
 }
 
 /* Левая колонка */
@@ -308,11 +316,16 @@
   }
 }
 
+@media (max-width: 800px) {
+  .profileBlock {
+    max-width: 60%;
+  }
+}
+
 @media (max-width: 768px) {
   .profileBlock {
     margin: 0px;
-    max-width: 100%;
-    height: 100vh;
+    max-width: 89%;
   }
 
   .profileButton button {
@@ -321,6 +334,12 @@
 }
 
 @media (max-width: 600px) {
+  .profileBlock {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 79%;
+  }
+
   .profileMainContent {
     overflow-y: scroll;
   }

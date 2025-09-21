@@ -1,18 +1,13 @@
 .WhatisCritiqo {
-  position: absolute;          /* фиксируем относительно страницы */
   top: 0;
-  left: 240px;                 /* ширина navbar */
   right: 0;
-  bottom: 0;
+  min-height: 100vh; /* можно больше, если контент больше */
   display: flex;
   justify-content: center;
   align-items: flex-start;
   color: #E0E0E0;
-  overflow-y: auto;            /* скролл внутри блока при переполнении */
-  overflow-x: hidden;
   padding: 40px 0;
   box-sizing: border-box;
-  /* фон не задаем */
 }
 
 .content {
@@ -243,16 +238,23 @@
   padding: 8px 10px;
 }
 
+@media (max-width: 2100px) {
+  .WhatisCritiqo {
+    margin-left: 240px;
+  }
+}
+
 @media (max-width: 1880px) {
   .WhatisCritiqo {
     max-width: 85%;
+    margin-left: 260px;
   }
 }
 
 @media (max-width: 1600px) {
   .WhatisCritiqo {
     max-width: 80%;
-    margin-left: 2%;
+    margin-left: 255px;
   }
 
   .advantagesblock {
@@ -263,21 +265,72 @@
 @media (max-width: 1300px) {
   .WhatisCritiqo {
     max-width: 75%;
+    margin-left: 253px;
   }
 }
 
 @media (max-width: 1024px) {
   .WhatisCritiqo {
     max-width: 70%;
-    margin-left: 0px;
+    margin-left: 220px;
   }
 }
 
 @media (max-width: 768px) {
   .WhatisCritiqo {
     overflow-y: scroll;
-    top: -40px;
     left: 0px;
+    margin-left: 0px;
     max-width: 100%;
+    width: 100%;
+  }
+
+  .advantagesblock {
+    max-width: 80%;
+  }
+}
+
+/* Высота до 900px */
+@media (max-height: 900px) {
+  .WhatisCritiqo {
+    padding: 20px 0;
+  }
+  .content {
+    padding: 30px 20px;
+  }
+}
+
+/* Высота до 700px */
+@media (max-height: 700px) {
+  .WhatisCritiqo {
+    padding: 15px 0;
+  }
+  .content {
+    padding: 20px 15px;
+  }
+  .WhatisCritiqo h1 {
+    font-size: 32px;
+  }
+  .aboutText {
+    font-size: 14px;
+  }
+}
+
+/* Высота до 500px */
+@media (max-height: 500px) {
+  .WhatisCritiqo {
+    padding: 10px 0;
+  }
+  .content {
+    padding: 15px 10px;
+  }
+  .WhatisCritiqo h1 {
+    font-size: 26px;
+  }
+  .whyDoingCritiqo {
+    font-size: 18px;
+  }
+  .advantagesblock {
+    padding: 20px 15px;
   }
 }

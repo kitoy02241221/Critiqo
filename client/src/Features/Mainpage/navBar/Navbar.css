@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 250px;
-  height: 100vh;          /* занимает весь экран */
+  height: 100vh;              
   padding: 24px 16px;
   background: rgba(28,28,28,0.95);
   backdrop-filter: blur(12px);
@@ -12,11 +12,10 @@
   align-items: center;
   gap: 32px;
   box-shadow: 0 8px 30px rgba(0,0,0,0.8);
-  overflow-y: auto;       /* вертикальный скролл только внутри */
   box-sizing: border-box;
   z-index: 2000;
+  overflow-x: hidden;
 }
-
 .banner {
   display: flex;
   justify-content: center;
@@ -170,6 +169,8 @@
     transition: left 0.3s ease;
     box-shadow: 0 8px 30px rgba(0,0,0,0.8);
     z-index: 2500;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
 
   /* показываем при активном классе */

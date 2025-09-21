@@ -12,6 +12,7 @@
 /* Контейнер модалки */
 .modal-content {
   width: 400px;
+  margin-left: 200px;
   max-width: 90%;
   padding: 30px;
   border-radius: 20px;
@@ -240,4 +241,37 @@
   font-size: 14px;
   margin-top: -6px;
   margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 500px) {
+  .modal-content {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .modalInfo li {
+    line-height: 17px;
+  }
+
+  .modal-content {
+    max-width: 200px; 
+  }
+
+  .checkPolicy input[type="checkbox"] {
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
+
+  .checkPolicy {
+    max-width: 200px;
+    align-items: center;
+    flex-direction: column;
+  }
 }
