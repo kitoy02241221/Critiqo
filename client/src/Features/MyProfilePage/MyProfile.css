@@ -370,8 +370,12 @@
   }
 
   .analyzeHistory {
-    max-width: 50%;
+    max-width: 100%;
     padding-top: 0px;
+  }
+
+  .modalOverlay {
+    max-width: 100%;
   }
 }
 
