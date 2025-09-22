@@ -6,7 +6,8 @@
     "frontend": "npm start --prefix client",
     "backend": "npm start --prefix server",
     "backend:prod": "npm run start:prod --prefix server",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "start": "node server/index.js"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
