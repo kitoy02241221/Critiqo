@@ -19,11 +19,11 @@ function ByAnalyzeModal({ modalstyle, onClose }) {
 
   return (
     <div
-      className="modalOverlay"
+      className="modalOverlaypay"
       style={modalstyle}
       onClick={handleOverlayClick}
     >
-      <div className="modalWindow">
+      <div className="modalWindowpay">
         <h1>Заказать разбор</h1>
 
         <div className="infoModal">
