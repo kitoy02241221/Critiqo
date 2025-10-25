@@ -1,13 +1,10 @@
 .WhatisCritiqo {
-  top: 0;
-  right: 0;
-  min-height: 100vh; /* можно больше, если контент больше */
-  display: flex;
-  justify-content: center;
+  min-height: 100vh;
   align-items: flex-start;
   color: #E0E0E0;
   padding: 40px 0;
   box-sizing: border-box;
+  margin-left: 280px;
 }
 
 .content {

@@ -19,11 +19,11 @@ function ByAnalyzeModal({ modalstyle, onClose }) {
 
   return (
     <div
-      className="modalOverlaypay"
+      className="modalOverlay"
       style={modalstyle}
       onClick={handleOverlayClick}
     >
-      <div className="modalWindowpay">
+      <div className="modalWindow">
         <h1>Заказать разбор</h1>
 
         <div className="infoModal">
@@ -41,7 +41,7 @@ function ByAnalyzeModal({ modalstyle, onClose }) {
 
         <div className="inputModal">
           <h3>Выбор матча:</h3>
-          <input type="number" required placeholder="Введите id матча" onChange={(e) => setMatch(e.target.value)}/>
+          <input type="number" placeholder="Введите id матча" onChange={(e) => setMatch(e.target.value)} required/>
 
           <h3>Над чем будем работать?</h3>
           <input type="text" placeholder="Например: Фарм, билд" onChange={(e) => setTask(e.target.value)}/>
