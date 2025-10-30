@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-  "start": "node server/index.js",
-  "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-  "frontend": "npm start --prefix client"
-},
+    "start": "node server/index.js",
+    "backend": "node server/index.js",
+    "frontend": "npm start --prefix client",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+  },
   "devDependencies": {
     "concurrently": "^7.6.0",
     "gh-pages": "^6.3.0"
